@@ -104,38 +104,6 @@ services:
     security_opt:
       - apparmor:unconfined
 
-  # ---- Enhanced log monitor service ----
-  log-monitor:
-    build:
-      context: .
-      dockerfile: Dockerfile.monitor
-    volumes:
-      - wazuh_logs:/wazuh_logs:ro
-      - ./monitor_scripts:/scripts
-    networks:
-      - mgmt_net
-      - corp_net
-    depends_on:
-      wazuh.manager:
-        condition: service_healthy
-    environment:
-      - PYTHONPATH=/scripts
-      - WAZUH_LOGS_PATH=/wazuh_logs
-    command: tail -f /dev/null
-
-  # ---- Default service for agent ----
-  default:
-    image: kalilinux/kali-rolling
-    tty: true
-    stdin_open: true
-    networks:
-      - mgmt_net
-      - corp_net
-    depends_on:
-      wazuh.manager:
-        condition: service_healthy
-    command: /bin/bash
-
 networks:
   mgmt_net:
     driver: bridge

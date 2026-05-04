@@ -1,14 +1,18 @@
-# Base image with security tools for testing
-FROM kalilinux/kali-rolling
+# Base image — Debian 12 (bookworm) so Microsoft's sysmonforlinux package
+# and its libxml2 (>= 2.7.4) dependency resolve cleanly. Kali rolling tracks
+# Debian sid/trixie which mismatches Microsoft's bullseye-pinned repo.
+# Targets don't need to be Kali; they're victims, not attackers.
+FROM debian:bookworm-slim
 
 # Install dependencies and common GTFOBins tools
 RUN apt-get update && \
     apt-get install -y curl gnupg lsb-release sudo vim wget unzip jq netcat-traditional \
                        python3 python3-pip gawk sed grep findutils less nano git \
-                       openssh-client net-tools procps psmisc rsyslog apt-transport-https && \
-    # Add Microsoft repository for Sysmon
+                       openssh-client net-tools procps psmisc rsyslog apt-transport-https \
+                       ca-certificates && \
+    # Add Microsoft repository for Sysmon — match the base distro (bookworm)
     curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg && \
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/debian/11/prod bullseye main" > /etc/apt/sources.list.d/microsoft.list && \
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/debian/12/prod bookworm main" > /etc/apt/sources.list.d/microsoft.list && \
     # Add Wazuh repository
     curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --dearmor -o /usr/share/keyrings/wazuh-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/wazuh-archive-keyring.gpg] https://packages.wazuh.com/4.x/apt/ stable main" > /etc/apt/sources.list.d/wazuh.list && \

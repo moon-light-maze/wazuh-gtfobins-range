@@ -1,0 +1,5 @@
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Value added to registry key has Base64-like pattern</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Powershell.exe spawned a powershell process which executed a base64 encoded command</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>A powershell process created by WMI executed a base64 encoded command</description>
+/var/ossec/ruleset/rules/0915-win-powershell_rules.xml:    <field name="win.eventdata.scriptBlockText" type="pcre2">(?i)FromBase64String</field>
+/var/ossec/ruleset/rules/0915-win-powershell_rules.xml:    <description>Powershell script may be using Base64 decoding method</description>

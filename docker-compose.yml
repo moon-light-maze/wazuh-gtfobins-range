@@ -1,0 +1,150 @@
+services:
+  # ---- Wazuh manager ----
+  wazuh.manager:
+    image: wazuh/wazuh-manager:4.13.0
+    hostname: wazuh.manager
+    restart: always
+    environment:
+      - WAZUH_MANAGER_NAME=wazuh.manager
+      - WAZUH_INDEXER_URL=""
+    networks:
+      - mgmt_net
+      - corp_net
+    volumes:
+      - wazuh_logs:/var/ossec/logs
+      - wazuh_etc:/var/ossec/etc
+      - wazuh_var:/var/ossec/var
+      - wazuh_rules:/var/ossec/etc/rules
+      - wazuh_decoders:/var/ossec/etc/decoders
+      - ./socfortress_rules:/socfortress_rules:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f ossec-execd > /dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 12
+      start_period: 120s
+
+  # ---- Kali attacker VM ----
+  kali:
+    image: kalilinux/kali-rolling
+    tty: true
+    stdin_open: true
+    networks:
+      - mgmt_net
+      - corp_net
+    depends_on:
+      wazuh.manager:
+        condition: service_healthy
+    command: /bin/bash
+
+  # ---- Target machines with Wazuh agent and Sysmon ----
+  target-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.target
+    hostname: target-1
+    environment:
+      - MANAGER_IP=wazuh.manager
+    volumes:
+      - ./sysmon-config.xml:/sysmon-config.xml:ro
+    networks:
+      - corp_net
+    depends_on:
+      wazuh.manager:
+        condition: service_healthy
+    cap_add:
+      - AUDIT_CONTROL
+      - AUDIT_READ
+      - AUDIT_WRITE
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+
+  target-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.target
+    hostname: target-2
+    environment:
+      - MANAGER_IP=wazuh.manager
+    volumes:
+      - ./sysmon-config.xml:/sysmon-config.xml:ro
+    networks:
+      - corp_net
+    depends_on:
+      wazuh.manager:
+        condition: service_healthy
+    cap_add:
+      - AUDIT_CONTROL
+      - AUDIT_READ
+      - AUDIT_WRITE
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+
+  target-3:
+    build:
+      context: .
+      dockerfile: Dockerfile.target
+    hostname: target-3
+    environment:
+      - MANAGER_IP=wazuh.manager
+    volumes:
+      - ./sysmon-config.xml:/sysmon-config.xml:ro
+    networks:
+      - corp_net
+    depends_on:
+      wazuh.manager:
+        condition: service_healthy
+    cap_add:
+      - AUDIT_CONTROL
+      - AUDIT_READ
+      - AUDIT_WRITE
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+
+  # ---- Enhanced log monitor service ----
+  log-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.monitor
+    volumes:
+      - wazuh_logs:/wazuh_logs:ro
+      - ./monitor_scripts:/scripts
+    networks:
+      - mgmt_net
+      - corp_net
+    depends_on:
+      wazuh.manager:
+        condition: service_healthy
+    environment:
+      - PYTHONPATH=/scripts
+      - WAZUH_LOGS_PATH=/wazuh_logs
+    command: tail -f /dev/null
+
+  # ---- Default service for agent ----
+  default:
+    image: kalilinux/kali-rolling
+    tty: true
+    stdin_open: true
+    networks:
+      - mgmt_net
+      - corp_net
+    depends_on:
+      wazuh.manager:
+        condition: service_healthy
+    command: /bin/bash
+
+networks:
+  mgmt_net:
+    driver: bridge
+  corp_net:
+    driver: bridge
+
+volumes:
+  wazuh_logs:
+  wazuh_etc:
+  wazuh_var:
+  wazuh_rules:
+  wazuh_decoders:

@@ -1,0 +1,1359 @@
+/var/ossec/ruleset/rules/0010-rules_config.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0010-rules_config.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0010-rules_config.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0015-ossec_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0015-ossec_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0015-ossec_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0015-ossec_rules.xml:    <regex>Thumbs.db:encryptable'.|:Zone.Identifier'.|</regex>
+/var/ossec/ruleset/rules/0015-ossec_rules.xml:  <!-- File rotation/truncation rules -->
+/var/ossec/ruleset/rules/0016-wazuh_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0016-wazuh_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0016-wazuh_rules.xml:    <description>Remote upgrade could not be launched. Error: $(error).</description>
+/var/ossec/ruleset/rules/0016-wazuh_rules.xml:    <description>Custom installation could not be launched. Error: $(error).</description>
+/var/ossec/ruleset/rules/0017-wazuh-api_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:    <match>PPM exceeds tolerance</match>
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:    <match>Wrong password given for|login failed|Auth: Login incorrect|</match>
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:  <rule id="2509" level="5" timeframe="10" frequency="2">
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:    <match>PCI: if you experience problems, try using option</match>
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:    <description>NFS incompatibility between Linux and Solaris.</description>
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:    <description>NFS incompatibility between Linux and Solaris.</description>
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:    <match>incorrect password attempt</match>
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:    <match>3 incorrect password attempts</match>
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:    <description>Incorrect chain/target/match.</description>
+/var/ossec/ruleset/rules/0020-syslog_rules.xml:  <rule id="2964" level="10" frequency="4" timeframe="30">
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  <rule id="3151" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  <rule id="3152" level="6" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  <rule id="3153" level="6" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  <rule id="3154" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  <rule id="3155" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  <rule id="3156" level="10" frequency="12" timeframe="120">
+/var/ossec/ruleset/rules/0025-sendmail_rules.xml:  <rule id="3158" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:    <description>(503: Bad sequence of commands).</description>
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  <rule id="3351" level="6" frequency="$POSTFIX_FREQ" timeframe="90">
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  <rule id="3352" level="6" frequency="$POSTFIX_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  <rule id="3353" level="10" frequency="$POSTFIX_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  <rule id="3354" level="12" frequency="$POSTFIX_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:    <description>(bad sequence of commands).</description>
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  <rule id="3355" level="10" frequency="$POSTFIX_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  <rule id="3356" level="10" frequency="$POSTFIX_FREQ" timeframe="120" ignore="30">
+/var/ossec/ruleset/rules/0030-postfix_rules.xml:  <rule id="3357" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0035-spamd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0035-spamd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0035-spamd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0040-imapd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0040-imapd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0040-imapd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0040-imapd_rules.xml:  <rule id="3651" level="10" frequency="$IMAPD_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0045-mailscanner_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0045-mailscanner_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0045-mailscanner_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0045-mailscanner_rules.xml:  <rule id="3751" level="6" frequency="8" timeframe="180">
+/var/ossec/ruleset/rules/0050-ms-exchange_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0050-ms-exchange_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0050-ms-exchange_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0050-ms-exchange_rules.xml:  <rule id="3851" level="9" frequency="12" timeframe="120" ignore="120">
+/var/ossec/ruleset/rules/0050-ms-exchange_rules.xml:  <rule id="3852" level="9" frequency="14" timeframe="120" ignore="240">
+/var/ossec/ruleset/rules/0055-courier_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0055-courier_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0055-courier_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0055-courier_rules.xml:  <rule id="3910" level="10" frequency="12" timeframe="30">
+/var/ossec/ruleset/rules/0055-courier_rules.xml:  <rule id="3911" level="10" frequency="17" timeframe="30">
+/var/ossec/ruleset/rules/0065-pix_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0065-pix_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0065-pix_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0065-pix_rules.xml:  <rule id="4380" level="10" frequency="8" timeframe="360">
+/var/ossec/ruleset/rules/0065-pix_rules.xml:  <rule id="4381" level="10" frequency="8" timeframe="360">
+/var/ossec/ruleset/rules/0065-pix_rules.xml:  <rule id="4382" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0065-pix_rules.xml:  <rule id="4383" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0065-pix_rules.xml:  <rule id="4385" level="10" frequency="10" timeframe="240" ignore="90">
+/var/ossec/ruleset/rules/0065-pix_rules.xml:  <rule id="4386" level="10" frequency="10" timeframe="240">
+/var/ossec/ruleset/rules/0070-netscreenfw_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0070-netscreenfw_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0070-netscreenfw_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0070-netscreenfw_rules.xml:     - Configuration Erase sequence accepted -->
+/var/ossec/ruleset/rules/0070-netscreenfw_rules.xml:    <description>Netscreen Erase sequence started.</description>
+/var/ossec/ruleset/rules/0070-netscreenfw_rules.xml:  <rule id="4550" level="10" frequency="6" timeframe="180" ignore="60">
+/var/ossec/ruleset/rules/0070-netscreenfw_rules.xml:  <rule id="4551" level="10" frequency="8" timeframe="180" ignore="60">
+/var/ossec/ruleset/rules/0070-netscreenfw_rules.xml:  <rule id="4552" level="10" frequency="6" timeframe="180" ignore="60">
+/var/ossec/ruleset/rules/0070-netscreenfw_rules.xml:  <rule id="4553" level="10" frequency="10" timeframe="100" ignore="60">
+/var/ossec/ruleset/rules/0075-cisco-ios_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0075-cisco-ios_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0075-cisco-ios_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0075-cisco-ios_rules.xml:    <description>Cisco IOS emergency message - $(cisco.mnemonic)</description>
+/var/ossec/ruleset/rules/0080-sonicwall_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0080-sonicwall_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0080-sonicwall_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0080-sonicwall_rules.xml:  <rule id="4850" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0080-sonicwall_rules.xml:  <rule id="4851" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0085-pam_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0085-pam_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0085-pam_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0085-pam_rules.xml:  <rule id="5551" level="10" frequency="8" timeframe="180">
+/var/ossec/ruleset/rules/0090-telnetd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0090-telnetd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0090-telnetd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0090-telnetd_rules.xml:  <rule id="5631" level="10" frequency="6" timeframe="120">
+/var/ossec/ruleset/rules/0095-sshd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0095-sshd_rules.xml:  <rule id="5703" level="10" frequency="6" timeframe="360">
+/var/ossec/ruleset/rules/0095-sshd_rules.xml:  <rule id="5705" level="10" frequency="6" timeframe="360">
+/var/ossec/ruleset/rules/0095-sshd_rules.xml:  <rule id="5712" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0095-sshd_rules.xml:  <rule id="5714" level="14" timeframe="120" frequency="3">
+/var/ossec/ruleset/rules/0095-sshd_rules.xml:  <rule id="5719" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0095-sshd_rules.xml:  <rule id="5720" level="10" frequency="8">
+/var/ossec/ruleset/rules/0095-sshd_rules.xml:    <description>sshd: User entered incorrect password.</description>
+/var/ossec/ruleset/rules/0095-sshd_rules.xml:  <rule id="5763" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0100-solaris_bsm_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0100-solaris_bsm_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0100-solaris_bsm_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0105-asterisk_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0105-asterisk_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0105-asterisk_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0105-asterisk_rules.xml:  <rule id="6250" level="10" frequency="8" timeframe="300">
+/var/ossec/ruleset/rules/0105-asterisk_rules.xml:  <rule id="6251" level="10" frequency="8" timeframe="300">
+/var/ossec/ruleset/rules/0105-asterisk_rules.xml:  <rule id="6252" level="10" frequency="8" timeframe="300">
+/var/ossec/ruleset/rules/0105-asterisk_rules.xml:  <rule id="6254" level="10" frequency="5" timeframe="300">
+/var/ossec/ruleset/rules/0105-asterisk_rules.xml:  <rule id="6257" level="10" frequency="5" timeframe="300">
+/var/ossec/ruleset/rules/0110-ms_dhcp_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0110-ms_dhcp_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0110-ms_dhcp_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0110-ms_dhcp_rules.xml:    <group>dhcp_lease_action,dhcp_dns_maintenance,</group>
+/var/ossec/ruleset/rules/0110-ms_dhcp_rules.xml:    <group>dhcp_maintenance,</group>
+/var/ossec/ruleset/rules/0110-ms_dhcp_rules.xml:    <group>dhcp_maintenance,</group>
+/var/ossec/ruleset/rules/0110-ms_dhcp_rules.xml:    <group>dhcp_dns_maintenance,</group>
+/var/ossec/ruleset/rules/0110-ms_dhcp_rules.xml:    <group>dhcp_dns_maintenance,pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+/var/ossec/ruleset/rules/0110-ms_dhcp_rules.xml:    <group>dhcp_dns_maintenance,pci_dss_10.6.1,gpg13_4.12,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+/var/ossec/ruleset/rules/0115-arpwatch_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0115-arpwatch_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0115-arpwatch_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0120-symantec-av_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0120-symantec-av_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0120-symantec-av_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0125-symantec-ws_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0125-symantec-ws_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0125-symantec-ws_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0130-trend-osce_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0130-trend-osce_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0130-trend-osce_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0135-hordeimp_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0135-hordeimp_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0135-hordeimp_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0135-hordeimp_rules.xml:    <match>^[emergency]</match>
+/var/ossec/ruleset/rules/0135-hordeimp_rules.xml:    <description>Horde IMP emergency message.</description>
+/var/ossec/ruleset/rules/0135-hordeimp_rules.xml:  <rule id="9351" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0135-hordeimp_rules.xml:  <rule id="9352" level="10" frequency="6" timeframe="320">
+/var/ossec/ruleset/rules/0135-hordeimp_rules.xml:    <description>Multiple Horde emergency messages.</description>
+/var/ossec/ruleset/rules/0140-roundcube_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0140-roundcube_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0140-roundcube_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0140-roundcube_rules.xml:  <rule id="9403" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0145-wordpress_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0145-wordpress_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0145-wordpress_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0150-cimserver_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0150-cimserver_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0150-cimserver_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0155-dovecot_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0155-dovecot_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0155-dovecot_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0155-dovecot_rules.xml:<rule id="9750" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0155-dovecot_rules.xml:<rule id="9751" level="10" frequency="8" timeframe="240">
+/var/ossec/ruleset/rules/0160-vmpop3d_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0160-vmpop3d_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0160-vmpop3d_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0160-vmpop3d_rules.xml:  <rule id="9820" level="10" frequency="8" timeframe="240">
+/var/ossec/ruleset/rules/0165-vpopmail_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0165-vpopmail_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0165-vpopmail_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0165-vpopmail_rules.xml:  <rule id="9951" level="10" frequency="10" timeframe="240">
+/var/ossec/ruleset/rules/0165-vpopmail_rules.xml:  <rule id="9952" level="10" frequency="10" timeframe="240">
+/var/ossec/ruleset/rules/0165-vpopmail_rules.xml:  <rule id="9953" level="10" frequency="10" timeframe="240">
+/var/ossec/ruleset/rules/0170-ftpd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0170-ftpd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0170-ftpd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0175-proftpd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0175-proftpd_rules.xml:    <match>Incorrect password.$|Login failed</match>
+/var/ossec/ruleset/rules/0175-proftpd_rules.xml:    <match>unable to open incoming connection</match>
+/var/ossec/ruleset/rules/0175-proftpd_rules.xml:    <description>ProFTPD: Couldn't open the incoming connection. Check log message for reason.</description>
+/var/ossec/ruleset/rules/0175-proftpd_rules.xml:  <rule id="11251" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0175-proftpd_rules.xml:  <rule id="11252" level="10" frequency="12" timeframe="60">
+/var/ossec/ruleset/rules/0175-proftpd_rules.xml:  <rule id="11253" level="10" frequency="12" timeframe="120">
+/var/ossec/ruleset/rules/0180-pure-ftpd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0180-pure-ftpd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0180-pure-ftpd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0180-pure-ftpd_rules.xml:  <rule id="11306" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0180-pure-ftpd_rules.xml:  <rule id="11307" level="10" frequency="8" timeframe="60">
+/var/ossec/ruleset/rules/0185-vsftpd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0185-vsftpd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0185-vsftpd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0185-vsftpd_rules.xml:  <rule id="11451" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0185-vsftpd_rules.xml:  <rule id="11452" level="10" frequency="12" timeframe="60">
+/var/ossec/ruleset/rules/0190-ms_ftpd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0190-ms_ftpd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0190-ms_ftpd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0190-ms_ftpd_rules.xml:  <rule id="11510" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0190-ms_ftpd_rules.xml:  <rule id="11511" level="10" frequency="10" timeframe="30">
+/var/ossec/ruleset/rules/0190-ms_ftpd_rules.xml:  <rule id="11512" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0195-named_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0195-named_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0195-named_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0195-named_rules.xml:    <info type="link">http://seclists.org/incidents/2000/May/217</info>
+/var/ossec/ruleset/rules/0195-named_rules.xml:  <rule id="12149" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0200-smbd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0200-smbd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0200-smbd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0205-racoon_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0205-racoon_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0205-racoon_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0205-racoon_rules.xml:  <rule id="14151" level="9" frequency="5" timeframe="360">
+/var/ossec/ruleset/rules/0210-vpn_concentrator_rules.xml:  -  Cisco VPN Concentrator rules
+/var/ossec/ruleset/rules/0210-vpn_concentrator_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0210-vpn_concentrator_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0210-vpn_concentrator_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0210-vpn_concentrator_rules.xml:    <decoded_as>cisco-vpn-concentrator</decoded_as>
+/var/ossec/ruleset/rules/0210-vpn_concentrator_rules.xml:    <description>Grouping of Cisco VPN concentrator rules</description>
+/var/ossec/ruleset/rules/0210-vpn_concentrator_rules.xml:  <rule id="14251" level="10" frequency="10" timeframe="240">
+/var/ossec/ruleset/rules/0215-policy_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0215-policy_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0215-policy_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=640</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=4625</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=530</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=531</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=532</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=533</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=534</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=535</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4767</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=631</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=632</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=633</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=634</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=635</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=636</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=637</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=638</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=639</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=641</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=658</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=659</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=660</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=661</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <info type="link">https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=662</info>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <description>Windows: Incoming Forest Trust Builders Group Changed</description>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <description>Windows: Performance Monitor Users Group Changed</description>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:    <description>Windows: Performance Log Users Group Changed</description>
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  2016 Nov 18 10:37:26 WinEvtLog: Application: INFORMATION(302): ESENT: (no user): no domain: BNC-O9020: Music.UI (25428) {87E550B7-AD4D-40F7-BE5E-263C3D44C124}: The database engine has successfully completed recovery steps.
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  2018 Oct 23 12:23:57 WinEvtLog: System: INFORMATION(302): Microsoft-Windows-FailoverClustering-SoftwareStorageBusTarget: SYSTEM: NT AUTHORITY: O-VH06-PTP.domain.org: A missing flash device has reappeared. This hybrid disk will resume serving IO.    Disk GUID: {200747AA-2332-F910-0751-DFCEAFCEF3D3}  Disk number: 8  Manufacturer: SEAGATE   Product ID: ST8000NM0195      Serial: ZA17YH2A    Enclosure location:  Enclosure slot: 4294967295  Enclosure manufacturer:    Enclosure product ID:    Enclosure serial:      Guidance:  This is the culmination of the preceding event 301. No further action is necessary.
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  <rule id="18151" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  <rule id="18153" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  <rule id="18154" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  <rule id="18155" level="10" frequency="$MS_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  <rule id="18156" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  <rule id="18157" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0220-msauth_rules.xml:  Created by Kevin Branch
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:    <match>scan was cancelled |has taken too long</match>
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:    <description>McAfee Windows AV - Virus scan cancelled.</description>
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:    <match>scan was canceled because</match>
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:    <description>McAfee Windows AV - Virus scan cancelled due to shutdown.</description>
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:    <match>update was cancelled</match>
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:    <description>McAfee Windows AV - Virus program or DAT update cancelled.</description>
+/var/ossec/ruleset/rules/0225-mcafee_av_rules.xml:  <rule id="7550" level="10" frequency="$MCAFEE_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0230-ms-se_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0230-ms-se_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0230-ms-se_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0230-ms-se_rules.xml:  <rule id="7719" level="10" frequency="8" timeframe="240">
+/var/ossec/ruleset/rules/0230-ms-se_rules.xml:  <rule id="7720" level="10" frequency="8" timeframe="240">
+/var/ossec/ruleset/rules/0235-vmware_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0235-vmware_rules.xml:  <rule id="19150" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0235-vmware_rules.xml:  <rule id="19151" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0235-vmware_rules.xml:  <rule id="19152" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0235-vmware_rules.xml:  <rule id="19153" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0240-ids_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0240-ids_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0240-ids_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0240-ids_rules.xml:  <rule id="20152" level="10" frequency="$IDS_FREQ" timeframe="120" ignore="90">
+/var/ossec/ruleset/rules/0240-ids_rules.xml:  <rule id="20151" level="10" frequency="$IDS_FREQ" timeframe="120" ignore="90">
+/var/ossec/ruleset/rules/0240-ids_rules.xml:     - since they became just noise.
+/var/ossec/ruleset/rules/0240-ids_rules.xml:  <rule id="20161" level="11" frequency="5" timeframe="3800">
+/var/ossec/ruleset/rules/0240-ids_rules.xml:  <rule id="20162" level="11" frequency="5" timeframe="3800">
+/var/ossec/ruleset/rules/0245-web_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0245-web_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0245-web_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0245-web_rules.xml:  <rule id="31151" level="10" frequency="14" timeframe="90">
+/var/ossec/ruleset/rules/0245-web_rules.xml:  <rule id="31152" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0245-web_rules.xml:  <rule id="31153" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0245-web_rules.xml:  <rule id="31154" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0245-web_rules.xml:  <rule id="31161" level="10" frequency="14" timeframe="120">
+/var/ossec/ruleset/rules/0245-web_rules.xml:  <rule id="31162" level="10" frequency="14" timeframe="120">
+/var/ossec/ruleset/rules/0245-web_rules.xml:  <rule id="31163" level="10" frequency="14" timeframe="120">
+/var/ossec/ruleset/rules/0250-apache_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0250-apache_rules.xml:  <rule id="30116" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0250-apache_rules.xml:  <rule id="30119" level="12" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0250-apache_rules.xml:  <rule id="30202" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0250-apache_rules.xml:  <rule id="30310" level="10" frequency="12" timeframe="160">
+/var/ossec/ruleset/rules/0250-apache_rules.xml:  <rule id="30316" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0255-zeus_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0255-zeus_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0255-zeus_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0255-zeus_rules.xml:  <rule id="31251" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0260-nginx_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0260-nginx_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0260-nginx_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0260-nginx_rules.xml:    <description>Nginx: Incomplete client request.</description>
+/var/ossec/ruleset/rules/0260-nginx_rules.xml:  <rule id="31316" level="10" frequency="8" timeframe="240">
+/var/ossec/ruleset/rules/0265-php_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0265-php_rules.xml:    <match>Failed opening required |Call to undefined function </match>
+/var/ossec/ruleset/rules/0265-php_rules.xml:    <description>PHP internal error (missing file or function).</description>
+/var/ossec/ruleset/rules/0270-web_appsec_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0270-web_appsec_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0270-web_appsec_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0270-web_appsec_rules.xml:  <rule id="31510" level="8" frequency="8" timeframe="30">
+/var/ossec/ruleset/rules/0270-web_appsec_rules.xml:   <rule id="31533" level="10" timeframe="20" frequency="8">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0275-squid_rules.xml:    <info type="link">http://www.symantec.com/avcenter/venc/data/w32.beagle.dp.html</info>
+/var/ossec/ruleset/rules/0275-squid_rules.xml:    -  It includes most of the time bugs on IE that always
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  <rule id="35051" level="10" frequency="$SQUID_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  <rule id="35052" level="10" frequency="$SQUID_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  <rule id="35053" level="10" frequency="$SQUID_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  <rule id="35054" level="12" frequency="$SQUID_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:    <info type="link">http://www.symantec.com/avcenter/venc/data/w32.beagle.dp.html</info>
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  <rule id="35055" level="10" frequency="$SQUID_FREQ" timeframe="90">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  <rule id="35056" level="12" frequency="$SQUID_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  <rule id="35057" level="10" frequency="$SQUID_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  <rule id="35058" level="10" frequency="$SQUID_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:  <rule id="35095" level="0" frequency="4" timeframe="360">
+/var/ossec/ruleset/rules/0275-squid_rules.xml:    <description> (alert only once).</description>
+/var/ossec/ruleset/rules/0280-attack_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0280-attack_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0280-attack_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0280-attack_rules.xml:<var name="SYS_USERS">^apache$|^mysql$|^www$|^nobody$|^nogroup$|^portmap$|^named$|^rpc$|^mail$|^ftp$|^shutdown$|^halt$|^daemon$|^bin$|^postfix$|^shell$|^info$|^guest$|^psql$|^user$|^users$|^console$|^uucp$|^lp$|^sync$|^sshd$|^cdrom$|^ossec$</var>
+/var/ossec/ruleset/rules/0280-attack_rules.xml:    <info type="link">http://snap.nlc.dcccd.edu/reference/sysadmin/julian/ch18/389-392.html</info>
+/var/ossec/ruleset/rules/0280-attack_rules.xml:  <rule id="40111" level="10" frequency="12" timeframe="160">
+/var/ossec/ruleset/rules/0280-attack_rules.xml:  <rule id="40113" level="12" frequency="8" timeframe="360">
+/var/ossec/ruleset/rules/0280-attack_rules.xml:  <rule id="40501" level="15" timeframe="300" frequency="4">
+/var/ossec/ruleset/rules/0280-attack_rules.xml:  <rule id="40601" level="10" frequency="12" timeframe="90" ignore="90">
+/var/ossec/ruleset/rules/0285-systemd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0285-systemd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0285-systemd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0290-firewalld_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0290-firewalld_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0290-firewalld_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0290-firewalld_rules.xml:    <description>firewalld: Incorrect chain/target/match.</description>
+/var/ossec/ruleset/rules/0295-mysql_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0295-mysql_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0295-mysql_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0295-mysql_rules.xml:  <rule id="50180" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0295-mysql_rules.xml:  <rule id="50183" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0300-postgresql_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0300-postgresql_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0300-postgresql_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0300-postgresql_rules.xml:  <rule id="50580" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0300-postgresql_rules.xml:  <rule id="50581" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0305-dropbear_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0305-dropbear_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0305-dropbear_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0305-dropbear_rules.xml:  <rule id="51007" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0305-dropbear_rules.xml:    <match>Incompatible remote version</match>
+/var/ossec/ruleset/rules/0305-dropbear_rules.xml:    <description>Dropbear: Incompatible remote version.</description>
+/var/ossec/ruleset/rules/0305-dropbear_rules.xml:  <rule id="51011" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0310-openbsd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0310-openbsd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0310-openbsd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0310-openbsd_rules.xml:    <description>Unclean filesystem, run fsck.</description>
+/var/ossec/ruleset/rules/0310-openbsd_rules.xml:    <match>uncorrectable data error reading fsbn</match>
+/var/ossec/ruleset/rules/0315-apparmor_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0315-apparmor_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0315-apparmor_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0320-clam_av_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0320-clam_av_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0320-clam_av_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0320-clam_av_rules.xml:    <match>Incremental update failed|Error while reading database from|Update failed.</match>
+/var/ossec/ruleset/rules/0320-clam_av_rules.xml:    <description>ClamAV: Could not download the incremental virus definition updates.</description>
+/var/ossec/ruleset/rules/0320-clam_av_rules.xml:  <rule id="52511" level="10" frequency="8">
+/var/ossec/ruleset/rules/0325-opensmtpd_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0325-opensmtpd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0325-opensmtpd_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0325-opensmtpd_rules.xml:Aug 14 10:15:25 junction.example.com smtpd[28882]: smtp-in: Failed command on session 1f55bdcdf16e28a3: "MAIL FROM:<root@junction.example.com>  " => 421 4.3.0: Temporar
+/var/ossec/ruleset/rules/0330-sysmon_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0330-sysmon_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0330-sysmon_rules.xml:    -  Updated by Wazuh, Inc. <support@wazuh.com>.
+/var/ossec/ruleset/rules/0335-unbound_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0335-unbound_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0335-unbound_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:    - Oct  1 16:16:56 puppet puppet-master[7879]: Duplicate declaration: Concat[undef] is already declared in file /etc/puppet/modules/ossec/manifests/client.pp:68; cannot redeclare at /etc/puppet/modules/ossec/manifests/client.pp:88 on node windows.localdomain
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:    - Oct  1 19:25:42 puppet puppet-master[7879]: Unrecognised escape sequence '\P' in file /etc/puppet/modules/ossec/manifests/params.pp at line 71
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:    - Oct  1 16:41:38 puppet puppet-master[7879]: "${env_programfiles(x86)}/ossec-agent/ossec.conf" is not an absolute path. at /etc/puppet/modules/concat/manifests/init.pp:71 on node windows.localdomain
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:    - Oct  8 09:24:44 vpc-puppet puppet-master[1399]: Unknown function includes at /etc/puppet/manifests/nodes.pp:3 on node vpc-puppet.wazuh.com
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:        <match>^Could not|^You cannot|^too few arguments|^Duplicate declaration|^Unrecognised escape sequence|^Invalid parameter|is not|has not been tested|Unknown function|failed|has failure</match>
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:    - Oct  5 15:18:58 puppet puppet-master[1039]: Sections other than main, master, agent, user are deprecated in puppet.conf. Please use the directory environments feature to specify environments. (See http://docs.puppetlabs.com/puppet/latest/reference/environments.html)
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:    - 2014-10-04T08:02:57.1343+00:00 text puppet-agent[1966]: Failed to apply catalog: Could not find dependency File[/etc/yum.conf] for Package[puppet] at /text/text
+/var/ossec/ruleset/rules/0340-puppet_rules.xml:            <frequency>2100</frequency>
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:    <rule id="80102" level="10" frequency="8">
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:    <rule id="80105" level="10" frequency="8">
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:        <description>Netscaler: ICA application launch has started</description>
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:    <rule id="80112" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:    <rule id="80114" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:    Jul 16 15:00:39 <local0.err> 10.90.192.54 07/16/2007:15:00:39 GMT ns : SSLVPN CLISEC_CHECK : User joe12 - Client_ip 10.90.147.47 - Vserver 10.90.192.74:443 - Client_security_expression "CLIENT.FILE(tsto.exe) EXISTS -frequency 3" - Client security check failed - User put in quarantine group Quarantine
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:    APPFW APPFW_FIELDCONSISTENCY
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:        <match>APPFW APPFW_STARTURL|APPFW APPFW_DENYURL|APPFW APPFW_CONTENT_TYPE|APPFW APPFW_REFERER_HEADER|APPFW APPFW_CSRF_TAG|APPFW APPFW_XSS|APPFW APPFW_XML_XSS|APPFW APPFW_SQL|APPFW APPFW_XML_SQL|APPFW APPFW_COOKIE|APPFW APPFW_FIELDCONSISTENCY|APPFWAPPFW_BUFFEROVERFLOW_URL|APPFW APPFW_BUFFEROVER FLOW_COOKIE|APPFW APPFW_BUFFEROVERFLOW_HDR|APPFW APPFW_FIELDFORMAT|APPFW APPFW_SAFECOMMERCE|APPFW APPFW_SAFECOMMERCE_XFORM|APPFW APPFW_SAFEOBJECT|APPFW APPFW_SIGNATURE_MATCH|APPFW_RESP APPFW_XML_XSS|APPFW_RESP APPFW_XML_SQL</match>
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:    <rule id="80137" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0345-netscaler_rules.xml:    <rule id="80140" level="10" frequency="8">
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  <!-- If there is an error code: increase the level and change description -->
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  <rule id="80252" level="10" frequency="22" timeframe="600">
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  <rule id="80255" level="10" frequency="6" timeframe="360">
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  <!-- Documentation: https://docs.aws.amazon.com/elasticloadbalancing/index.html -->
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  <!-- Silence general REST.GET.OBJECT with status code 200 -->
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  <!-- Silence events when S3 puts a file into the bucket -->
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  <rule id="80369" level="10" frequency="10" timeframe="60">
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  <rule id="80371" level="10" frequency="10" timeframe="60">
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:  <rule id="80443" level="10" frequency="8" timeframe="120" ignore="60">
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:    <description>The resource was discovered but its configuration was not recorded since the recorder excludes the recording of resources of this type. AWS config - history:  [$(aws.awsAccountId) $(aws.awsRegion)] [$(aws.resourceType)]: $(aws.resourceId) ($(aws.configurationItemStatus)).</description>
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:    <description>The resource was deleted but its configuration was not recorded since the recorder excludes the recording of resources of this type. AWS config - history:  [$(aws.awsAccountId) $(aws.awsRegion)] [$(aws.resourceType)]: $(aws.resourceId) ($(aws.configurationItemStatus)).</description>
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:    <field name="aws.configuration.complianceType">\.+</field>
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:    <description>AWS config - snapshot compliance [$(aws.awsAccountId) $(aws.awsRegion)] [$(aws.resourceType)] [$(aws.configuration.configRuleList.configRuleName)]: $(aws.resourceId) ($(aws.configurationItemStatus)) $(aws.configuration.complianceType).</description>
+/var/ossec/ruleset/rules/0350-amazon_rules.xml:    <group>aws_config,aws_config_snapshot,aws_config_snapshot_compliance,</group>
+/var/ossec/ruleset/rules/0360-serv-u_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0360-serv-u_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0360-serv-u_rules.xml:    <rule id="80506" level="10" frequency="8">
+/var/ossec/ruleset/rules/0365-auditd_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0365-auditd_rules.xml:    <description>Auditd: Login attempt reached the maximum amount of concurrent sessions.</description>
+/var/ossec/ruleset/rules/0375-usb_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0375-usb_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0380-redis_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0380-redis_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "???", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "pass", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "notchecked", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "notapplicable", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "fixed", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "informational", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "error", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "unknown", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "notselected", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "fail", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "fail", severity: "medium", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "fail", severity: "high", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "xccdf-overview", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_common", profile-title: "Common Profile for General-Purpose Systems", score: "62.500000".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "??", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "vulnerability", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "pass", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "vulnerability", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "pass", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "inventory", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "fail", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "compliance", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+/var/ossec/ruleset/rules/0385-oscap_rules.xml:    oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "fail", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "patch", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+/var/ossec/ruleset/rules/0390-fortiddos_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0390-fortiddos_rules.xml:  Reference:
+/var/ossec/ruleset/rules/0390-fortiddos_rules.xml:    <description>Sequence number of a packet was outside the acceptable window.  Tracked when the SPP setting seq-validation is enabled.</description>
+/var/ossec/ruleset/rules/0390-fortiddos_rules.xml:    <description>Effective rate limit for the concurrent-connections-per-source threshold has been reached. Source IP address is reported.</description>
+/var/ossec/ruleset/rules/0390-fortiddos_rules.xml:    <description>An asynchronous Transfer Full Range (AXFR) request (QTYPE=252).</description>
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81605" level="7" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81607" level="7" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81609" level="8" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81611" level="7" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81613" level="4" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81615" level="7" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81617" level="7" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81619" level="3" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81621" level="3" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81623" level="4" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81625" level="4" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81627" level="4" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81632" level="4" frequency="16" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  <rule id="81635" level="3" frequency="16" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  NOTE: Since this rule can be noisy is set to level 1 by default.
+/var/ossec/ruleset/rules/0391-fortigate_rules.xml:  References:
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:  References:
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:    For the creation of the child rules I had in mind this article: https://fortinetweb.s3.amazonaws.com/docs.fortinet.com/v2/attachments/f7868f9d-b70f-11ea-8b7d-00505692583a/FortiMail-6.4.0-Log_Reference.pdf
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:    Additional reference: https://docs.fortinet.com/document/fortimail/6.4.0/log-reference/434224/about-fortinet-logs
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:    0 Emergency   Level 13
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:    <field name="pri">^emergency$</field>
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:    <description>FortiMail: Emergency message.</description>
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:    <field name="msg">hasyncd:</field>
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:    <description>FortiMail: Synchronization related information.</description>
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:    <field name="type">encrypt</field>
+/var/ossec/ruleset/rules/0392-fortimail_rules.xml:    <description>FortiMail: FortiMail encrypted or decrypted an email.</description>
+/var/ossec/ruleset/rules/0393-fortiauth_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0395-hp_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0395-hp_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0395-hp_rules.xml:        0 Emergency: The system is unusable. For example, the system authorization has expired.
+/var/ossec/ruleset/rules/0395-hp_rules.xml:        <description>HP 5500 EI - Emergency event</description>
+/var/ossec/ruleset/rules/0395-hp_rules.xml:        <group>hp-emergency,gdpr_IV_35.7.d,</group>
+/var/ossec/ruleset/rules/0395-hp_rules.xml:    <rule id="81710" level="10" frequency="8">
+/var/ossec/ruleset/rules/0400-openvpn_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0400-openvpn_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0400-openvpn_rules.xml:    <rule id="81802" level="3" frequency="3" timeframe="60">
+/var/ossec/ruleset/rules/0400-openvpn_rules.xml:        <description>OpenVPN: Concurrent connections</description>
+/var/ossec/ruleset/rules/0400-openvpn_rules.xml:    <rule id="81804" level="4" frequency="3" timeframe="60">
+/var/ossec/ruleset/rules/0400-openvpn_rules.xml:    Note: Enhanced decoder rules to handle LDAP integrated authentication
+/var/ossec/ruleset/rules/0400-openvpn_rules.xml:Jan 28 14:25:49 VPN-SERVER-05892 openvpn: Incorrect password supplied for LDAP DN "CN=Harry T. Hacker,OU=business unit,OU=department,DC=domain,DC=com".
+/var/ossec/ruleset/rules/0400-openvpn_rules.xml:    <match>^Incorrect password supplied for LDAP DN</match>
+/var/ossec/ruleset/rules/0405-rsa-auth-manager_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0405-rsa-auth-manager_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0405-rsa-auth-manager_rules.xml:    <rule id="81904" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0410-imperva_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0410-imperva_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0415-sophos_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0415-sophos_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0420-freeipa_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0420-freeipa_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0420-freeipa_rules.xml:    [Tue Aug 09 18:26:22 2016] [error] ipa: INFO: 401 Unauthorized: kinit: Password incorrect while getting initial credentials
+/var/ossec/ruleset/rules/0420-freeipa_rules.xml:        <match>Password incorrect</match>
+/var/ossec/ruleset/rules/0425-cisco-estreamer_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0425-cisco-estreamer_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0430-ms_wdefender_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0430-ms_wdefender_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0430-ms_wdefender_rules.xml:    2017 Apr 06 06:25:54 WinEvtLog: Microsoft-Windows-Windows Defender/Operational: WARNING(1116): Microsoft-Windows-Windows Defender: SYSTEM: NT AUTHORITY: DESKTOP-6UOEPO5: Windows Defender has detected malware or other potentially unwanted software.   For more information please see the following:  http://go.microsoft.com/fwlink/?linkid=37020&name=Virus:DOS/EICAR_Test_File&threatid=2147519003&enterprise=0     Name: Virus:DOS/EICAR_Test_File          ID: 2147519003          Severity: Severe        Category: Virus         Path: file:_C:\Users\spiderman\Downloads\eicar.com.txt          Detection Origin: Local machine         Detection Type: Concrete     Detection Source: Real-Time Protection          User: NT AUTHORITY\SYSTEM       Process Name: C:\Windows\System32\SearchProtocolHost.exe        Signature Version: AV: 1.239.892.0, AS: 1.239.892.0, NIS: 116.88.0.0    Engine Version: AM: 1.1.13601.0, NIS: 2.1.12706.0
+/var/ossec/ruleset/rules/0430-ms_wdefender_rules.xml:    2017 Apr 06 06:26:01 WinEvtLog: Microsoft-Windows-Windows Defender/Operational: INFORMATION(1117): Microsoft-Windows-Windows Defender: SYSTEM: NT AUTHORITY: DESKTOP-6UOEPO5: Windows Defender has taken action to protect this machine from malware or other potentially unwanted software.   For more information please see the following:  http://go.microsoft.com/fwlink/?linkid=37020&name=Virus:DOS/EICAR_Test_File&threatid=2147519003&enterprise=0         Name: Virus:DOS/EICAR_Test_File         ID: 2147519003          Severity: Severe        Category: Virus         Path: file:_C:\Users\spiderman\Downloads\eicar.com.txt;webfile:_C:\Users\spiderman\Downloads\eicar.com.txt|http://www.eicar.org/download/eicar.com.txt|chrome.exe    Detection Origin: Internet      Detection Type: Concrete        Detection Source: Real-Time Protection          User: NT AUTHORITY\SYSTEM       Process Name: C:\Windows\System32\SearchProtocolHost.exe     Action: Quarantine      Action Status:  No additional actions required          Error Code: 0x80508023          Error description: The program could not find the malware and other potentially unwanted software on this computer.          Signature Version: AV: 1.239.892.0, AS: 1.239.892.0, NIS: 116.88.0.0    Engine Version: AM: 1.1.13601.0, NIS: 2.1.12706.0
+/var/ossec/ruleset/rules/0435-ms_logs_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0440-ms_sqlserver_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0440-ms_sqlserver_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0440-ms_sqlserver_rules.xml:    <rule id="85006" level="10" frequency="8">
+/var/ossec/ruleset/rules/0440-ms_sqlserver_rules.xml:2017-04-03 15:53:26.11 spid51      Using 'xpstar.dll' version '2007.100.6000' to execute extended stored procedure 'xp_instance_regread'. This is an informational message only; no user action is required.
+/var/ossec/ruleset/rules/0440-ms_sqlserver_rules.xml:2017-04-03 15:53:07.73 Server      The SQL Server Network Interface library could not register the Service Principal Name (SPN) for the SQL Server service. Error: 0x2098, state: 15. Failure to register an SPN may cause integrated authentication to fall back to NTLM instead of Kerberos. This is an informational message. Further action is only required if Kerberos authentication is required by authentication policies.
+/var/ossec/ruleset/rules/0440-ms_sqlserver_rules.xml:        <match>The SQL Server Network Interface library could not register the Service Principal Name</match>
+/var/ossec/ruleset/rules/0445-identity_guard_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0445-identity_guard_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0445-identity_guard_rules.xml:    <rule id="85502" level="10" frequency="8">
+/var/ossec/ruleset/rules/0450-mongodb_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0450-mongodb_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0450-mongodb_rules.xml:    2017-03-27T19:32:31.916+0200 I ACCESS   [conn10000] Successfully authenticated as principal snapshots on myUser
+/var/ossec/ruleset/rules/0450-mongodb_rules.xml:    <rule id="85760" level="10" frequency="8">
+/var/ossec/ruleset/rules/0450-mongodb_rules.xml:    2016-03-31T15:18:14.340-0500 I ACCESS   [conn7] Unauthorized not authorized on admin to execute command { createUser:  "mongoadmin2", pwd: "xxx", roles: [ { role: "userAdminAnyDatabase",  db: "admin" } ], digestPassword: false, writeConcern:   { w: "majority", wtimeout: 30000.0 } }
+/var/ossec/ruleset/rules/0455-docker_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0455-docker_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0460-jenkins_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0460-jenkins_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0470-vshell_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0470-vshell_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0470-vshell_rules.xml:  <rule id="86806" level="12" frequency="7" timeframe="120">
+/var/ossec/ruleset/rules/0470-vshell_rules.xml:  <rule id="86807" level="12" frequency="7" timeframe="60">
+/var/ossec/ruleset/rules/0475-suricata_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0475-suricata_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0480-qualysguard_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0480-qualysguard_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:  -  Cylance rules
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:<group name="cylance,">
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <decoded_as>cylance_events</decoded_as>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <description>Cylance events messages grouped.</description>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <field name="cylance_events.eventstatus">unsafe</field>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <description>Cylance: File $(cylance_events.filepath) is unsafe.</description>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <field name="cylance_events.eventstatus">abnormal</field>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <description>Cylance: File $(cylance_events.filepath) is abnormal.</description>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <field name="cylance_events.eventstatus">quarantined</field>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <description>Cylance: File $(cylance_events.filepath) is quarantined.</description>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <field name="cylance_events.eventstatus">waived</field>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <description>Cylance Event: File $(cylance_events.filepath) is waived.</description>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <decoded_as>cylance_threats</decoded_as>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:        <description>Cylance threats messages grouped.</description>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:    	<field name="cylance_threats.file_status">waived</field>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:    	<description>Cylance Threat: File $(cylance_threats.file_path) is waived</description>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:    	<field name="cylance_threats.file_status">quarantined</field>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:    	<description>Cylance Threat: File $(cylance_threats.file_path) is quarantined</description>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:    	<field name="cylance_threats.file_status">abnormal</field>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:    	<description>Cylance Threat: File $(cylance_threats.file_path) is abnormal</description>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:    	<field name="cylance_threats.file_status">unsafe</field>
+/var/ossec/ruleset/rules/0485-cylance_rules.xml:    	<description>Cylance Threat: File $(cylance_threats.file_path) is unsafe</description>
+/var/ossec/ruleset/rules/0490-virustotal_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0490-virustotal_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0495-proxmox-ve_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0495-proxmox-ve_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0495-proxmox-ve_rules.xml:  <rule id="87202" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  -  OwnCloud ruleset
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:      <location>ABSOLUTE_PATH_TO_YOUR_OWNCLOUD_.json_LOG_FILE</location>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:      <label key="@source">ownCloud</label>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"wlioIFa6pOvt6DIAoeHE","remoteAddr":"127.0.0.1","app":"core","message":"Login failed: 'admin' (Remote IP: '127.0.0.1')","level":2,"time":"2016-04-12T22:28:20+02:00","method":"POST","url":"\/","user":"- -","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"prLlx9+QIfl1jHtz9C5o","remoteAddr":"127.0.0.1","app":"core","message":"Login failed: 'admin' (Remote IP: '127.0.0.1')","level":2,"time":"2015-07-08T12:12:41+02:00","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"wLP7a3MdzTo8wgCWret9","remoteAddr":"127.0.0.1","app":"core","message":"Login failed: 'admin' (Remote IP: '127.0.0.1')","level":2,"time":"2015-07-15T09:40:35+02:00","method":"POST","url":"\/","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"prLlx9+QIfl1jHtz9C5o","remoteAddr":"127.0.0.1","app":"core","message":"Login failed: 'admin' (Remote IP: '127.0.0.1)","level":2,"time":"2015-07-08T12:12:41+02:00","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"wLP7a3MdzTo8wgCWret9","remoteAddr":"127.0.0.1","app":"core","message":"Login failed: 'admin' (Remote IP: '127.0.0.1)","level":2,"time":"2015-07-15T09:40:35+02:00","method":"POST","url":"\/","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"f7906a8355f496e3a1947d7839c4a2c3","remoteAddr":"127.0.0.1","app":"core","message":"Login failed: 'admin' (Remote IP: '127.0.0.1', X-Forwarded-For: '')","level":2,"time":"2015-06-09T08:17:43+00:00","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"9f8edc5558b2b4f8628663d83a092a7f","remoteAddr":"127.0.0.1","app":"core","message":"Login failed: 'admin' (Remote IP: '127.0.0.1', X-Forwarded-For: '')","level":2,"time":"2015-06-09T08:19:02   - +00:00","method":"POST","url":"\/cloud\/index.php","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"app":"core","message":"Login failed: 'admin' (Remote IP: '127.0.0.1', X-Forwarded-For: '')","level":2,"time":"2015-06-09T08:16:29+00:00","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"5576a04643d8e","app":"core","message":"Login failed: 'admin' (Remote IP: '127.0.0.1', X-Forwarded-For: '')","level":2,"time":"2015-06-09T08:13:58+00:00","method":"POST","url":"\/owncloud\/index.php","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"app":"core","message":"Login failed: user 'admin' , wrong password, IP:127.0.0.1","level":2,"time":"2015-06-09T08:10:29+00:00","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"55769fcacd1e0","app":"core","message":"Login failed: user 'admin' , wrong password, IP:127.0.0.1","level":2,"time":"2015-06-09T08:11:54+00:00","method":"POST","url":"\/owncloud\/index.php","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"BaW6nfA5rHBoihjDtQVm","remoteAddr":"127.0.0.1","app":"core-preview","message":"Passed filename is not valid, might be malicious (file:\"test\";ip:\"127.0.0.1\")","level":2,"time":"2017-09-01T22:11:25+02:00","method":"POST","url":"\/login","user":"- -","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"4ETnKW0UyDBNmL4z\/umV","remoteAddr":"127.0.0.1","app":"PHP","message":"Redis::connect(): connect() failed: No such file or directory at \/var\/www\/owncloud\/lib\/private\/RedisFactory.php#60","level":3,"time":"2017-08-21T16:00:34+02:00","method":"PROPFIND","url":"\/remote.php\/dav\/addressbooks\/users\/admin\/example\/","user":"admin","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - {"reqId":"4j2DKpvOh0OezXVwfuLO","remoteAddr":"127.0.0.1","app":"PHP","message":"fopen(\/var\/www\/owncloud\/data\/user 1\/thumbnails\/1234\/32-32.png): failed to open stream: No such file or directory at \/var\/www\/owncloud\/lib\/private\/Files\/Storage\/Local.php#278","level":3,"time":"2017-07-15T23:59:20+02:00","method":"GET","url":"\/core\/preview.png?file=%2Fexample.txt&c=123&x=32&y=32&forceIcon=0","user":"user 1","@source":"ownCloud"}
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - Sep  1 20:16:09 foo ownCloud[15463]: {core} Login failed: 'test' (Remote IP: '127.0.0.1')
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  - Sep  1 22:16:33 foo ownCloud[15467]: {core-preview} Passed filename is not valid, might be malicious (file:"test";ip:"127.0.0.1","@source":"ownCloud")
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:<group name="json,owncloud,">
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <field name="@source">ownCloud</field>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud messages grouped.</description>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <decoded_as>owncloud</decoded_as>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud messages grouped.</description>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud authentication failed.</description>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:  <rule id="87302" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud brute force (multiple failed logins).</description>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud possible malicious request.</description>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud FATAL message.</description>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud ERROR message.</description>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud WARN message.</description>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud INFO message.</description>
+/var/ossec/ruleset/rules/0500-owncloud_rules.xml:    <description>ownCloud DEBUG message.</description>
+/var/ossec/ruleset/rules/0505-vuls_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0505-vuls_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0505-vuls_rules.xml:  {"vuls": {"last_modified": "2017-12-08 21:29:05", "detection_method": "OvalMatch", "kernel_version": "3.10.0-693.el7.x86_64", "scan_date": "2017-12-27 14:39:50", "affected_packages": "kernel (Not fixable), kernel-tools (Not fixable), kernel-tools-libs (Not fixable), python-perf (Not fixable)", "integration": "vuls", "os_version": "centos 7.4.1708", "score": 8.3, "link": "https://nvd.nist.gov/vuln/detail/CVE-2017-1000251", "source": "National Vulnerability Database", "scanned_cve": "CVE-2017-1000251", "tittle": "CVE-2017-1000251", "assurance": "100%", "affected_packages_info": {"kernel": {"new_version": "", "repository": "", "version": "3.10.0", "release": "693.el7", "fixable": "No", "new_release": "", "arch": "x86_64"}, "kernel-tools-libs": {"new_version": "", "repository": "", "version": "3.10.0", "release": "693.el7", "fixable": "No", "new_release": "", "arch": "x86_64"}, "kernel-tools": {"new_version": "", "repository": "", "version": "3.10.0", "release": "693.el7", "fixable": "No", "new_release": "", "arch": "x86_64"}, "python-perf": {"new_version": "", "repository": "", "version": "3.10.0", "release": "693.el7", "fixable": "No", "new_release": "", "arch": "x86_64"}}}}
+/var/ossec/ruleset/rules/0505-vuls_rules.xml:  {"vuls": {"last_modified": "2017-10-17 00:00:00", "detection_method": "OvalMatch", "kernel_version": "3.10.0-693.el7.x86_64", "scan_date": "2017-12-27 14:39:50", "affected_packages": "wpa_supplicant (Not fixable)", "integration": "vuls", "os_version": "centos 7.4.1708", "score": 8.1, "link": "https://access.redhat.com/security/cve/CVE-2017-13088", "source": "RedHat OVAL", "scanned_cve": "CVE-2017-13088", "tittle": "RHSA-2017:2907: wpa_supplicant security update (Important)", "assurance": "100%", "affected_packages_info": {"wpa_supplicant": {"new_version": "", "repository": "", "version": "1:2.6", "release": "5.el7", "fixable": "No", "new_release": "", "arch": "x86_64"}}}}
+/var/ossec/ruleset/rules/0505-vuls_rules.xml:  {"vuls": {"last_modified": "2017-07-05 00:00:00", "detection_method": "OvalMatch", "kernel_version": "3.10.0-693.el7.x86_64", "scan_date": "2017-12-27 14:39:50", "days": 27, "integration": "vuls", "os_version": "centos 7.4.1708", "score": 7.5, "link": "https://access.redhat.com/security/cve/CVE-2017-3143", "source": "RedHat OVAL", "scanned_cve": "CVE-2017-3143", "tittle": "RHSA-2017:1680: bind security and bug fix update (Important)", "event": "CVE-2017-3143 has a update date lower than 27 days.", "assurance": "100%"}}
+/var/ossec/ruleset/rules/0505-vuls_rules.xml:      <description>Low vulnerability $(vuls.scanned_cve) detected in scanning launched on c with $(vuls.assurance) reliability ($(vuls.detection_method)). Score: $(vuls.core) ($(vuls.source)). Affected packages: $(vuls.affected_packages)</description>
+/var/ossec/ruleset/rules/0505-vuls_rules.xml:      <description>Medium vulnerability $(vuls.scanned_cve) detected in scanning launched on $(vuls.scan_date) with $(vuls.assurance) reliability ($(vuls.detection_method)). $(vuls.tittle). Score: $(vuls.score) ($(vuls.source)). Affected packages: $(vuls.affected_packages)</description>
+/var/ossec/ruleset/rules/0505-vuls_rules.xml:      <description>High vulnerability $(vuls.scanned_cve) detected in scanning launched on $(vuls.scan_date) with $(vuls.assurance) reliability ($(vuls.detection_method)). $(vuls.tittle). Score: $(vuls.score) ($(vuls.source)). Affected packages: $(vuls.affected_packages)</description>
+/var/ossec/ruleset/rules/0505-vuls_rules.xml:      <description>Critical vulnerability $(vuls.scanned_cve) detected in scanning launched on $(vuls.scan_date) with $(vuls.assurance) reliability ($(vuls.detection_method)). $(vuls.tittle). Score: $(vuls.score) ($(vuls.source)). Affected packages: $(vuls.affected_packages)</description>
+/var/ossec/ruleset/rules/0510-ciscat_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0510-ciscat_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0510-ciscat_rules.xml:{"type":"scan_info","scan_id":75459013,"cis":{"benchmark":"CIS Ubuntu Linux 16.04 LTS Benchmark","hostname":"ubuntu","timestamp":"2017-12-21T03:16:54.431-08:00","score":76}}
+/var/ossec/ruleset/rules/0515-exim_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0515-exim_rules.xml:  <rule id="87503" level="10" frequency="8" timeframe="240">
+/var/ossec/ruleset/rules/0515-exim_rules.xml:    <description>Exim: SMTP protocol synchronization error (input sent without waiting for greeting).</description>
+/var/ossec/ruleset/rules/0520-vulnerability-detector_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0520-vulnerability-detector_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0525-openvas_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0525-openvas_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0525-openvas_rules.xml:  <rule id="87602" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0525-openvas_rules.xml:  <rule id="87610" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0530-mysql_audit_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0530-mysql_audit_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0535-mariadb_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0535-mariadb_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0540-pfsense_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0540-pfsense_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0540-pfsense_rules.xml:  <rule id="87702" level="10" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.pack">^incident-response$</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">launchd</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <description>osquery: $(osquery.pack) $(osquery.subquery): Program $(osquery.columns.name) is launched at system startup</description>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <description>osquery: $(osquery.pack) $(osquery.subquery): Command launched $(osquery.columns.command) at $(osquery.columns.hour):$(osquery.columns.minute) $(osquery.columns.day_of_month) $(osquery.columns.month) </description>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">disk_encryption</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <description>osquery: $(osquery.pack) $(osquery.subquery): Device $(osquery.columns.name) encryption status is $(osquery.columns.encryption_status)</description>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>incident_response,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.pack">^it-compliance$</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">disk_encryption</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <description>osquery: $(osquery.pack) $(osquery.subquery): Device $(osquery.columns.name) encryption status is $(osquery.columns.encryption_status)</description>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">launchd</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <group>it_compliance,</group>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">HackingTeam_Mac_Persistence</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <description>osquery: $(osquery.pack) $(osquery.subquery): HackingTeam Mac Persistence malware detected on path $(osquery.columns.path)</description>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">conhost.exe_incorrect_path</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">dllhost.exe_incorrect_path</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">lsass.exe_incorrect_path</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">services.exe_incorrect_parent_process</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <description>osquery: $(osquery.pack) $(osquery.subquery): services.exe process masquerading detected, the parent process is incorrect</description>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">svchost.exe_incorrect_path</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <description>osquery: $(osquery.pack) $(osquery.subquery): svchost.exe process masquerading detected, path $(osquery.columns.path) is incorrect</description>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <field name="osquery.name">svchost.exe_incorrect_parent_process</field>
+/var/ossec/ruleset/rules/0545-osquery_rules.xml:    <description>osquery: $(osquery.pack) $(osquery.subquery): svchost.exe process masquerading detected, the parent process is incorrect</description>
+/var/ossec/ruleset/rules/0550-kaspersky_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0550-kaspersky_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0555-azure_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0555-azure_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0555-azure_rules.xml:{"id": "Directory_856062e8-b362-4974-8e4d-0", "category": "UserManagement", "correlationId": "856062e8-b362-4", "result": "success", "resultReason": "", "activityDisplayName": "Add app role assignment grant to user", "activityDateTime": "2023-11-27T20:16:25.9499334Z", "loggedByService": "Core Directory", "operationType": "Assign", "initiatedBy": {"app": null, "user": {"id": "36053d22-7e85-43", "displayName": null, "userPrincipalName": "foo@bar.com", "ipAddress": "1.2.3.4", "userType": null, "homeTenantId": null, "homeTenantName": null}}, "targetResources": [{"id": "e5821434-36ef-44", "displayName": "GraphSample", "type": "ServicePrincipal", "userPrincipalName": null, "groupType": null, "modifiedProperties": [{"displayName": "AppRole.Id", "oldValue": null, "newValue": "\"00000000-0000-0000-0000-000000000000\""}, {"displayName": "AppRole.Value", "oldValue": null, "newValue": "\"\""}, {"displayName": "AppRole.DisplayName", "oldValue": null, "newValue": "\"\""}, {"displayName": "AppRoleAssignment.CreatedDateTime", "oldValue": null, "newValue": "\"2023-11-27T20:16:25.8949279Z\""}, {"displayName": "AppRoleAssignment.LastModifiedDateTime", "oldValue": null, "newValue": "\"2023-11-27T20:16:25.8949279Z\""}, {"displayName": "User.ObjectID", "oldValue": null, "newValue": "\"36053d22-7e85-43eb-a0b6-f4ef7a814981\""}, {"displayName": "User.UPN", "oldValue": null, "newValue": "\"foo_bar.com#EXT#@foobar.onmicrosoft.com\""}, {"displayName": "User.PUID", "oldValue": null, "newValue": "\"100320\""}, {"displayName": "TargetId.ServicePrincipalNames", "oldValue": null, "newValue": "\"560c3d27-08ef-4a4b-99\""}]}, {"id": "36053d22-7", "displayName": null, "type": "User", "userPrincipalName": "foo_bar.com#EXT#@foobar.onmicrosoft.com", "groupType": null, "modifiedProperties": []}], "additionalDetails": [{"key": "User-Agent", "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"}, {"key": "AppId", "value": "560c3d27-08e"}], "azure_tag": "azure-ad-graph", "azure_aad_tag": "microsoft-entra_id"}
+/var/ossec/ruleset/rules/0555-azure_rules.xml:{"category": "Action", "azure_tag": "azure-storage", "level": "Information", "resourceId": "/SUBSCRIPTIONS/D17...6DD/RESOURCEGROUPS/WAZUHGROUP/PROVIDERS/MICROSOFT.STORAGE/STORAGEACCOUNTS/WAZUHGROUPDIAG665", "operationName": "MICROSOFT.STORAGE/STORAGEACCOUNTS/LISTKEYS/ACTION", "durationMs": 76, "properties": {"serviceRequestId": "bbcbafc4-31ed-428a-8536-0e8cea5c2721", "statusCode": "OK"}, "resultType": "Success", "resultSignature": "Succeeded.OK", "identity": {"claims": {"e_exp": "262800", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": "live.com#sample@wazuh.com", "altsecid": "1:live.com:0003BFFD0973B960", "http://schemas.microsoft.com/identity/claims/identityprovider": "live.com", "nbf": "1536323915", "ver": "1.0", "aud": "https://management.core.windows.net/", "ipaddr": "81.34.214.32", "puid": "10030000A8EFD7BB", "http://schemas.microsoft.com/identity/claims/objectidentifier": "23bf7eb5-9593-4b58-ba50-b32ee01ccd4a", "iat": "1536323915", "wids": "62e90394-69f5-4237-9190-012177145e10", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname": "Alberto", "http://schemas.microsoft.com/claims/authnclassreference": "1", "groups": "11945c43-21c2-48ed-8b08-3cf4d5e555a0", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname": "Rodriguez", "http://schemas.microsoft.com/claims/authnmethodsreferences": "pwd", "name": "Alberto Rodriguez", "iss": "https://sts.windows.net/13fb6bf6-e9c2-4aeb-9957-f07dc32420e2/", "uti": "u8xQmnOM90SO6ycx9uEZAA", "http://schemas.microsoft.com/identity/claims/tenantid": "13fb6bf6-e9c2-4aeb-9957-f07dc32420e2", "appidacr": "2", "aio": "42BgYMjYllx53Y9p6jonr52+M0XUtd9Urk5d4GfFYT69LV/j+zQA", "http://schemas.microsoft.com/identity/claims/scope": "user_impersonation", "exp": "1536327815", "appid": "c44b4083-3bb0-49c1-b47d-974e53cbdf3c", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier": "Xd-UHgPNe-zXWRAPp0BHTKBKQirFyjOd7ILS_RkjgfQ", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress": "sample@wazuh.com"}, "authorization": {"action": "Microsoft.Storage/storageAccounts/listKeys/action", "scope": "/subscriptions/d17...6dd/resourceGroups/WazuhGroup/providers/Microsoft.Storage/storageAccounts/wazuhgroupdiag665", "evidence": {"role": "Subscription Admin"}}}, "time": "2018-09-07T12:43:42.9696992Z", "azure_storage_tag": "activity", "callerIpAddress": "81.34.214.32", "correlationId": "c4b81795-7677-4a8e-ab76-20bbc9546f5d", "location": "global"}
+/var/ossec/ruleset/rules/0560-docker_integration_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0560-docker_integration_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0560-docker_integration_rules.xml:        <description>Docker: Command launched in container $(docker.Actor.Attributes.name). Action: "$(docker.Action)"</description>
+/var/ossec/ruleset/rules/0565-ms_ipsec_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0565-ms_ipsec_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0565-ms_ipsec_rules.xml:    <description>IPsec received a packet from a remote computer with an incorrect Security Parameter Index (SPI)</description>
+/var/ossec/ruleset/rules/0565-ms_ipsec_rules.xml:    <description>IPsec Services has experienced a critical failure and has been shut down</description>
+/var/ossec/ruleset/rules/0565-ms_ipsec_rules.xml:    <description>IPsec Services encountered a potentially serious failure</description>
+/var/ossec/ruleset/rules/0570-sca_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0570-sca_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0575-win-base_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0575-win-base_rules.xml:    <field name="win.system.channel">^Microsoft-Windows-Windows Firewall With Advanced Security/Firewall$</field>
+/var/ossec/ruleset/rules/0575-win-base_rules.xml:    <description>Group of Microsoft Windows firewall with advanced security rules.</description>
+/var/ossec/ruleset/rules/0575-win-base_rules.xml:  <rule id="60013" level="8" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0575-win-base_rules.xml:  <rule id="60014" level="10" frequency="8" timeframe="240">
+/var/ossec/ruleset/rules/0575-win-base_rules.xml:  <rule id="60015" level="12" frequency="4" timeframe="240">
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:  -  Copyright (C) 2015-2021, Wazuh Inc.
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:    <description>Incoming Forest Trust Builders Group Changed</description>
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:    <description>Performance Monitor Users Group Changed</description>
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:    <description>Performance Log Users Group Changed</description>
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:  <rule id="60203" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:  <rule id="60204" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:  <rule id="60205" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:  <rule id="60206" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:  <rule id="60207" level="10" frequency="$MS_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:    <description>IPsec received a packet from a remote computer with an incorrect Security Parameter Index (SPI)</description>
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:    <description>IPsec Services has experienced a critical failure and has been shut down</description>
+/var/ossec/ruleset/rules/0580-win-security_rules.xml:    <description>IPsec Services encountered a potentially serious failure</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>SLUI.exe launched.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Performance monitoring cannot be initialized.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Performance monitoring cannot be initialized because the counters are not loaded or the shared memory object cannot be opened.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Sqllib error: OLEDB Error encountered calling IDBInitialize.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Internal inconsistency detected in trying to contact shadow copy service writers.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Inconsistent system shutdown detected.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Error encountered trying to load MOF.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The WMI service detected an inconsistency with the WMI repository.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>WMI service could not deliver results asynchronously for the namespace.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Event system failed to create an instance for the subscriber.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The COM+ event system detected an inconsistency in its internal state.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The COM+ event system failed to create an instance of the MultiInterfacePublisherFilter.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>User logoff notification for customer experience improvement program.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The database engine stopped an instance.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Synchronous read page checksum error occurred.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The database engine is starting a new instance.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The version store for this instance has reached its maximum size.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Customer experience improvement program data successfully consolidated.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Successful auto update retrieval of third-party root list sequence number.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>XA transaction manager attempted to locate the "GetXaSwitch" function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MSDTC TM could not determine if an incoming connection request is from a remote machine.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>MS DTC encountered an internal error and is terminating.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC log file is an incompatible version.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>MS DTC transaction manager is in an inconsistent state and cannot proceed.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The DllGetTransactionManagerCore function is missing from the OLE transactions proxy DLL.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>MS DTC TIP gateway encountered error calling CoCreateInstance.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>An incompletely initialized MS DTC log file was detected.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Unexpected event occurred on synchronization object.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The thread launched to update the trace settings has failed.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC transaction manager is in an inconsistent state and cannot proceed.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>A MS DTC component has encountered an internal error.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The XA transaction manager is in an inconsistent state and cannot proceed.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>MSDTC encountered an error during migration of contact identifiers.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>MSDTC encountered an error during Windows upgrade.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The maximum number of asynchronous checkpoints has been exceeded.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_commit function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_open function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The XA transaction manager attempted to locate the "GetXaSwitch" function in the XA resource manager DLL.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The XA transaction manager called the XA resource manager's xa_open function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The XA transaction manager called the XA resource manager's xa_close function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_recover function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_commit function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_rollback function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_prepare function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The XA transaction manager called the "GetXaSwitch" function in the XA resource manager DLL.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_commit function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_rollback function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_prepare function.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The MS DTC XA transaction manager called the XA resource manager's xa_commit function with the TMONEPHASE flag set.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The launch of the setup command for a program succeeded.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>The fault tolerance driver configuration information is corrupted.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>Mirror initialization or synchronization started.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:    <description>VDS fails to launch provider.</description>
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:  <rule id="61061" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0585-win-application_rules.xml:  <rule id="61062" level="10" frequency="$MS_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0590-win-system_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0590-win-system_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0590-win-system_rules.xml:  <rule id="61110" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0590-win-system_rules.xml:  <rule id="61111" level="10" frequency="$MS_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0590-win-system_rules.xml:  <rule id="61112" level="12" frequency="$MS_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0590-win-system_rules.xml:    <description>The master browser has received a server announcement</description>
+/var/ossec/ruleset/rules/0590-win-system_rules.xml:    <description>The browser has received a server announcement indicating that the computer is a master browser, but this computer is not a master browser</description>
+/var/ossec/ruleset/rules/0595-win-sysmon_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0595-win-sysmon_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0595-win-sysmon_rules.xml:  <rule id="61642" level="10" frequency="$MS_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0595-win-sysmon_rules.xml:  <rule id="61643" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:  <rule id="62103" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:  <rule id="62104" level="10" frequency="$MS_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:  <rule id="62105" level="14" frequency="$MS_FREQ" timeframe="60">
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:  <rule id="62106" level="14" frequency="$MS_FREQ" timeframe="30">
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:    <description>Windows Defender: Antimalware platform encountered a critical error when attempting to perform an action over the  potentially unwanted software</description>
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:    <description>Windows Defender: $(win.eventdata.feature) real-time protection encountered an error and failed</description>
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:    <description>Windows Defender: Antimalware engine encountered an error and failed because of $(win.eventdata.failureType) at $(win.eventdata.resource)</description>
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:    <description>Windows Defender: ERROR: LUA CANCELLATION</description>
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:    <description>Windows Defender: ERROR: CODE LUA CANCELLED</description>
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:    <description>Windows Defender: ERROR: CODE ASYNC CALL PENDING</description>
+/var/ossec/ruleset/rules/0600-win-wdefender_rules.xml:    <description>Windows Defender: ERROR: CODE CANCELLED</description>
+/var/ossec/ruleset/rules/0601-win-vipre_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0601-win-vipre_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0601-win-vipre_rules.xml:    <description>Definitions update cancelled</description>
+/var/ossec/ruleset/rules/0601-win-vipre_rules.xml:    <description>Scan cancelled</description>
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  -  Windows Event Channel ruleset for the Windows Firewall With Advanced Security channel 
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:<!-- MS Windows Firewall With Advanced Security rules -->
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:    <description>Windows Firewall With Advanced Security informational event</description>
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:    <description>Windows Firewall With Advanced Security warning event</description>
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  <!--  {"win":{"system":{"providerName":"Microsoft-Windows-Windows Firewall With Advanced Security","providerGuid":"{d1bc9aff-2abf-4d71-9146-ecb2a986eb85}","eventID":"2003","version":"0","level":"4","task":"0","opcode":"0","keywords":"0x8000000000000000","systemTime":"2019-11-23T00:33:26.728595000Z","eventRecordID":"3345","processID":"3708","threadID":"8868","channel":"Microsoft-Windows-Windows Firewall With Advanced Security/Firewall","computer":"DESKTOP-COGHUOH","severityValue":"INFORMATION","message":"A Windows Defender Firewall setting in the Public profile has changed."},"eventdata":{"profiles":"4","settingType":"1","settingValueSize":"4","settingValue":"01000000","settingValueString":"Yes","origin":"1","modifyingUser":"S-1-5-21-1176116133-684496316-159144361-1001","modifyingApplication":"C:WindowsSystem32dllhost.exe"}}} -->
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:    <description>Windows Firewall With Advanced Security: Windows Defender Firewall enabled.</description>
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  <!--  {"win":{"system":{"providerName":"Microsoft-Windows-Windows Firewall With Advanced Security","providerGuid":"{d1bc9aff-2abf-4d71-9146-ecb2a986eb85}","eventID":"2003","version":"0","level":"4","task":"0","opcode":"0","keywords":"0x8000000000000000","systemTime":"2019-11-23T00:33:26.728595000Z","eventRecordID":"3345","processID":"3708","threadID":"8868","channel":"Microsoft-Windows-Windows Firewall With Advanced Security/Firewall","computer":"DESKTOP-COGHUOH","severityValue":"INFORMATION","message":"A Windows Defender Firewall setting in the Public profile has changed."},"eventdata":{"profiles":"4","settingType":"1","settingValueSize":"4","settingValue":"00000000","settingValueString":"No","origin":"1","modifyingUser":"S-1-5-21-1176116133-684496316-159144361-1001","modifyingApplication":"C:WindowsSystem32dllhost.exe"}}} -->
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:    <description>Windows Firewall With Advanced Security: Windows Defender Firewall disabled.</description>
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  <!--  {"win":{"system":{"providerName":"Microsoft-Windows-Windows Firewall With Advanced Security","providerGuid":"{d1bc9aff-2abf-4d71-9146-ecb2a986eb85}","eventID":"2004","version":"0","level":"4","task":"0","opcode":"0","keywords":"0x8000020000000000","systemTime":"2019-11-23T00:25:36.602076300Z","eventRecordID":"3342","processID":"3708","threadID":"6636","channel":"Microsoft-Windows-Windows Firewall With Advanced Security/Firewall","computer":"DESKTOP-COGHUOH","severityValue":"INFORMATION","message":"A rule has been added to the Windows Defender Firewall exception list."},"eventdata":{"ruleId":"{BB4003C6-303B-40D9-B199-EF31729FCB5C}","ruleName":"test","origin":"1","direction":"2","protocol":"256","action":"3","profiles":"2147483647","localAddresses":"*","remoteAddresses":"*","flags":"1","active":"1","edgeTraversal":"0","looseSourceMapped":"0","securityOptions":"0","modifyingUser":"S-1-5-21-1176116133-684496316-159144361-1001","modifyingApplication":"C:WindowsSystem32mmc.exe","schemaVersion":"542","ruleStatus":"65536","localOnlyMapped":"0"}}} -->
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:    <description>Windows Firewall With Advanced Security: $(win.eventdata.ruleId) rule has been added to the Windows Defender Firewall exception list.</description>
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  <!-- {"win":{"system":{"providerName":"Microsoft-Windows-Windows Firewall With Advanced Security","providerGuid":"{d1bc9aff-2abf-4d71-9146-ecb2a986eb85}","eventID":"2005","version":"0","level":"4","task":"0","opcode":"0","keywords":"0x8000020000000000","systemTime":"2019-11-22T21:58:45.526726400Z","eventRecordID":"3336","processID":"3708","threadID":"8552","channel":"Microsoft-Windows-Windows Firewall With Advanced Security/Firewall","computer":"DESKTOP-COGHUOH","severityValue":"INFORMATION","message":"A rule has been modified in the Windows Defender Firewall exception list."},"eventdata":{"ruleId":"{AC4D5FEE-B730-487C-9D02-288E5EEE0AD5}","ruleName":"@{Microsoft.Windows.CloudExperienceHost_10.0.17763.1_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.Windows.CloudExperienceHost/resources/appDescription}","origin":"1","direction":"2","protocol":"256","action":"3","profiles":"2147483647","localAddresses":"*","remoteAddresses":"*","embeddedContext":"@{Microsoft.Windows.CloudExperienceHost_10.0.17763.1_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.Windows.CloudExperienceHost/resources/appDescription}","flags":"0","active":"0","edgeTraversal":"0","looseSourceMapped":"0","securityOptions":"0","modifyingUser":"S-1-5-21-1176116133-684496316-159144361-1001","modifyingApplication":"C:WindowsSystem32mmc.exe","schemaVersion":"541","ruleStatus":"65536","localOnlyMapped":"0"}}} -->
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:    <description>Windows Firewall With Advanced Security: $(win.eventdata.ruleId) rule has been modified in the Windows Defender Firewall exception list.</description>
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  <!-- {"win":{"system":{"providerName":"Microsoft-Windows-Windows Firewall With Advanced Security","providerGuid":"{d1bc9aff-2abf-4d71-9146-ecb2a986eb85}","eventID":"2006","version":"0","level":"4","task":"0","opcode":"0","keywords":"0x8000020000000000","systemTime":"2019-11-23T00:15:06.598777600Z","eventRecordID":"3339","processID":"3708","threadID":"1276","channel":"Microsoft-Windows-Windows Firewall With Advanced Security/Firewall","computer":"DESKTOP-COGHUOH","severityValue":"INFORMATION","message":"A rule has been deleted in the Windows Defender Firewall exception list."},"eventdata":{"ruleId":"{B86E05D6-FC64-45C3-8AA5-1DBE14CAD67A}","ruleName":"test","modifyingUser":"S-1-5-21-1176116133-684496316-159144361-1001","modifyingApplication":"C:WindowsSystem32mmc.exe"}}} -->
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:    <description>Windows Firewall With Advanced Security: $(win.eventdata.ruleId) rule has been deleted in the Windows Defender Firewall exception list.</description>
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  <rule id="67009" level="10" frequency="$MS_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:    <description>Multiple Windows Firewall With Advanced Security warning events</description>
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:  <rule id="67010" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0602-win-wfirewall_rules.xml:    <description>Multiple Windows Firewall With Advanced Security error events</description>
+/var/ossec/ruleset/rules/0605-win-mcafee_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0605-win-mcafee_rules.xml:    <field name="win.system.message">scan was cancelled |has taken too long</field>
+/var/ossec/ruleset/rules/0605-win-mcafee_rules.xml:    <description>McAfee Windows AV - Virus scan cancelled.</description>
+/var/ossec/ruleset/rules/0605-win-mcafee_rules.xml:    <field name="win.system.message">scan was canceled because</field>
+/var/ossec/ruleset/rules/0605-win-mcafee_rules.xml:    <description>McAfee Windows AV - Virus scan cancelled due to shutdown.</description>
+/var/ossec/ruleset/rules/0605-win-mcafee_rules.xml:    <field name="win.system.message">update was cancelled</field>
+/var/ossec/ruleset/rules/0605-win-mcafee_rules.xml:    <description>McAfee Windows AV - Virus program or DAT update cancelled.</description>
+/var/ossec/ruleset/rules/0605-win-mcafee_rules.xml:  <rule id="62617" level="10" frequency="$MCAFEE_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0605-win-mcafee_rules.xml:  <rule id="62618" level="10" frequency="$MCAFEE_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0610-win-ms_logs_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0610-win-ms_logs_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0610-win-ms_logs_rules.xml:  <rule id="63106" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0610-win-ms_logs_rules.xml:  <rule id="63107" level="10" frequency="$MS_FREQ" timeframe="120">
+/var/ossec/ruleset/rules/0615-win-ms-se_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0615-win-ms-se_rules.xml:  <rule id="63617" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0615-win-ms-se_rules.xml:  <rule id="63618" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0620-win-generic_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0620-win-generic_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0620-win-generic_rules.xml:  <rule id="64109" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0620-win-generic_rules.xml:  <rule id="64110" level="10" frequency="$MS_FREQ" timeframe="240">
+/var/ossec/ruleset/rules/0625-cisco-asa_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0625-cisco-asa_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0625-cisco-asa_rules.xml:  <rule id="64028" level="10" frequency="8" timeframe="360">
+/var/ossec/ruleset/rules/0625-cisco-asa_rules.xml:  <rule id="64029" level="10" frequency="8" timeframe="360">
+/var/ossec/ruleset/rules/0625-cisco-asa_rules.xml:  <rule id="64030" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0625-cisco-asa_rules.xml:  <rule id="64031" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0625-cisco-asa_rules.xml:  <rule id="64032" level="10" frequency="10" timeframe="240" ignore="90">
+/var/ossec/ruleset/rules/0625-cisco-asa_rules.xml:  <rule id="64033" level="10" frequency="10" timeframe="240">
+/var/ossec/ruleset/rules/0625-mcafee_epo_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0625-mcafee_epo_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0625-mcafee_epo_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0630-nextcloud_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0630-nextcloud_rules.xml:  <rule id="88203" level="10" frequency="8" timeframe="120">
+/var/ossec/ruleset/rules/0635-owlh-zeek_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0635-owlh-zeek_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0640-junos_rules.xml:  - Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0640-junos_rules.xml:  - Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0675-panda-paps_rules.xml:  -  Panda Advanced Protection Service (PAPS) rules
+/var/ossec/ruleset/rules/0675-panda-paps_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0675-panda-paps_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0680-checkpoint-smart1_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0680-checkpoint-smart1_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0680-checkpoint-smart1_rules.xml:        <field name="fw_action">Encrypt</field>
+/var/ossec/ruleset/rules/0680-checkpoint-smart1_rules.xml:        <description>Encrypt: Connection Encrypted</description>
+/var/ossec/ruleset/rules/0680-checkpoint-smart1_rules.xml:        <description>Key Install: Encryption keys were created.</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <field name="gcp.severity">^EMERGENCY$</field>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>GCP emergency event with source IP $(gcp.jsonPayload.sourceIP) from $(gcp.resource.labels.location) with response code $(gcp.jsonPayload.responseCode).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>GCP info event from VM $(gcp.jsonPayload.vmInstanceName) with source IP $(gcp.jsonPayload.sourceIP) from $(gcp.resource.labels.location) with response code $(gcp.jsonPayload.responseCode).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>GCP warning event from VM $(gcp.jsonPayload.vmInstanceName) with source IP $(gcp.jsonPayload.sourceIP) from $(gcp.resource.labels.location) with response code $(gcp.jsonPayload.responseCode).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>GCP notice event from VM $(gcp.jsonPayload.vmInstanceName) with source IP $(gcp.jsonPayload.sourceIP) from $(gcp.resource.labels.location) with response code $(gcp.jsonPayload.responseCode).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>GCP error event from VM $(gcp.jsonPayload.vmInstanceName) with source IP $(gcp.jsonPayload.sourceIP) from $(gcp.resource.labels.location) with response code $(gcp.jsonPayload.responseCode).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>GCP critical event from VM $(gcp.jsonPayload.vmInstanceName) with source IP $(gcp.jsonPayload.sourceIP) from $(gcp.resource.labels.location) with response code $(gcp.jsonPayload.responseCode).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>GCP alert event from VM $(gcp.jsonPayload.vmInstanceName) with source IP $(gcp.jsonPayload.sourceIP) from $(gcp.resource.labels.location) with response code $(gcp.jsonPayload.responseCode).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <field name="gcp.severity">^EMERGENCY$</field>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>GCP emergency event from VM $(gcp.jsonPayload.vmInstanceName) with source IP $(gcp.jsonPayload.sourceIP) from $(gcp.resource.labels.location) with response code $(gcp.jsonPayload.responseCode).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <field name="gcp.jsonPayload.responseCode">^BADTRUNC$</field>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>Bad truncation with source IP $(gcp.jsonPayload.sourceIP) from $(gcp.resource.labels.location), severity $(gcp.severity).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:  <!-- Persistence gcp_service_account created -->
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:  <!-- Persistence gcp_key_created_for_service_account -->
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:  <!-- Persistence gcp_iam_service_account_key deletion -->
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <field name="gcp.severity">^EMERGENCY$</field>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <description>GCP emergency event on project $(gcp.resource.labels.project_id), monitored resource type: $(gcp.resource.type).</description>
+/var/ossec/ruleset/rules/0690-gcp_rules.xml:    <field name="gcp.jsonPayload.rule_details.reference" type="pcre2">^(?!^$).*</field>
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:  <!-- 01010343 : Syncookie SW mode activated, server = %A:%d -->
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:  <!-- 01010038 : Syncookie counter %d exceeded vip threshold %u for virtual = %A:%d -->
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:  <!-- 01010240 : Syncookie HW mode activated, server = %A:%d, HSB modId = %d -->
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:    <description>F5 BigIP: Detected a syncookie DOS attack. Activated hardware syncookie protection mode on the HSB.</description>
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:  <!-- 01010241 : Syncookie HW mode exited, server = %A:%d, HSB modId = %d from %s. -->
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:    <description>F5 BigIP: Syncookie DOS attack has stopped.</description>
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:  <!-- 01010056 : Syncookie counter %d exceeded vip threshold %u for virtual = %s -->
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:    <description>F5 BigIP: Syncookie counter exceeded vip threshold. This is due to a normal spike in traffic or an attack.</description>
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:  <!-- 01010344 : Syncookie SW mode exited, server = %A:%d -->
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:    <description>F5 BigIP: Mcpd has detected that sync traffic is being sent over a VLAN that is not the correct one.</description>
+/var/ossec/ruleset/rules/0695-f5_bigip_rules.xml:    <description>F5 BigIP: The HAL daemon might not be able to correctly identify the platform or publish the hardware abstraction configuration at startup, or has encountered a critical failure during normal operation.</description>
+/var/ossec/ruleset/rules/0700-paloalto_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0705-sophos_fw_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0705-sophos_fw_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0715-freepbx_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0715-freepbx_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0750-github_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0750-github_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- dependency_graph
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action" type="osregex">^dependency_graph.\.*</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Dependency graph.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_dependency_graph</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- dependency_graph.disable -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">dependency_graph.disable</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Dependency graph disable.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_dependency_graph</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- dependency_graph.enable -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">dependency_graph.enable</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Dependency graph enable.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_dependency_graph</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- dependency_graph_new_repos
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action" type="osregex">^dependency_graph_new_repos.\.*</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Dependency graph new repos.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_dependency_graph_new_repos</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- dependency_graph_new_repos.disable -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">dependency_graph_new_repos.disable</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Dependency graph new repos disable.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_dependency_graph_new_repos</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- dependency_graph_new_repos.enable -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">dependency_graph_new_repos.enable</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Dependency graph new repos enable.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_dependency_graph_new_repos</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:            advanced_security_policy_selected_member_disabled
+/var/ossec/ruleset/rules/0750-github_rules.xml:            advanced_security_policy_selected_member_enabled
+/var/ossec/ruleset/rules/0750-github_rules.xml:            cancel_invitation
+/var/ossec/ruleset/rules/0750-github_rules.xml:            update_new_repository_default_branch_setting
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- org.advanced_security_policy_selected_member_disabled -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">org.advanced_security_policy_selected_member_disabled</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Organization advanced security policy selected member disabled.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- org.advanced_security_policy_selected_member_enabled -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">org.advanced_security_policy_selected_member_enabled</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Organization advanced security policy selected member enabled.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- org.cancel_invitation -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">org.cancel_invitation</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Organization cancel invitation.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- org.update_new_repository_default_branch_setting -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">org.update_new_repository_default_branch_setting</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Organization update new repository default branch setting.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action" type="osregex">^protected_branch.\.*</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.create -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.create</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch create.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.destroy -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.destroy</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch destroy.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.update_admin_enforced -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.update_admin_enforced</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch update admin enforced.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.update_require_code_owner_review -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.update_require_code_owner_review</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch update require code owner review.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.dismissal_restricted_users_teams -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.dismissal_restricted_users_teams</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch dismissal restricted users teams.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.dismiss_stale_reviews -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.dismiss_stale_reviews</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch dismiss stale reviews.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.update_signature_requirement_enforcement_level -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.update_signature_requirement_enforcement_level</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch update signature requirement enforcement level.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.update_pull_request_reviews_enforcement_level -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.update_pull_request_reviews_enforcement_level</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch update pull request reviews enforcement level.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.update_required_status_checks_enforcement_level -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.update_required_status_checks_enforcement_level</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch update required status checks enforcement level.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.update_strict_required_status_checks_policy -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.update_strict_required_status_checks_policy</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch update strict required status checks policy.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.rejected_ref_update -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.rejected_ref_update</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch rejected ref update.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.policy_override -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.policy_override</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch policy override.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.update_allow_force_pushes_enforcement_level -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.update_allow_force_pushes_enforcement_level</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch update allow force pushes enforcement level.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.update_allow_deletions_enforcement_level -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.update_allow_deletions_enforcement_level</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch update allow deletions enforcement level.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- protected_branch.update_linear_history_requirement_enforcement_level -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">protected_branch.update_linear_history_requirement_enforcement_level</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Protected branch update linear history requirement enforcement level.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_protected_branch</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:            advanced_security_disabled
+/var/ossec/ruleset/rules/0750-github_rules.xml:            advanced_security_enabled
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- repo.advanced_security_disabled -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">repo.advanced_security_disabled</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Repo advanced security disabled.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- repo.advanced_security_enabled -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">repo.advanced_security_enabled</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Repo advanced security enabled.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- repository_dependency_graph
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action" type="osregex">^repository_dependency_graph.\.*</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Repository dependency graph.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_repository_dependency_graph</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- repository_dependency_graph.disable -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">repository_dependency_graph.disable</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Repository dependency graph disable.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_repository_dependency_graph</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- repository_dependency_graph.enable -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">repository_dependency_graph.enable</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Repository dependency graph enable.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <group>git_repository_dependency_graph</group>
+/var/ossec/ruleset/rules/0750-github_rules.xml:            sponsor_sponsorship_cancel
+/var/ossec/ruleset/rules/0750-github_rules.xml:            sponsor_sponsorship_preference_change
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- sponsors.sponsor_sponsorship_cancel -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">sponsors.sponsor_sponsorship_cancel</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Sponsors sponsorship cancel.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- sponsors.sponsor_sponsorship_preference_change -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">sponsors.sponsor_sponsorship_preference_change</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Sponsors sponsorship preference change.</description>
+/var/ossec/ruleset/rules/0750-github_rules.xml:            cancel_workflow_run
+/var/ossec/ruleset/rules/0750-github_rules.xml:    <!-- workflows.cancel_workflow_run -->
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <field name="github.action">workflows.cancel_workflow_run</field>
+/var/ossec/ruleset/rules/0750-github_rules.xml:        <description>GitHub Workflows cancel workflow run.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0755-office365_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            ComplianceDLPSharePoint
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            ComplianceDLPExchange
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            SecurityComplianceCenterEOPCmdlet
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            ThreatIntelligence
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            ComplianceDLPSharePointClassification
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            DataGovernance
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            SecurityComplianceAlerts
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            ThreatIntelligenceUrl
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            SecurityComplianceInsights
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            ThreatIntelligenceAtpContent
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            ComplianceSupervisionExchange
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            CustomerKeyServiceEncryption
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            SecurityComplianceRBAC
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            SecurityComplianceUserChange
+/var/ossec/ruleset/rules/0755-office365_rules.xml:            ComplianceDLPExchangeClassification
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>ComplianceDLPSharePoint,hipaa_164.312.a.1,hipaa_164.312.b,hipaa_164.312.c.1,pci_dss_10.6.1,pci_dss_11.5</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>ComplianceDLPExchange,hipaa_164.312.a.1,hipaa_164.312.b,hipaa_164.312.c.1,pci_dss_10.6.1,pci_dss_11.5</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Admin actions from the Security and Compliance Center.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>SecurityComplianceCenterEOPCmdlet,hipaa_164.312.b,pci_dss_10.2.2,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Events for eDiscovery activities performed by running content searches and managing eDiscovery cases in the Security and Compliance Center.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>ThreatIntelligence,hipaa_164.312.b,pci_dss_5.3,pci_dss_6.1,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Advanced eDiscovery events.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>ComplianceDLPSharePointClassification,hipaa_164.312.b,pci_dss_10.6.2</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Events related to retention policies and retention labels in the Security and Compliance Center.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>DataGovernance,hipaa_164.312.b,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Security and compliance alert signals.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>SecurityComplianceAlerts,hipaa_164.312.b,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>ThreatIntelligenceUrl,hipaa_164.312.b,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Events related to insights and reports in the Office 365 security and compliance center.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>SecurityComplianceInsights,hipaa_164.312.b,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>ThreatIntelligenceAtpContent,hipaa_164.312.b,pci_dss_5.3,pci_dss_6.1,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Automated incident response (AIR) events.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Events tracked by the Communication compliance offensive language model.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>ComplianceSupervisionExchange,hipaa_164.312.b,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Events related to the customer key encryption service.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>CustomerKeyServiceEncryption,hipaa_164.312.a.1,hipaa_164.312.a.2.I,hipaa_164.312.a.2.IV,hipaa_164.312.b,hipaa_164.312.e.2.II,pci_dss_3.5.4,pci_dss_4.1,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Security and compliance RBAC events.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>SecurityComplianceRBAC,hipaa_164.312.b,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Threat intelligence events in Microsoft Defender for Office 365.</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>SecurityComplianceUserChange,hipaa_164.312.a.2.I,pci_dss_8.1.2,pci_dss_10.6.1</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <group>ComplianceDLPExchangeClassification,hipaa_164.312.a.1,hipaa_164.312.b,hipaa_164.312.c.1,pci_dss_10.6.1,pci_dss_11.5</group>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <field name="office365.Operation" type="osregex">^Add service principal credentials.$</field>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        <description>Office 365: Added credentials to a service principal</description>
+/var/ossec/ruleset/rules/0755-office365_rules.xml:        Advanced Detections
+/var/ossec/ruleset/rules/0755-office365_rules.xml:    <rule id="91724" level="10" frequency="100" timeframe="60" ignore="30">
+/var/ossec/ruleset/rules/0770-gitlab_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0775-arbor_rules.xml:  -  Created by Wazuh, Inc. <support@wazuh.com>.
+/var/ossec/ruleset/rules/0775-arbor_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0780-fireeye_rules.xml:  -  Created by Wazuh, Inc. <support@wazuh.com>.
+/var/ossec/ruleset/rules/0780-fireeye_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0780-fireeye_rules.xml:Aug 25 17:22:01 usa001 cef: CEF:0|fireeye|hx|3.5.1|IOC Hit Found|IOC Hit Found|10|rt=Aug 25 2017 17:22:01 UTC dvchost=usa001 categoryDeviceGroup=/IDS categoryDeviceType=Forensic Investigation categoryObject=/Host cs1Label=Host Agent Cert Hash cs1=DOdxxxuqM dst=192.168.1.2 dmac=d8-d0-d3-d8-d8-d8 dhost=XXXXXXXXXX-XX dntdom=NA deviceCustomDate1Label=Agent Last Audit deviceCustomDate1=Aug 25 2017 17:18:04 UTC cs2Label=FireEye Agent Version cs2=21.33.7 cs5Label=Target GMT Offset cs5=-PT4H cs6Label=Target OS cs6=Windows 7 Enterprise 7601 Service Pack 1 externalId=82xxx51 start=Aug 25 2017 17:17:34 UTC categoryOutcome=/Success categorySignificance=/Compromise categoryBehavior=/Found cs7Label=Resolution cs7=ALERT cs8Label=Alert Types cs8=exc act=Detection IOC Hit msg=Host XXXXXXXXXX-XX IOC compromise alert categoryTupleDescription=A Detection IOC found a compromise indication. cs4Label=IOC Name cs4=MALICIOUS SCRIPT CONTENT A (METHODOLOGY) categoryTechnique=Alert
+/var/ossec/ruleset/rules/0780-fireeye_rules.xml:Aug 26 02:51:57 usa001 cef[16323]: CEF:0|fireeye|hx|3.5.1|ExD Hit Found|ExD Hit Found|10|rt=Aug 26 2017 02:51:57 UTC dvchost=usa001 categoryDeviceGroup=/IDS categoryDeviceType=Exploit Detection categoryObject=/Host cs1Label=Host Agent Cert Hash cs1=fUKxxxwqs dst=192.168.1.2 dmac=d8-d5-d9-d2-d9-dd dhost=XXXXXXXXXX-XX dntdom=NA deviceCustomDate1Label=Agent Last Audit deviceCustomDate1=Aug 26 2017 02:51:52 UTC cs2Label=FireEye Agent Version cs2=21.33.7 cs5Label=Target GMT Offset cs5=-PT3H cs6Label=Target OS cs6=Windows 7 Enterprise 7601 Service Pack 1 externalId=83xxx12 start=Aug 26 2017 02:50:32 UTC categoryOutcome=/Success categorySignificance=/Compromise categoryBehavior=/Found cs7Label=Resolution cs7=ALERT cs8Label=Alert Types cs8=xplt act=Detection ExD Hit msg=Host XXXXXXXXXX-XX ExD compromise alert categoryTupleDescription=ExD found a compromise indication. cs4Label=Process Name cs4=chrome.exe categoryTechnique=Exploit
+/var/ossec/ruleset/rules/0780-fireeye_rules.xml:Aug 26 02:48:33 uk001 cef[20526]: CEF:0|fireeye|hx|3.5.1|FireEye Acquisition Started|FireEye Acquisition Started|0|rt=Aug 26 2017 02:48:33 UTC dvchost=uk001 categoryDeviceGroup=/IDS/Application/Service categoryDeviceType=Forensic Investigation categoryObject=/Host cs1Label=Host Agent Cert Hash cs1=0f0xxxEcw dst=192.168.1.2 dmac=d4-db-d5-d2-df-d1 dhost=XXXXXXXXXX-XX dntdom=NA deviceCustomDate1Label=Agent Last Audit deviceCustomDate1=Aug 24 2017 23:11:09 UTC cs2Label=FireEye Agent Version cs2=21.33.7 cs5Label=Target GMT Offset cs5=+PT8H cs6Label=Target OS cs6=Windows 7 Enterprise 7601 Service Pack 1 externalId=20xxx56 cs3Label=Script Name cs3=Custom Acquisition categoryOutcome=/Success categorySignificance=/Informational categoryBehavior=/Create act=Acquisition Status msg=Host XXXXXXXXXX-XX Custom Acquisition started categoryTupleDescription=A Host Acquisition was successfully started.
+/var/ossec/ruleset/rules/0785-huawei-usg_rules.xml:  -  Wazuh, Inc. <support@wazuh.com>.
+/var/ossec/ruleset/rules/0785-huawei-usg_rules.xml:  -  Copyright (C)  2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0785-huawei-usg_rules.xml:    <description>Huawei USG emergency message.</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Scripting interpreter spawned Windows command shell instance</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Powershell process spawned Windows command shell instance</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <field name="win.eventdata.commandLine" type="pcre2">(?i)Set-MpPreference</field>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Powershell process spawned powershell instance</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <field name="win.eventdata.originalFileName" type="pcre2">(?i)(SystemPropertiesAdvanced|net)\.EXE</field>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Netsh used to add firewall rule referencing port 5900, usually used for VNC</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Detected a suspicious process launched with a jscript engine signature</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <field name="win.eventdata.commandLine" type="pcre2">(?i)powershell\.exe.+\-\b(encodedcommand|e|ea|ec|encodeda|encode|en|enco)\b</field>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Powershell.exe spawned a powershell process which executed a base64 encoded command</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Application Compatibility Database launched</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <field name="win.eventdata.parentCommandLine" type="pcre2">(?i)powershell\.exe.+\-(encodedcommand|e|ea|ec|encodeda|encode|en|enco)</field>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Possible Shimming. Application Compatibility Database launched from an encoded powershell command</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Windows backup and restore tool $(win.eventdata.originalFileName) launched via $(win.eventdata.parentImage) with $(win.eventdata.integrityLevel) integrity level</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Powershell launched with a $(win.eventdata.integrityLevel) integrity level by $(win.eventdata.parentImage)</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Powershell.exe launched by binary $(win.eventdata.parentImage) in a suspicious location</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>$(win.eventdata.image) binary in a suspicious location launched by $(win.eventdata.parentImage)</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>$(win.eventdata.image) launched by $(win.eventdata.parentImage) executed a compressed file creation command</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <field name="win.eventdata.commandLine" type="pcre2">(?i)powershell\.exe.+\-(encodedcommand|e|ea|ec|encodeda|encode|en|enco)</field>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>A powershell process created by WMI executed a base64 encoded command</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>$(win.eventdata.originalFileName) launched with commands to create a binary file</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>$(win.eventdata.originalFileName) launched with commands to create a binary file</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <description>Rundll32 executing suspicious .lock file, possible persistence tactic</description>
+/var/ossec/ruleset/rules/0810-sysmon_id_3.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0820-sysmon_id_7.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0820-sysmon_id_7.xml:    <field name="win.eventdata.image" type="pcre2" negate="yes">(?i)(devenv|node|SSMS|VSLauncher)\.exe$</field>
+/var/ossec/ruleset/rules/0830-sysmon_id_11.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0840-win_event_channel.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0850-audit_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0860-sysmon_id_13.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0860-sysmon_id_13.xml:    <field name="win.eventdata.details" type="pcre2">(?i)(VNC|tvnserver\.exe)</field>
+/var/ossec/ruleset/rules/0860-sysmon_id_13.xml:    <description>Evidence of new service creation found in registry under $(win.eventdata.targetObject) binary is: $(win.eventdata.details)</description>
+/var/ossec/ruleset/rules/0860-sysmon_id_13.xml:    <description>Possible COM Hijacking evidence found in registry under $(win.eventdata.targetObject) binary is: $(win.eventdata.details)</description>
+/var/ossec/ruleset/rules/0860-sysmon_id_13.xml:    <description> COM Hijacking evidence found in registry under $(win.eventdata.targetObject) suspicious binary is: $(win.eventdata.details)</description>
+/var/ossec/ruleset/rules/0870-sysmon_id_8.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0870-sysmon_id_8.xml:    <field name="win.eventdata.targetImage" type="pcre2">(?i)(synchost\.exe|svchost\.exe)</field>
+/var/ossec/ruleset/rules/0900-firewall_rules.xml:  -  Updated by Wazuh, Inc.
+/var/ossec/ruleset/rules/0900-firewall_rules.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0900-firewall_rules.xml:  -  Copyright (C) 2009 Trend Micro Inc.
+/var/ossec/ruleset/rules/0900-firewall_rules.xml:  <rule id="4151" level="10" frequency="18" timeframe="45" ignore="240">
+/var/ossec/ruleset/rules/0905-cisco-ftd_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0905-cisco-ftd_rules.xml:  <rule id="91526" level="10" frequency="8" timeframe="360">
+/var/ossec/ruleset/rules/0905-cisco-ftd_rules.xml:  <rule id="91527" level="10" frequency="8" timeframe="360">
+/var/ossec/ruleset/rules/0905-cisco-ftd_rules.xml:  <rule id="91528" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0905-cisco-ftd_rules.xml:  <rule id="91529" level="10" frequency="10" timeframe="120">
+/var/ossec/ruleset/rules/0910-ms-exchange-proxylogon_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0910-ms-exchange-proxylogon_rules.xml:  Reference:
+/var/ossec/ruleset/rules/0910-ms-exchange-proxylogon_rules.xml:    Exploitation can be identified by searching for log entries where the AuthenticatedUser is empty and the AnchorMailbox contains the pattern of ServerInfo~*/*
+/var/ossec/ruleset/rules/0915-win-powershell_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0915-win-powershell_rules.xml:    <field name="win.eventdata.scriptBlockText" type="pcre2">(?i)Set-WmiInstance</field>
+/var/ossec/ruleset/rules/0915-win-powershell_rules.xml:    <description>Powershell executed "Set-WmiInstance". Possible creation or update of a WMI instance</description>
+/var/ossec/ruleset/rules/0915-win-powershell_rules.xml:    <field name="win.eventdata.scriptBlockText" type="pcre2">(?i)Text\.Encoding</field>
+/var/ossec/ruleset/rules/0915-win-powershell_rules.xml:    <description>Powershell executed a creation or update of a WMI instance with encoded values</description>
+/var/ossec/ruleset/rules/0920-oracledb_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0925-eset-remote_rules.xml:  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0925-eset-remote_rules.xml:  The reference below shows some events, their main parts and their different log types.
+/var/ossec/ruleset/rules/0925-eset-remote_rules.xml:  Reference: https://help.eset.com/protect_admin/81/en-US/events-exported-to-json-format.html
+/var/ossec/ruleset/rules/0935-cloudflare-waf_rules.xml:    Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0945-sysmon_id_10.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0945-sysmon_id_10.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0950-sysmon_id_20.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0950-sysmon_id_20.xml:  -  Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0950-sysmon_id_20.xml:        <description>WmiConsumerEvent created, possible persistence tactic</description>
+/var/ossec/ruleset/rules/0950-sysmon_id_20.xml:        <description>WmiConsumerEvent created, possible persistence tactic using command-executing binaries</description>
+/var/ossec/ruleset/rules/0955-WEF-baseline_rules.xml:    Copyright (C) 2015, Wazuh Inc.
+/var/ossec/ruleset/rules/0990-amazon-security-lake_rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0990-amazon-security-lake_rules.xml:  -  Copyright (C) 2023, Wazuh Inc.
+/var/ossec/ruleset/rules/0990-amazon-security-lake_rules.xml:  <rule id="99021" level="3" frequency="5" timeframe="120">
+/var/ossec/ruleset/rules/0990-amazon-security-lake_rules.xml:  <rule id="99027" level="12" frequency="15" timeframe="300">
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:  -  Copyright (C) 2023, InfoDefense Inc.
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:<!--Alerts&Incidents 99501-99650-->
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <field name="ms-graph.relationship">incidents</field>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: Incident related events.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: The alert/incident has not been resolved and is not a false positive.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:<!--Alerts&Incidents/Unknowns 99506-99515-->
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:<!--Alerts&Incidents/Severity 99516-99520-->
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: Behaviors and indicators that might be a part of an advanced persistent threat (APT) were detected. This includes observed behaviors typical of attack stages, anomalous registry change, execution of suspicious files, and so forth.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: Behaviors and indicators that are commonly associated with advanced persistent threats (APT) activity were detected. There is a high risk of severe damage to affected assets. Requires immediate action.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:<!--Alerts&Incidents/Category 99521-99605-->
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: Indicators that the system is potentially experiencing intrusion attempts have been detected. This alert is commonly caused by phishing emails. Check the system for signs of infection.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <field name="ms-graph.category">Persistence</field>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: Indicators that the system is potentially experiencing persistence establishment attempts have been detected. Check the system for signs of infection.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <field name="ms-graph.category">Persistence</field>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: Indicators that the system is affected by persistence establishment attempts have been detected. This alert usually originates from common malware and threats, rather than APT activity. Check the system for signs of infection.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <field name="ms-graph.category">Persistence</field>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: Indicators that the system is affected by persistence establishment attempts have been detected. This alert may be indicative of an APT.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <field name="ms-graph.category">Persistence</field>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: Indicators that the system is affected by persistence establishment attempts have been detected. This alert is very likely to indicate an APT.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:<!--Alerts&Incidents/Determination 99606-99630-->
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: An advanced persistent threat (APT) has been detected in the environment. This is a true positive alert. Requires immediate action.</description>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:<!--Alerts&Incidents/Classification&Status 99631-99635-->
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:<!--End of Alerts&Incidents -->
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <field name="ms-graph.relationship">servicePrincipalRiskDetections</field>
+/var/ossec/ruleset/rules/0995-microsoft-graph_rules.xml:        <description>MS Graph message: Service principal risk detection event.</description>
+/var/ossec/ruleset/rules/0997-maltiverse_rules.xml:        <description>Maltiverse: Alert Software $(threat.software.name) - Detected IoC $(threat.indicator.name) of type $(threat.indicator.type) with [$(threat.indicator.confidence)] that is related to $(threat.software.id)-$(threat.software.name) software known attack.</description>
+/var/ossec/ruleset/rules/0997-maltiverse_rules.xml:    <!-- threat indicator confidence high, medium or low -->
+/var/ossec/ruleset/rules/0997-maltiverse_rules.xml:        <field name="threat.indicator.confidence">Low|Medium|High</field>
+/var/ossec/ruleset/rules/0997-maltiverse_rules.xml:        <description>Maltiverse: Alert Indicator $(threat.indicator.name) - Detected IoC of type $(threat.indicator.type) with [$(threat.indicator.confidence)] confidence.</description>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:  -  Copyright (C) 2024, Wazuh Inc.
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Account.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^ACM.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^APIGateway.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^AppSync.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <description>AWS Security Hub - AWS AppSync controls group.</description>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^AutoScaling.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^CloudFront.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^CloudTrail.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^CloudWatch.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^CodeBuild.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^DMS.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^DocumentDB.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^EC2.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^ECR.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^ECS.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^EKS.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^ElastiCache.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^ElasticBeanstalk.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^EMR.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^ES.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^GuardDuty.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^IAM.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^KMS.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Lambda.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Macie.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Neptune.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Opensearch.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^RDS.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Redshift.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^S3.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^SageMaker.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^SSM.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^WAF.\d+</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^CloudTrail.6$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <group>cis_aws_foundations_benchmark_2.3,cis_aws_foundations_benchmark_3.3,</group>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^CodeBuild.1$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^CodeBuild.2$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^DMS.1$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <description>AWS Security Hub - Database Migration Service replication instance is public.</description>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^DocumentDB.3$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^EC2.1$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^EC2.19$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^EMR.2$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^ES.2$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^IAM.4$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <group>pci_dss_2.1,pci_dss_2.2,pci_dss_7.2.1,cis_aws_foundations_benchmark_1.12,cis_aws_foundations_benchmark_1.4,nist_800_53_AC.2,nist_800_53_AC.3,nist_800_53_AC.6,</group>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^IAM.6$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <group>pci_dss_8.3.1,cis_aws_foundations_benchmark_1.14,cis_aws_foundations_benchmark_1.6,nist_800_53_AC.2,nist_800_53_AC.3,nist_800_53_IA.2,</group>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^IAM.9$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <group>pci_dss_8.3.1,cis_aws_foundations_benchmark_1.13,cis_aws_foundations_benchmark_1.5,nist_800_53_AC.2,nist_800_53_AC.3,nist_800_53_IA.2,</group>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^KMS.3$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Lambda.1$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <description>AWS Security Hub - Lambda function policies allow public access.</description>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Neptune.3$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Opensearch.2$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^RDS.1$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^RDS.2$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <description>AWS Security Hub - Amazon RDS instance is publicly accessible.</description>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^Redshift.1$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^S3.2$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^S3.3$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^S3.19$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^SSM.4$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^EC2.9$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <description>AWS Security Hub - Amazon EC2 Instance uses a public IPv4 address.</description>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.SecurityControlId">^S3.8$</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <field name="aws.finding.Compliance.Status">FAILED</field>
+/var/ossec/ruleset/rules/0998-aws-security-hub-rules.xml:    <group>cis_aws_foundations_benchmark_2.1.5,nist_800_53_AC.3,nist_800_53_AC.4,nist_800_53_AC.6,nist_800_53_AC.21,nist_800_53_SC.7,</group>
+/var/ossec/ruleset/rules/0999-malicious-ioc-rules.xml:  -  Created by Wazuh, Inc.
+/var/ossec/ruleset/rules/0999-malicious-ioc-rules.xml:  -  Copyright (C) 2025, Wazuh Inc.
+/var/ossec/ruleset/rules/0999-malicious-ioc-rules.xml:    <!-- The if_sid tag references the built-in FIM rules -->

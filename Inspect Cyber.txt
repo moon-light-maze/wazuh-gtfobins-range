@@ -1,0 +1,3054 @@
+
+Inspect Cyber
+
+User Guide
+Welcome
+Basics
+Evaluation Configuration
+Dataset Processing
+Configuration Validation
+Project Structure
+Examples
+Cybench (CTFs)
+Doomla! (Cyber Range)
+On this page
+Evaluations
+Variants
+Sandboxes
+Report an issue
+Basics
+Evaluation Configuration
+Evaluation Configuration
+Creating an evaluation using Inspect Cyber involves writing two configuration files.
+
+Configuration File	Name	Description
+Evaluation	eval.yaml or eval.yml	Details of the evaluation (see Evaluations).
+Sandbox	Depends on the sandbox type (see Sandboxes).	Specifications of the sandbox environment, including its services and how they’re networked together.
+The following sections describe the contents of each file in more detail.
+
+Evaluations
+Attribute	Description	Required
+name	The name of the evaluation. This will be represented in the Inspect sample metadata as “eval_name”.	•
+sandbox	The sandbox environment to use for the evaluation. Any sandbox environment compatible with Inspect can be used.	
+files	A dictionary of files to be copied into the sandbox environment. The keys are the destination file paths and the values are the source file paths relative to the evaluation configuration file. By default, files are copied into the default (agent) sandbox environment, but they can optionally include a prefix indicating a different sandbox environment into which they should be copied (e.g., victim:/root/flag.txt).	
+setup	Path to a shell script to be executed within the default service after files have been copied into the environment.	
+flag	The correct flag for the evaluation, used to grade the agent’s submission.	
+metadata	Metadata about the evaluation. This is copied directly into the sample metadata.	
+variants	A dictionary of variants. Keys are added to the sample metadata as “variant_name”. Values are described in the following section. An evaluation must have at least one variant.	•
+Warning
+Files are copied before the setup script is run but after sandbox native events, like Docker entrypoints. Avoid referencing files in Docker entrypoints or writing to files which will be overwritten by the evaluation configuration file. Use the setup script instead if needed.
+
+Variants
+Variants allow for the creation of multiple samples for a single evaluation. Each variant is converted into a Sample. The attributes of a variant are provided below. Note that all of the attributes other than name overlap with the attributes of an evaluation. By default, variants inherit the attribute values of the evaluation to which they belong. However, if attributes are set at the variant level, they override the ones set at the evaluation level.
+
+In theory, this allows for combining vastly different samples under the same evaluation. In practice, it is usually recommended to only group variants into the same evaluation if they share some attributes. For example, variants are often useful for experimenting with different prompts for the same evaluation. They are also useful for supporting the same evaluation on multiple sandbox types (e.g., Docker and Kubernetes) or making minor changes to a sandbox environment (e.g., adding protections to a vulnerable service). It is up to the user to decide how to organise their evaluations and variants.
+
+Attribute	Description	Required
+prompt	Prompt to provide as the first user message to the agent.	•
+sandbox	The sandbox environment to use for the variant. Any sandbox environment compatible with Inspect can be used.	
+files	(Same as above.)	
+setup	(Same as above.)	
+flag	The correct flag for the variant, used to grade the agent’s submission.	
+metadata	Metadata about the variant. This is copied directly into the sample metadata. Overlapping fields with evaluation metadata are overwritten.	
+Note
+Although sandbox is not required at the evaluation or variant level, at least one of them must have it. In other words, every variant needs a sandbox. So if it is not provided at the variant level and there is none to inherit from the evaluation, an error will be thrown.
+
+Sandboxes
+The essence of an agentic cyber eval is the environment in which the agent is placed. Sandboxing is the process of setting up that environment.
+
+Sandboxes have two attributes.
+
+Attribute	Description	Required
+type	The type of the sandbox environment.	•
+config	Path to a config file for the sandbox environment.	•
+There are multiple sandbox environment types: Inspect natively supports Docker; other developers have implemented support for Kubernetes and Proxmox; and users who wish to use other environment types can implement support for them.
+
+The description of the sandbox environment, including its services and how they’re networked together, will be in the config file. Inspect Cyber is agnostic to the name and kind of the sandbox configuration file; it simply requires a path to it. Configuration files for Docker are typically named compose.yaml and ones for Kubernetes are usually helm-values.yaml, though this it isn’t required to follow this practice. A Docker sandbox configuration file for a basic evaluation involving only two services – the agent and a victim server – might look something like this:
+
+compose.yaml
+services:
+  default:
+    image: ubuntu:latest
+    command: tail -f /dev/null
+    init: true
+  victim:
+    image: victim:1.0.0
+    init: true
+
+See the Examples section for more examples of sandbox configurations.
+
+Welcome
+Dataset Processing
+UK AI Security Institute
+
+Code
+
+License
+
+Issues
+
+
+Inspect AI
+
+User Guide
+Reference
+Extensions
+Evals
+Changelog
+Basics
+Welcome
+Tutorial
+Options
+Log Viewer
+VS Code
+Components
+Tasks
+Datasets
+Solvers
+Scorers
+Models
+Using Models
+Providers
+Caching
+Batch Mode
+Multimodal
+Reasoning
+Structured Output
+Tools
+Tool Basics
+Standard Tools
+MCP Tools
+Custom Tools
+Sandboxing
+Tool Approval
+Agents
+Using Agents
+ReAct Agent
+Multi Agent
+Custom Agents
+Agent Bridge
+Human Agent
+Analysis
+Log Files
+Log Dataframes
+Advanced
+Eval Sets
+Errors & Limits
+Typing
+Tracing
+Parallelism
+Interactivity
+Extensions
+On this page
+Overview
+Task Basics
+Parameters
+Solvers
+Task Cleanup
+Task Reuse
+Packaging
+Exploratory
+Report an issue
+Components
+Tasks
+Tasks
+Overview
+This article documents both basic and advanced use of Inspect tasks, which are the fundamental unit of integration for datasets, solvers, and scorers. The following topics are explored:
+
+Task Basics describes the core components and options of tasks.
+Parameters covers adding parameters to tasks to make them flexible and adaptable.
+Solvers describes how to create tasks that can be used with many different solvers.
+Task Reuse documents how to flexibly derive new tasks from existing task definitions.
+Packaging illustreates how you can distribute tasks within Python packages.
+Exploratory provides guidance on doing exploratory task and solver development.
+Task Basics
+Tasks provide a recipe for an evaluation consisting minimally of a dataset, a solver, and a scorer (and possibly other options) and is returned from a function decorated with @task. For example:
+
+from inspect_ai import Task, task
+from inspect_ai.dataset import json_dataset
+from inspect_ai.scorer import model_graded_fact
+from inspect_ai.solver import chain_of_thought, generate
+
+@task
+def security_guide():
+    return Task(
+        dataset=json_dataset("security_guide.json"),
+        solver=[chain_of_thought(), generate()],
+        scorer=model_graded_fact()
+    )
+
+For convenience, tasks always define a default solver. That said, it is often desirable to design tasks that can work with any solver so that you can experiment with different strategies. The Solvers section below goes into depth on how to create tasks that can be flexibly used with any solver.
+
+Task Options
+While many tasks can be defined with only a dataset, solver, and scorer, there are lots of other useful Task options. We won’t describe these options in depth here, but rather provide a list along with links to other sections of the documentation that cover their usage:
+
+Option	Description	Docs
+epochs	Epochs to run for each dataset sample.	Epochs
+setup	Setup solver(s) to run prior to the main solver.	Sample Setup
+cleanup	Cleanup function to call at task completion	Task Cleanup
+sandbox	Sandbox configuration for un-trusted code execution.	Sandboxing
+approval	Approval policy for tool calls.	Tool Approval
+metrics	Metrics to use in place of scorer metrics.	Scoring Metrics
+model	Model for evaluation (note that model is typically specified by eval rather than in the task)	Models
+config	Config for model generation (also typically specified in eval).	Generate Config
+fail_on_error	Failure tolerance for samples.	Sample Failure
+message_limit
+token_limit
+time_limit
+working_limit	Limits to apply to sample execution.	Sample Limits
+name
+version
+metadata	Eval log attributes for task.	Eval Logs
+You by and large don’t need to worry about these options until you want to use the features they are linked to.
+
+Parameters
+Task parameters make it easy to run variants of your task without changing its source code. Task parameters are simply the arguments to your @task decorated function. For example, here we provide parameters (and default values) for system and grader prompts, as well as the grader model:
+
+security.py
+from inspect_ai import Task, task
+from inspect_ai.dataset import example_dataset
+from inspect_ai.scorer import model_graded_fact
+from inspect_ai.solver import generate, system_message
+
+@task
+def security_guide(
+    system="devops.txt", 
+    grader="expert.txt",
+    grader_model="openai/gpt-4o"
+):
+   return Task(
+      dataset=example_dataset("security_guide"),
+      solver=[system_message(system), generate()],
+      scorer=model_graded_fact(
+          template=grader, model=grader_model
+      )
+   )
+
+Let’s say we had an alternate system prompt in a file named "researcher.txt". We could run the task with this prompt as follows:
+
+inspect eval security.py -T system="researcher.txt"
+
+The -T CLI flag is used to specify parameter values. You can include multiple -T flags. For example:
+
+inspect eval security.py \
+   -T system="researcher.txt" -T grader="hacker.txt"
+
+If you have several task parameters you want to specify together, you can put them in a YAML or JSON file and use the --task-config CLI option. For example:
+
+config.yaml
+system: "researcher.txt"
+grader: "hacker.txt"
+
+Reference this file from the CLI with:
+
+inspect eval security.py --task-config=config.yaml
+
+Solvers
+While tasks always include a default solver, you can also vary the solver to explore other strategies and elicitation techniques. This section covers best practices for creating solver-independent tasks.
+
+Solver Parameter
+You can substitute an alternate solver for the solver that is built in to your Task using the --solver command line parameter (or solver argument to the eval() function).
+
+For example, let’s start with a simple CTF challenge task:
+
+from inspect_ai import Task, task
+from inspect_ai.solver import generate, use_tools
+from inspect_ai.tool import bash, python
+from inspect_ai.scorer import includes
+
+@task
+def ctf():
+    return Task(
+        dataset=read_dataset(),
+        solver=[
+            use_tools([
+                bash(timeout=180), 
+                python(timeout=180)
+            ]),
+            generate()
+        ],
+        sandbox="docker",
+        scorer=includes()
+    )
+
+This task uses the most naive solver possible (a simple tool use loop with no additional elicitation). That might be okay for initial task development, but we’ll likely want to try lots of different strategies. We start by breaking the solver into its own function and adding an alternative solver that uses a react() agent
+
+from inspect_ai import Task, task
+from inspect_ai.agent import react
+from inspect_ai.dataset._dataset import Sample
+from inspect_ai.scorer import includes
+from inspect_ai.solver import chain, generate, solver, use_tools
+from inspect_ai.tool import bash, python
+
+
+@solver
+def ctf_tool_loop():
+    return chain([
+        use_tools([
+            bash(timeout=180), 
+            python(timeout=180)
+        ]),
+        generate()
+    ])
+
+@solver
+def ctf_agent(attempts: int = 3):
+    return react(
+        tools=[bash(timeout=180), python(timeout=180)],
+        attempts=attempts,
+    )
+
+ 
+@task
+def ctf():
+    # return task
+    return Task(
+        dataset=read_dataset(),
+        solver=ctf_tool_loop(),
+        sandbox="docker",
+        scorer=includes(),
+    )
+
+Note that we use the chain() function to combine multiple solvers into a composite one.
+
+You can now switch between solvers when running the evaluation:
+
+# run with the default solver (ctf_tool_loop)
+inspect eval ctf.py 
+
+# run with the ctf agent solver
+inspect eval ctf.py --solver=ctf_agent
+
+# run with a different attempts
+inspect eval ctf.py --solver=ctf_agent -S attempts=5
+
+Note the use of the -S CLI option to pass an alternate value for attempts to the ctf_agent() solver.
+
+Setup Parameter
+In some cases, there will be important steps in the setup of a task that should not be substituted when another solver is used with the task. For example, you might have a step that does dynamic prompt engineering based on values in the sample metadata or you might have a step that initialises resources in a sample’s sandbox.
+
+In these scenarios you can define a setup solver that is always run even when another solver is substituted. For example, here we adapt our initial example to include a setup step:
+
+# prompt solver which should always be run
+@solver
+def ctf_prompt():
+    async def solve(state, generate):
+        # TODO: dynamic prompt engineering
+        return state
+
+    return solve
+
+@task
+def ctf(solver: Solver | None = None):
+    # use default tool loop solver if no solver specified
+    if solver is None:
+        solver = ctf_tool_loop()
+   
+    # return task
+    return Task(
+        dataset=read_dataset(),
+        setup=ctf_prompt(),
+        solver=solver,
+        sandbox="docker",
+        scorer=includes()
+    )
+
+Task Cleanup
+You can use the cleanup parameter for executing code at the end of each sample run. The cleanup function is passed the TaskState and is called for both successful runs and runs where are exception is thrown. Extending the example from above:
+
+async def ctf_cleanup(state: TaskState):
+    ## perform cleanup
+    ...
+
+Task(
+    dataset=read_dataset(),
+    setup=ctf_prompt(),
+    solver=solver,
+    cleanup=ctf_cleanup,
+    scorer=includes()
+)
+
+Note that like solvers, cleanup functions should be async.
+
+Task Reuse
+The basic mechanism for task re-use is to create flexible and adaptable base @task functions (which often have many parameters) and then derive new higher-level tasks from them by creating additional @task functions that call the base function.
+
+In some cases though you might not have full control over the base @task function (e.g. it’s published in a Python package you aren’t the maintainer of) but you nevertheless want to flexibly create derivative tasks from it. To do this, you can use the task_with() function, which provides a straightforward way to modify the properties of an existing task.
+
+For example, imagine you are dealing with a Task that hard-codes its sandbox to a particular Dockerfile included with the task, and further hard codes its solver to a simple agent:
+
+from inspect_ai import Task, task
+from inspect_ai.agent import react
+from inspect_ai.tool import bash
+from inspect_ai.scorer import includes
+
+@task
+def hard_coded():
+    return Task(
+        dataset=read_dataset(),
+        solver=react(tools=[bash()]),
+        sandbox=("docker", "compose.yaml"),
+        scorer=includes()
+    )
+
+Using task_with(), you can adapt this task to use a different solver and sandbox entirely. For example, here we import the original hard_coded() task from a hypothetical ctf_tasks package and provide it with a different solver and sandbox, as well as give it a message_limit (which we in turn also expose as a parameter of the adapted task):
+
+from inspect_ai import task, task_with
+from inspect_ai.solver import solver
+
+from ctf_tasks import hard_coded
+
+@solver
+def my_custom_agent():
+    ## custom agent implementation
+    ...
+
+@task
+def adapted(message_limit: int = 20):
+    return task_with(
+        hard_coded(),  # original task definition
+        solver=my_custom_agent(),
+        sandbox=("docker", "custom-compose.yaml"),
+        message_limit=message_limit
+    )
+
+Tasks are recipes for an evaluation and represent the convergence of many considerations (datasets, solvers, sandbox environments, limits, and scoring). Task variations often lie at the intersection of these, and the task_with() function is intended to help you produce exactly the variation you need for a given evaluation.
+
+Note that task_with() modifies the passed task in-place, so if you want to create multiple variations of a single task using task_with() you should create the underlying task multiple times (once for each call to task_with()). For example:
+
+adapted1 = task_with(hard_coded(), ...)
+adapted2 = task_with(hard_coded(), ...)
+
+Packaging
+A convenient way to distribute tasks is to include them in a Python package. This makes it very easy for others to run your task and ensure they have all of the required dependencies.
+
+Tasks in packages can be registered such that users can easily refer to them by name from the CLI. For example, the Inspect Evals package includes a suite of tasks that can be run as follows:
+
+inspect eval inspect_evals/gaia 
+inspect eval inspect_evals/swe_bench
+
+Example
+Here’s an example that walks through all of the requirements for registering tasks in packages. Let’s say your package is named evals and has a task named mytask in the tasks.py file:
+
+evals/       
+  evals/
+    tasks.py
+    _registry.py
+  pyproject.toml
+The _registry.py file serves as a place to import things that you want registered with Inspect. For example:
+
+_registry.py
+from .tasks import mytask
+
+You can then register mytask (and anything else imported into _registry.py) as a setuptools entry point. This will ensure that inspect can resolve references to your package from the CLI. Here is how this looks in pyproject.toml:
+
+Setuptools
+Poetry
+[project.entry-points.inspect_ai]
+evals = "evals._registry"
+
+Now, anyone that has installed your package can run the task as follows:
+
+inspect eval evals/mytask
+
+Exploratory
+When developing tasks and solvers, you often want to explore how changing prompts, generation options, solvers, and models affect performance on a task. You can do this by creating multiple tasks with varying parameters and passing them all to the eval_set() function.
+
+Returning to the example from above, the system and grader parameters point to files we are using as system message and grader model templates. At the outset we might want to explore every possible combination of these parameters, along with different models. We can use the itertools.product function to do this:
+
+from itertools import product
+
+# 'grid' will be a permutation of all parameters
+params = {
+    "system": ["devops.txt", "researcher.txt"],
+    "grader": ["hacker.txt", "expert.txt"],
+    "grader_model": ["openai/gpt-4o", "google/gemini-1.5-pro"],
+}
+grid = list(product(*(params[name] for name in params)))
+
+# run the evals and capture the logs
+logs = eval_set(
+    [
+        security_guide(system, grader, grader_model)
+        for system, grader, grader_model in grid
+    ],
+    model=["google/gemini-1.5-flash", "mistral/mistral-large-latest"],
+    log_dir="security-tasks"
+)
+
+# analyze the logs...
+plot_results(logs)
+
+Note that we also pass a list of model to try out the task on multiple models. This eval set will produce in total 16 tasks accounting for the parameter and model variation.
+
+See the article on Eval Sets to learn more about using eval sets. See the article on Eval Logs for additional details on working with evaluation logs.
+
+VS Code
+Datasets
+UK AI Security Institute
+
+Code
+
+Changelog
+
+License
+
+Issues
+
+
+Inspect AI
+
+User Guide
+Reference
+Extensions
+Evals
+Changelog
+Basics
+Welcome
+Tutorial
+Options
+Log Viewer
+VS Code
+Components
+Tasks
+Datasets
+Solvers
+Scorers
+Models
+Using Models
+Providers
+Caching
+Batch Mode
+Multimodal
+Reasoning
+Structured Output
+Tools
+Tool Basics
+Standard Tools
+MCP Tools
+Custom Tools
+Sandboxing
+Tool Approval
+Agents
+Using Agents
+ReAct Agent
+Multi Agent
+Custom Agents
+Agent Bridge
+Human Agent
+Analysis
+Log Files
+Log Dataframes
+Advanced
+Eval Sets
+Errors & Limits
+Typing
+Tracing
+Parallelism
+Interactivity
+Extensions
+On this page
+Overview
+Example
+Task States
+Solver Function
+Built-In Solvers
+Multiple Choice
+Self Critique
+Custom Solvers
+Early Termination
+Report an issue
+Components
+Solvers
+Solvers
+Overview
+Solvers are the heart of Inspect evaluations and can serve a wide variety of purposes, including:
+
+Providing system prompts
+Prompt engineering (e.g. chain of thought)
+Model generation
+Self critique
+Multi-turn dialog
+Running an agent scaffold
+Tasks have a single top-level solver that defines an execution plan. This solver could be implemented with arbitrary Python code (calling the model as required) or could consist of a set of other solvers composed together. Solvers can therefore play two different roles:
+
+Composite specifications for task execution; and
+
+Components that can be chained together.
+
+Example
+Here’s an example task definition that composes a few standard solver components:
+
+@task
+def theory_of_mind():
+    return Task(
+        dataset=json_dataset("theory_of_mind.jsonl"),
+        solver=[
+            system_message("system.txt"),
+            prompt_template("prompt.txt"),
+            generate(),
+            self_critique()
+        ],
+        scorer=model_graded_fact(),
+    )
+
+In this example we pass a list of solver components directly to the Task. More often, though we’ll wrap our solvers in an @solver decorated function to create a composite solver:
+
+@solver
+def critique(
+    system_prompt = "system.txt",
+    user_prompt = "prompt.txt",
+):
+    return chain(
+        system_message(system_prompt),
+        prompt_template(user_prompt),
+        generate(),
+        self_critique()
+    )
+
+@task
+def theory_of_mind():
+    return Task(
+        dataset=json_dataset("theory_of_mind.jsonl"),
+        solver=critique(),
+        scorer=model_graded_fact(),
+    )
+
+Composite solvers by no means need to be implemented using chains. While chains are frequently used in more straightforward knowledge and reasoning evaluations, fully custom solver functions are often used for multi-turn dialog and agent evaluations.
+
+This section covers mostly solvers as components (both built in and creating your own). The Agents section describes fully custom solvers in more depth.
+
+Task States
+Before we get into the specifics of how solvers work, we should describe TaskState, which is the fundamental data structure they act upon. A TaskState consists principally of chat history (derived from input and then extended by model interactions) and model output:
+
+class TaskState:
+    messages: list[ChatMessage],
+    output: ModelOutput
+
+Note that the TaskState definition above is simplified: there are other fields in a TaskState but we’re excluding them here for clarity.
+
+A prompt engineering solver will modify the content of messages. A model generation solver will call the model, append an assistant message, and set the output (a multi-turn dialog solver might do this in a loop).
+
+Solver Function
+We’ve covered the role of solvers in the system, but what exactly are solvers technically? A solver is a Python function that takes a TaskState and generate function, and then transforms and returns the TaskState (the generate function may or may not be called depending on the solver).
+
+async def solve(state: TaskState, generate: Generate):
+    # do something useful with state (possibly
+    # calling generate for more advanced solvers)
+    # then return the state
+    return state
+
+The generate function passed to solvers is a convenience function that takes a TaskState, calls the model with it, appends the assistant message, and sets the model output. This is never used by prompt engineering solvers and often used by more complex solvers that want to have multiple model interactions.
+
+Here are what some of the built-in solvers do with the TaskState:
+
+The system_message() and user_message() solvers insert messages into the chat history.
+
+The chain_of_thought() solver takes the original user prompt and re-writes it to ask the model to use chain of thought reasoning to come up with its answer.
+
+The generate() solver just calls the generate function on the state. In fact, this is the full source code for the generate() solver:
+
+async def solve(state: TaskState, generate: Generate):
+    return await generate(state)
+
+The self_critique() solver takes the ModelOutput and then sends it to another model for critique. It then replays this critique back within the messages stream and re-calls generate to get a refined answer.
+
+You can also imagine solvers that call other models to help come up with a better prompt, or solvers that implement a multi-turn dialog. Anything you can imagine is possible.
+
+Built-In Solvers
+Inspect has a number of built-in solvers, each of which can be customised in some fashion. Built in solvers can be imported from the inspect_ai.solver module. Below is a summary of these solvers. There is not (yet) reference documentation on these functions so the best way to learn about how they can be customised, etc. is to use the Go to Definition command in your source editor.
+
+prompt_template()
+
+Modify the user prompt by substituting the current prompt into the {prompt} placeholder within the specified template. Also automatically substitutes any variables defined in sample metadata as well as any other custom named parameters passed in params.
+
+system_message()
+
+Prepend role=“system” message to the list of messages (will follow any other system messages it finds in the message stream). Also automatically substitutes any variables defined in sample metadata and store, as well as any other custom named parameters passed in params.
+
+user_message()
+
+Append role=“user” message to the list of messages. Also automatically substitutes any variables defined in sample metadata and store, as well as any other custom named parameters passed in params.
+
+chain_of_thought()
+
+Standard chain of thought template with {prompt} substitution variable. Asks the model to provide the final answer on a line by itself at the end for easier scoring.
+
+use_tools()
+
+Define the set tools available for use by the model during generate().
+
+generate()
+
+As illustrated above, just a simple call to generate(state). This is the default solver if no solver is specified.
+
+self_critique()
+
+Prompts the model to critique the results of a previous call to generate() (note that this need not be the same model as they one you are evaluating—use the model parameter to choose another model). Makes use of {question} and {completion} template variables. Also automatically substitutes any variables defined in sample metadata
+
+multiple_choice()
+
+A solver which presents A,B,C,D style choices from input samples and calls generate() to yield model output. Pair this solver with the choices() scorer. For custom answer parsing or scoring needs (like handling complex outputs), use a custom scorer instead. Learn more about Multiple Choice in the section below.
+
+Multiple Choice
+Here is the declaration for the multiple_choice() solver:
+
+@solver
+def multiple_choice(
+    *,
+    template: str | None = None,
+    cot: bool = False,
+    multiple_correct: bool = False,
+    
+) -> Solver:
+
+We’ll present an example and then discuss the various options below (in most cases you won’t need to customise these). First though there are some special considerations to be aware of when using the multiple_choice() solver:
+
+The Sample must include the available choices. Choices should not include letters (as they are automatically included when presenting the choices to the model).
+The Sample target should be a capital letter (e.g. A, B, C, D, etc.)
+You should always pair it with the choice() scorer in your task definition. For custom answer parsing or scoring needs (like handling complex model outputs), implement a custom scorer.
+It calls generate() internally, so you do need to separately include the generate() solver.
+Example
+Below is a full example of reading a dataset for use with multiple choice() and using it in an evaluation task. The underlying data in mmlu.csv has the following form:
+
+Question	A	B	C	D	Answer
+Find the degree for the given field extension Q(sqrt(2), sqrt(3), sqrt(18)) over Q.	0	4	2	6	B
+Let p = (1, 2, 5, 4)(2, 3) in S_5 . Find the index of <p> in S_5.	8	2	24	120	C
+Here is the task definition:
+
+@task
+def mmlu():
+    # read the dataset
+    task_dataset = csv_dataset(
+        "mmlu.csv", 
+        sample_fields=record_to_sample
+    )
+
+    # task with multiple choice() and choice() scorer
+    return Task(
+        dataset=task_dataset,
+        solver=multiple_choice(),
+        scorer=choice(),
+    )
+
+def record_to_sample(record):
+    return Sample(
+        input=record["Question"],
+        choices=[
+            str(record["A"]),
+            str(record["B"]),
+            str(record["C"]),
+            str(record["D"]),
+        ],
+        target=record["Answer"],
+    )
+
+We use the record_to_sample() function to read the choices along with the target (which should always be a letter ,e.g. A, B, C, or D). Note that you should not include letter prefixes in the choices, as they will be included automatically when presenting the question to the model.
+
+Options
+The following options are available for further customisation of the multiple choice solver:
+
+Option	Description
+template	Use template to provide an alternate prompt template (note that if you do this your template should handle prompting for multiple_correct directly if required). You can access the built in templates using the MultipleChoiceTemplate enum.
+cot	Whether the solver should perform chain-of-thought reasoning before answering (defaults to False). NOTE: this has no effect if you provide a custom template.
+multiple_correct	By default, multiple choice questions have a single correct answer. Set multiple_correct=True if your target has defined multiple correct answers (for example, a target of ["B", "C"]). In this case the model is prompted to provide one or more answers, and the sample is scored correct only if each of these answers are provided. NOTE: this has no effect if you provide a custom template.
+Shuffling
+When working with datasets that contain multiple-choice options, you can randomize the order of these choices during data loading. The shuffling operation automatically updates any corresponding target values to maintain correct answer mappings.
+
+For datasets that contain choices, you can shuffle the choices when the data is loaded. Shuffling choices will randomly re-order the choices and update the sample’s target value or values to align with the shuffled choices.
+
+There are two ways to shuffle choices:
+
+# Method 1: Using the dataset method
+dataset = dataset.shuffle_choices()
+
+# Method 2: During dataset loading
+dataset = json_dataset("data.jsonl", shuffle_choices=True)
+
+For reproducible shuffling, you can specify a random seed:
+
+# Using a seed with the dataset method
+dataset = dataset.shuffle_choices(seed=42)
+
+# Using a seed during loading
+dataset = json_dataset("data.jsonl", shuffle_choices=42)
+
+Self Critique
+Here is the declaration for the self_critique() solver:
+
+def self_critique(
+    critique_template: str | None = None,
+    completion_template: str | None = None,
+    model: str | Model | None = None,
+) -> Solver:
+
+There are two templates which correspond to the one used to solicit critique and the one used to play that critique back for a refined answer (default templates are provided for both).
+
+You will likely want to experiment with using a distinct model for generating critiques (by default the model being evaluated is used).
+
+Custom Solvers
+In this section we’ll take a look at the source code for a couple of the built in solvers as a jumping off point for implementing your own solvers. A solver is an implementation of the Solver protocol (a function that transforms a TaskState):
+
+async def solve(state: TaskState, generate: Generate) -> TaskState:
+    # do something useful with state, possibly calling generate()
+    # for more advanced solvers
+    return state
+
+Typically solvers can be customised with parameters (e.g. template for prompt engineering solvers). This means that a Solver is actually a function which returns the solve() function referenced above (this will become more clear in the examples below).
+
+Task States
+Before presenting the examples we’ll take a more in-depth look at the TaskState class. Task states consist of both lower level data members (e.g. messages, output) as well as a number of convenience properties. The core members of TaskState that are modified by solvers are messages / user_prompt and output:
+
+Member	Type	Description
+messages	list[ChatMessage]	Chat conversation history for sample. It is automatically appended to by the generate() solver, and is often manipulated by other solvers (e.g. for prompt engineering or elicitation).
+user_prompt	ChatMessageUser	Convenience property for accessing the first user message in the message history (commonly used for prompt engineering).
+output	ModelOutput	The ‘final’ model output once we’ve completed all solving. This field is automatically updated with the last “assistant” message by the generate() solver.
+Note that the generate() solver automatically updates both the messages and output fields. For very simple evaluations modifying the user_prompt and then calling generate() encompasses all of the required interaction with TaskState.
+
+Sometimes its important to have access to the original prompt input for the task (as other solvers may have re-written or even removed it entirely). This is available using the input and input_text properties:
+
+Member	Type	Description
+input	str | list[ChatMessage]	Original Sample input.
+input_text	str	Convenience function for accessing the initial input from the Sample as a string.
+There are several other fields used to provide contextual data from either the task sample or evaluation:
+
+Member	Type	Description
+sample_id	int | str	Unique ID for sample.
+epoch	int	Epoch for sample.
+metadata	dict	Original metadata from Sample
+choices	list[str] | None	Choices from sample (used only in multiple-choice evals).
+model	ModelName	Name of model currently being evaluated.
+Task states also include available tools as well as guidance for the model on which tools to use (if you haven’t yet encountered the concept of tool use in language models, don’t worry about understanding these fields, the Tools article provides a more in-depth treatment):
+
+Member	Type	Description
+tools	list[Tool]	Tools available to the model
+tool_choice	ToolChoice	Tool choice directive.
+These fields are typically modified via the use_tools() solver, but they can also be modified directly for more advanced use cases.
+
+Example: Prompt Template
+Here’s the code for the prompt_template() solver:
+
+@solver
+def prompt_template(template: str, **params: dict[str, Any]):
+
+    # determine the prompt template
+    prompt_template = resource(template)
+
+    async def solve(state: TaskState, generate: Generate) -> TaskState:
+        prompt = state.user_prompt
+        kwargs = state.metadata | params
+        prompt.text = prompt_template.format(prompt=prompt.text, **kwargs)
+        return state
+
+    return solve
+
+A few things to note about this implementation:
+
+The function applies the @solver decorator—this registers the Solver with Inspect, making it possible to capture its name and parameters for logging, as well as make it callable from a configuration file (e.g. a YAML specification of an eval).
+
+The solve() function is declared as async. This is so that it can participate in Inspect’s optimised scheduling for expensive model generation calls (this solver doesn’t call generate() but others will).
+
+The resource() function is used to read the specified template. This function accepts a string, file, or URL as its argument, and then returns a string with the contents of the resource.
+
+We make use of the user_prompt property on the TaskState. This is a convenience property for locating the first role="user" message (otherwise you might need to skip over system messages, etc). Since this is a string templating solver, we use the state.user_prompt.text property (so we are dealing with prompt as a string, recall that it can also be a list of messages).
+
+We make sample metadata available to the template as well as any params passed to the function.
+
+Example: Self Critique
+Here’s the code for the self_critique() solver:
+
+DEFAULT_CRITIQUE_TEMPLATE = r"""
+Given the following question and answer, please critique the answer.
+A good answer comprehensively answers the question and NEVER refuses
+to answer. If the answer is already correct do not provide critique
+- simply respond 'The original answer is fully correct'.
+
+[BEGIN DATA]
+***
+[Question]: {question}
+***
+[Answer]: {completion}
+***
+[END DATA]
+
+Critique: """
+
+DEFAULT_CRITIQUE_COMPLETION_TEMPLATE = r"""
+Given the following question, initial answer and critique please
+generate an improved answer to the question:
+
+[BEGIN DATA]
+***
+[Question]: {question}
+***
+[Answer]: {completion}
+***
+[Critique]: {critique}
+***
+[END DATA]
+
+If the original answer is already correct, just repeat the
+original answer exactly. You should just provide your answer to
+the question in exactly this format:
+
+Answer: <your answer> """
+
+@solver
+def self_critique(
+    critique_template: str | None = None,
+    completion_template: str | None = None,
+    model: str | Model | None = None,
+) -> Solver:
+    # resolve templates
+    critique_template = resource(
+        critique_template or DEFAULT_CRITIQUE_TEMPLATE
+    )
+    completion_template = resource(
+        completion_template or DEFAULT_CRITIQUE_COMPLETION_TEMPLATE
+    )
+
+    # resolve critique model
+    model = get_model(model)
+
+    async def solve(state: TaskState, generate: Generate) -> TaskState:
+        # run critique
+        critique = await model.generate(
+            critique_template.format(
+                question=state.input_text,
+                completion=state.output.completion,
+            )
+        )
+
+        # add the critique as a user message
+        state.messages.append(
+            ChatMessageUser(
+                content=completion_template.format(
+                    question=state.input_text,
+                    completion=state.output.completion,
+                    critique=critique.completion,
+                ),
+            )
+        )
+
+        # regenerate
+        return await generate(state)
+
+    return solve
+
+Note that calls to generate() (for both the critique model and the model being evaluated) are called with await—this is critical to ensure that the solver participates correctly in the scheduling of generation work.
+
+Models in Solvers
+As illustrated above, often you’ll want to use models in the implementation of solvers. Use the get_model() function to get either the currently evaluated model or another model interface. For example:
+
+# use the model being evaluated for critique
+critique_model = get_model() 
+
+# use another model for critique
+critique_model = get_model("google/gemini-2.5-pro")
+
+Use the config parameter of get_model() to override default generation options:
+
+critique_model = get_model(
+    "google/gemini-2.5-pro", 
+    config = GenerateConfig(temperature = 0.9, max_connections = 10)
+)
+
+Scoring in Solvers
+Typically, solvers don’t score samples but rather leave that to externally specified scorers. However, in some cases it is more convenient to have solvers also do scoring (e.g. when there is high coupling between the solver and scoring). The following two task state fields can be used for scoring:
+
+Member	Type	Description
+target	Target	Scoring target from Sample
+scores	dict[str, Score]	Optional scores.
+Here is a trivial example of the code that might be used to yield scores from a solver:
+
+async def solve(state: TaskState, generate: Generate):
+    # ...perform solver work
+    
+    # score
+    correct = state.output.completion == state.target.text
+    state.scores = { "correct": Score(value=correct) }
+    return state
+
+Note that scores yielded by a Solver are combined with scores from the normal scoring provided by the scorer(s) defined for a Task.
+
+Intermediate Scoring
+In some cases it is useful for a solver to score a task directly to generate an intermediate score or assist in deciding whether or how to continue. You can do this using the score function:
+
+from inspect_ai.scorer import score
+
+def solver_that_scores() -> Solver:
+    async def solve(state: TaskState, generate: Generate) -> TaskState:
+        
+        # use score(s) to determine next step
+        scores = await score(state)
+        
+        return state
+    
+    return solver
+
+Note that the score function returns a list of Score (as its possible that a task could have multiple scorers).
+
+Concurrency
+When creating custom solvers, it’s critical that you understand Inspect’s concurrency model. More specifically, if your solver is doing non-trivial work (e.g. calling REST APIs, executing external processes, etc.) please review Parallelism for a more in depth discussion.
+
+Early Termination
+In some cases a solver has the context available to request an early termination of the sample (i.e. don’t call the rest of the solvers). In this case, setting the TaskState.completed field will result in forgoing remaining solvers. For example, here’s a simple solver that terminates the sample early:
+
+@solver
+def complete_task():
+    async def solve(state: TaskState, generate: Generate):
+        state.completed = True
+        return state
+
+    return solve
+
+Early termination might also occur if you specify the message_limit option and the conversation exceeds that limit:
+
+# could terminate early
+eval(my_task, message_limit = 10)
+
+Datasets
+Scorers
+UK AI Security Institute
+
+Code
+
+Changelog
+
+License
+
+Issues
+
+
+Inspect AI
+
+User Guide
+Reference
+Extensions
+Evals
+Changelog
+Basics
+Welcome
+Tutorial
+Options
+Log Viewer
+VS Code
+Components
+Tasks
+Datasets
+Solvers
+Scorers
+Models
+Using Models
+Providers
+Caching
+Batch Mode
+Multimodal
+Reasoning
+Structured Output
+Tools
+Tool Basics
+Standard Tools
+MCP Tools
+Custom Tools
+Sandboxing
+Tool Approval
+Agents
+Using Agents
+ReAct Agent
+Multi Agent
+Custom Agents
+Agent Bridge
+Human Agent
+Analysis
+Log Files
+Log Dataframes
+Advanced
+Eval Sets
+Errors & Limits
+Typing
+Tracing
+Parallelism
+Interactivity
+Extensions
+On this page
+Overview
+Standard Tools
+MCP Tools
+Custom Tools
+Using Tools
+Learning More
+Report an issue
+Tools
+Tool Basics
+Tool Basics
+Overview
+Many models now have the ability to interact with client-side Python functions in order to expand their capabilities. This enables you to equip models with your own set of custom tools so they can perform a wider variety of tasks.
+
+Inspect natively supports registering Python functions as tools and providing these tools to models that support them. Inspect also includes several standard tools for code execution, text editing, computer use, web search, and web browsing.
+
+Tools and Agents
+One application of tools is to run them within an agent scaffold that pursues an objective over multiple interactions with a model. The scaffold uses the model to help make decisions about which tools to use and when, and orchestrates calls to the model to use the tools. This is covered in more depth in the Agents section.
+
+Standard Tools
+Inspect has several standard tools built-in, including:
+
+Web Search, which uses a search provider (either built in to the model or external) to execute and summarize web searches.
+
+Bash and Python for executing arbitrary shell and Python code.
+
+Bash Session for creating a stateful bash shell that retains its state across calls from the model.
+
+Text Editor which enables viewing, creating and editing text files.
+
+Web Browser, which provides the model with a headless Chromium web browser that supports navigation, history, and mouse/keyboard interactions.
+
+Computer, which provides the model with a desktop computer (viewed through screenshots) that supports mouse and keyboard interaction.
+
+Think, which provides models the ability to include an additional thinking step as part of getting to its final answer.
+
+If you are only interested in using the standard tools, check out their respective documentation links above. To learn more about creating your own tools read on below.
+
+MCP Tools
+The Model Context Protocol is a standard way to provide capabilities to LLMs. There are hundreds of MCP Servers that provide tools for a myriad of purposes including web search and browsing, filesystem interaction, database access, git, and more.
+
+Tools exposed by MCP servers can be easily integrated into Inspect. Learn more in the article on MCP Tools.
+
+Custom Tools
+Here’s a simple tool that adds two numbers. The @tool decorator is used to register it with the system:
+
+from inspect_ai.tool import tool
+
+@tool
+def add():
+    async def execute(x: int, y: int):
+        """
+        Add two numbers.
+
+        Args:
+            x: First number to add.
+            y: Second number to add.
+
+        Returns:
+            The sum of the two numbers.
+        """
+        return x + y
+
+    return execute
+
+Annotations
+Note that we provide type annotations for both arguments:
+
+async def execute(x: int, y: int)
+
+Further, we provide descriptions for each parameter in the documentation comment:
+
+Args:
+    x: First number to add.
+    y: Second number to add.
+
+Type annotations and descriptions are required for tool declarations so that the model can be informed which types to pass back to the tool function and what the purpose of each parameter is.
+
+Note that you while you are required to provide default descriptions for tools and their parameters within doc comments, you can also make these dynamically customisable by users of your tool (see the section on Tool Descriptions for details on how to do this).
+
+Using Tools
+We can use the addition() tool in an evaluation by passing it to the use_tools() Solver:
+
+from inspect_ai import Task, task
+from inspect_ai.dataset ipmort Sample
+from inspect_ai.solver import generate, use_tools
+from inspect_ai.scorer import match
+
+@task
+def addition_problem():
+    return Task(
+        dataset=[Sample(input="What is 1 + 1?", target=["2"])],
+        solver=[
+            use_tools(add()), 
+            generate()
+        ],
+        scorer=match(numeric=True),
+    )
+
+Note that this tool doesn’t make network requests or do heavy computation, so is fine to run as inline Python code. If your tool does do more elaborate things, you’ll want to make sure it plays well with Inspect’s concurrency scheme. For network requests, this amounts to using async HTTP calls with httpx. For heavier computation, tools should use subprocesses as described in the next section.
+
+Note that when using tools with models, the models do not call the Python function directly. Rather, the model generates a structured request which includes function parameters, and then Inspect calls the function and returns the result to the model.
+
+See the Custom Tools article for details on more advanced custom tool features including sandboxing, error handling, and dynamic tool definitions.
+
+Learning More
+Standard Tools describes Inspect’s built-in tools for code execution, text editing computer use, web search, and web browsing.
+
+MCP Tools covers how to intgrate tools from the growing list of Model Context Protocol providers.
+
+Custom Tools provides details on more advanced custom tool features including sandboxing, error handling, and dynamic tool definitions.
+
+Structured Output
+Standard Tools
+UK AI Security Institute
+
+Code
+
+Changelog
+
+License
+
+Issues
+
+
+Inspect AI
+
+User Guide
+Reference
+Extensions
+Evals
+Changelog
+Basics
+Welcome
+Tutorial
+Options
+Log Viewer
+VS Code
+Components
+Tasks
+Datasets
+Solvers
+Scorers
+Models
+Using Models
+Providers
+Caching
+Batch Mode
+Multimodal
+Reasoning
+Structured Output
+Tools
+Tool Basics
+Standard Tools
+MCP Tools
+Custom Tools
+Sandboxing
+Tool Approval
+Agents
+Using Agents
+ReAct Agent
+Multi Agent
+Custom Agents
+Agent Bridge
+Human Agent
+Analysis
+Log Files
+Log Dataframes
+Advanced
+Eval Sets
+Errors & Limits
+Typing
+Tracing
+Parallelism
+Interactivity
+Extensions
+On this page
+Overview
+Web Search
+Bash and Python
+Bash Session
+Text Editor
+Web Browser
+Computer
+Think
+Report an issue
+Tools
+Standard Tools
+Standard Tools
+Overview
+Inspect has several standard tools built-in, including:
+
+Web Search, which uses a search provider (either built in to the model or external) to execute and summarize web searches.
+
+Bash and Python for executing arbitrary shell and Python code.
+
+Bash Session for creating a stateful bash shell that retains its state across calls from the model.
+
+Text Editor which enables viewing, creating and editing text files.
+
+Web Browser, which provides the model with a headless Chromium web browser that supports navigation, history, and mouse/keyboard interactions.
+
+Computer, which provides the model with a desktop computer (viewed through screenshots) that supports mouse and keyboard interaction.
+
+Think, which provides models the ability to include an additional thinking step as part of getting to its final answer.
+
+Web Search
+The web_search() tool provides models the ability to enhance their context window by performing a search. Web searches are executed using a provider. Providers are split into two categories:
+
+Internal providers: "openai", "anthropic", "gemini", "grok", and "perplexity" - these use the model’s built-in search capability and do not require separate API keys. These work only for their respective model provider (e.g. the “openai” search provider works only for openai/* models).
+
+External providers: "tavily", "exa", and "google". These are external services that work with any model and require separate accounts and API keys. Note that “google” is different from “gemini” - “google” refers to Google’s Programmable Search Engine service, while “gemini” refers to Google’s built-in search capability for Gemini models.
+
+Internal providers will be prioritized if running on the corresponding model (e.g., “openai” provider will be used when running on openai models). If an internal provider is specified but the evaluation is run with a different model, a fallback external provider must also be specified.
+
+You can configure the web_search() tool in various ways:
+
+from inspect_ai.tool import web_search
+
+# single provider
+web_search("tavily")
+
+# internal provider and fallback
+web_search(["openai", "tavily"])
+
+# multiple internal providers and fallback
+web_search(["openai", "anthropic", "gemini", "perplexity", "tavily"])
+
+# provider with specific options
+web_search({"tavily": {"max_results": 5}})
+
+# multiple providers with options
+web_search({
+    "openai": True, 
+    "google": {"num_results": 5}, 
+    "tavily": {"max_results": 5}
+})
+
+OpenAI Options
+The web_search() tool can use OpenAI’s built-in search capability when running on a limited number of OpenAI models (currently “gpt-4o”, “gpt-4o-mini”, and “gpt-4.1”). This provider does not require any API keys beyond what’s needed for the model itself.
+
+For more details on OpenAI’s web search parameters, see OpenAI Web Search Documentation.
+
+Note that when using the “openai” provider, you should also specify a fallback external provider (like “tavily”, “exa”, or “google”) if you are also running the evaluation with non-OpenAI model.
+
+Anthropic Options
+The web_search() tool can use Anthropic’s built-in search capability when running on a limited number of Anthropic models (currently “claude-opus-4-20250514”, “claude-sonnet-4-20250514”, “claude-3-7-sonnet-20250219”, “claude-3-5-sonnet-latest”, “claude-3-5-haiku-latest”). This provider does not require any API keys beyond what’s needed for the model itself.
+
+For more details on Anthropic’s web search parameters, see Anthropic Web Search Documentation.
+
+Note that when using the “anthropic” provider, you should also specify a fallback external provider (like “tavily”, “exa”, or “google”) if you are also running the evaluation with non-Anthropic model.
+
+Gemini Options
+The web_search() tool can use Google’s built-in search capability (called grounding) when running on Gemini 2.0 models and later. This provider does not require any API keys beyond what’s needed for the model itself.
+
+This is distinct from the “google” provider (described below), which uses Google’s external Programmable Search Engine service and requires separate API keys.
+
+For more details, see Grounding with Google Search.
+
+Note that when using the “gemini” provider, you should also specify a fallback external provider (like “tavily”, “exa”, or “google”) if you are also running the evaluation with non-Gemini models.
+
+Warning
+Google’s search grounding does not currently support use with other tools. Attempting to use web_search("gemini") alongside other tools will result in an error.
+
+Grok Options
+The web_search() tool can use Grok’s built-in live search capability when running on Grok 3.0 models and later. This provider does not require any API keys beyond what’s needed for the model itself.
+
+For more details, see Live Search.
+
+Note that when using the “grok” provider, you should also specify a fallback external provider (like “tavily”, “exa”, or “google”) if you are also running the evaluation with non-Grok models.
+
+Perplexity Options
+The web_search() tool can use Perplexity’s built-in search capability when running on Perplexity models. This provider does not require any API keys beyond what’s needed for the model itself. Search parameters can be passed using the perplexity provider options and will be forwarded to the model API.
+
+For more details, see Perplexity API Documentation.
+
+Note that when using the “perplexity” provider, you should also specify a fallback external provider (like “tavily”, “exa”, or “google”) if you are also running the evaluation with non-Perplexity models.
+
+Tavily Options
+The web_search() tool can use Tavily’s Research API. To use it you will need to set up your own Tavily account. Then, ensure that the following environment variable is defined:
+
+TAVILY_API_KEY — Tavily Research API key
+Tavily supports the following options:
+
+Option	Description
+max_results	Number of results to return
+search_depth	Can be “basic” or “advanced”
+topic	Can be “general” or “news”
+include_domains / exclude_domains	Lists of domains to include or exclude
+time_range	Time range for search results (e.g., “day”, “week”, “month”)
+max_connections	Maximum number of concurrent connections
+For more options, see the Tavily API Documentation.
+
+Exa Options
+The web_search() tool can use Exa’s Answer API. To use it you will need to set up your own Exa account. Then, ensure that the following environment variable is defined:
+
+EXA_API_KEY — Exa API key
+Exa supports the following options:
+
+Option	Description
+text	Whether to include text content in citations (defaults to true)
+model	LLM model to use for generating the answer (“exa” or “exa-pro”)
+max_connections	Maximum number of concurrent connections
+For more details, see the Exa API Documentation.
+
+Google Options
+The web_search() tool can use Google Programmable Search Engine as an external provider. This is different from the “gemini” provider (described above), which uses Google’s built-in search capability for Gemini models.
+
+To use the “google” provider you will need to set up your own Google Programmable Search Engine and also enable the Programmable Search Element Paid API. Then, ensure that the following environment variables are defined:
+
+GOOGLE_CSE_ID — Google Custom Search Engine ID
+GOOGLE_CSE_API_KEY — Google API key used to enable the Search API
+Google supports the following options:
+
+Option	Description
+num_results	The number of relevant webpages whose contents are returned
+max_provider_calls	Number of times to retrieve more links in case previous ones were irrelevant (defaults to 3)
+max_connections	Maximum number of concurrent connections (defaults to 10)
+model	Model to use to determine if search results are relevant (defaults to the model being evaluated)
+Bash and Python
+The bash() and python() tools enable execution of arbitrary shell commands and Python code, respectively. These tools require the use of a Sandbox Environment for the execution of untrusted code. For example, here is how you might use them in an evaluation where the model is asked to write code in order to solve capture the flag (CTF) challenges:
+
+from inspect_ai.tool import bash, python
+
+CMD_TIMEOUT = 180
+
+@task
+def intercode_ctf():
+    return Task(
+        dataset=read_dataset(),
+        solver=[
+            system_message("system.txt"),
+            use_tools([
+                bash(CMD_TIMEOUT), 
+                python(CMD_TIMEOUT)
+            ]),
+            generate(),
+        ],
+        scorer=includes(),
+        message_limit=30,
+        sandbox="docker",
+    )
+
+We specify a 3-minute timeout for execution of the bash and python tools to ensure that they don’t perform extremely long running operations.
+
+See the Agents section for more details on how to build evaluations that allow models to take arbitrary actions over a longer time horizon.
+
+Bash Session
+The bash_session() tool provides a bash shell that retains its state across calls from the model (as distinct from the bash() tool which executes each command in a fresh session). The prompt, working directory, and environment variables are all retained across calls. The tool also supports a restart action that enables the model to reset its state and work in a fresh session.
+
+Note that a separate bash process is created within the sandbox for each instance of the bash session tool. See the bash_session() reference docs for details on customizing this behavior.
+
+Configuration
+Bash sessions require the use of a Sandbox Environment for the execution of untrusted code.
+
+Task Setup
+A task configured to use the bash session tool might look like this:
+
+from inspect_ai import Task, task
+from inspect_ai.scorer import includes
+from inspect_ai.solver import generate, system_message, use_tools
+from inspect_ai.tool import bash_session
+
+@task
+def intercode_ctf():
+    return Task(
+        dataset=read_dataset(),
+        solver=[
+            system_message("system.txt"),
+            use_tools([bash_session(timeout=180)]),
+            generate(),
+        ],
+        scorer=includes(),
+        sandbox=("docker", "compose.yaml")
+    )
+
+Note that we provide a timeout for bash session commands (this is a best practice to guard against extremely long running commands).
+
+Text Editor
+The text_editor() tool enables viewing, creating and editing text files. The tool supports editing files within a protected Sandbox Environment so tasks that use the text editor should have a sandbox defined and configured as described below.
+
+Configuration
+The text editor tools requires the use of a Sandbox Environment.
+
+Task Setup
+A task configured to use the text editor tool might look like this (note that this task is also configured to use the bash_session() tool):
+
+from inspect_ai import Task, task
+from inspect_ai.scorer import includes
+from inspect_ai.solver import generate, system_message, use_tools
+from inspect_ai.tool import bash_session, text_editor
+
+@task
+def intercode_ctf():
+    return Task(
+        dataset=read_dataset(),
+        solver=[
+            system_message("system.txt"),
+            use_tools([
+                bash_session(timeout=180),
+                text_editor(timeout=180)
+            ]),
+            generate(),
+        ],
+        scorer=includes(),
+        sandbox=("docker", "compose.yaml")
+    )
+
+Note that we provide a timeout for the bash session and text editor tools (this is a best practice to guard against extremely long running commands).
+
+Tool Binding
+The schema for the text_editor() tool is based on the standard Anthropic text editor tool type. The text_editor() works with all models that support tool calling, but when using Claude, the text editor tool will automatically bind to the native Claude tool definition.
+
+Web Browser
+The web browser tools provides models with the ability to browse the web using a headless Chromium browser. Navigation, history, and mouse/keyboard interactions are all supported.
+
+Configuration
+Under the hood, the web browser is an instance of Chromium orchestrated by Playwright, and runs in a Sandbox Environment. In addition, you’ll need some dependencies installed in the sandbox container. Please see Sandbox Dependencies below for additional instructions.
+
+Note that Playwright (used for the web_browser() tool) does not support some versions of Linux (e.g. Kali Linux).
+
+Sandbox Dependencies
+Task Setup
+A task configured to use the web browser tools might look like this:
+
+from inspect_ai import Task, task
+from inspect_ai.scorer import match
+from inspect_ai.solver import generate, use_tools
+from inspect_ai.tool import bash, python, web_browser
+
+@task
+def browser_task():
+    return Task(
+        dataset=read_dataset(),
+        solver=[
+            use_tools([bash(), python()] + web_browser()),
+            generate(),
+        ],
+        scorer=match(),
+        sandbox=("docker", "compose.yaml"),
+    )
+
+Unlike some other tool functions like bash(), the web_browser() function returns a list of tools. Therefore, we concatenate it with a list of the other tools we are using in the call to use_tools().
+
+Note that a separate web browser process is created within the sandbox for each instance of the web browser tool. See the web_browser() reference docs for details on customizing this behavior.
+
+Browsing
+If you review the transcripts of a sample with access to the web browser tool, you’ll notice that there are several distinct tools made available for control of the web browser. These tools include:
+
+Tool	Description
+web_browser_go(url)	Navigate the web browser to a URL.
+web_browser_click(element_id)	Click an element on the page currently displayed by the web browser.
+web_browser_type(element_id)	Type text into an input on a web browser page.
+web_browser_type_submit(element_id, text)	Type text into a form input on a web browser page and press ENTER to submit the form.
+web_browser_scroll(direction)	Scroll the web browser up or down by one page.
+web_browser_forward()	Navigate the web browser forward in the browser history.
+web_browser_back()	Navigate the web browser back in the browser history.
+web_browser_refresh()	Refresh the current page of the web browser.
+The return value of each of these tools is a web accessibility tree for the page, which provides a clean view of the content, links, and form fields available on the page (you can look at the accessibility tree for any web page using Chrome Developer Tools).
+
+Disabling Interactions
+You can use the web browser tools with page interactions disabled by specifying interactive=False, for example:
+
+use_tools(web_browser(interactive=False))
+
+In this mode, the interactive tools (web_browser_click(), web_browser_type(), and web_browser_type_submit()) are not made available to the model.
+
+Computer
+The computer() tool provides models with a computer desktop environment along with the ability to view the screen and perform mouse and keyboard gestures.
+
+The computer tool works with any model that supports image input. It also binds directly to the internal computer tool definitions for Anthropic and OpenAI models tuned for computer use (currently anthropic/claude-3-7-sonnet-latest and openai/computer-use-preview).
+
+Configuration
+The computer() tool runs within a Docker container. To use it with a task you need to reference the aisiuk/inspect-computer-tool image in your Docker compose file. For example:
+
+compose.yaml
+services:
+  default:
+    image: aisiuk/inspect-computer-tool
+
+You can configure the container to not have Internet access as follows:
+
+compose.yaml
+services:
+  default:
+    image: aisiuk/inspect-computer-tool
+    network_mode: none
+
+Note that if you’d like to be able to view the model’s interactions with the computer desktop in realtime, you will need to also do some port mapping to enable a VNC connection with the container. See the VNC Client section below for details on how to do this.
+
+The aisiuk/inspect-computer-tool image is based on the ubuntu:22.04 image and includes the following additional applications pre-installed:
+
+Firefox
+VS Code
+Xpdf
+Xpaint
+galculator
+Task Setup
+A task configured to use the computer tool might look like this:
+
+from inspect_ai import Task, task
+from inspect_ai.scorer import match
+from inspect_ai.solver import generate, use_tools
+from inspect_ai.tool import computer
+
+@task
+def computer_task():
+    return Task(
+        dataset=read_dataset(),
+        solver=[
+            use_tools([computer()]),
+            generate(),
+        ],
+        scorer=match(),
+        sandbox=("docker", "compose.yaml"),
+    )
+
+To evaluate the task with models tuned for computer use:
+
+inspect eval computer.py --model anthropic/claude-3-7-sonnet-latest
+inspect eval computer.py --model openai/computer-use-preview
+
+Options
+The computer tool supports the following options:
+
+Option	Description
+max_screenshots	The maximum number of screenshots to play back to the model as input. Defaults to 1 (set to None to have no limit).
+timeout	Timeout in seconds for computer tool actions. Defaults to 180 (set to None for no timeout).
+For example:
+
+solver=[
+    use_tools([computer(max_screenshots=2, timeout=300)]),
+    generate()
+]
+
+Examples
+Two of the Inspect examples demonstrate basic computer use:
+
+computer — Three simple computing tasks as a minimal demonstration of computer use.
+
+inspect eval examples/computer
+
+intervention — Computer task driven interactively by a human operator.
+
+inspect eval examples/intervention -T mode=computer --display conversation
+
+VNC Client
+You can use a VNC connection to the container to watch computer use in real-time. This requires some additional port-mapping in the Docker compose file. You can define dynamic port ranges for VNC (5900) and a browser based noVNC client (6080) with the following ports entries:
+
+compose.yaml
+services:
+  default:
+    image: aisiuk/inspect-computer-tool
+    ports:
+      - "5900"
+      - "6080"
+
+To connect to the container for a given sample, locate the sample in the Running Samples UI and expand the sample info panel at the top:
+
+
+
+Click on the link for the noVNC browser client, or use a native VNC client to connect to the VNC port. Note that the VNC server will take a few seconds to start up so you should give it some time and attempt to reconnect as required if the first connection fails.
+
+The browser based client provides a view-only interface. If you use a native VNC client you should also set it to “view only” so as to not interfere with the model’s use of the computer. For example, for Real VNC Viewer:
+
+
+
+Approval
+If the container you are using is connected to the Internet, you may want to configure human approval for a subset of computer tool actions. Here are the possible actions (specified using the action parameter to the computer tool):
+
+key: Press a key or key-combination on the keyboard.
+type: Type a string of text on the keyboard.
+cursor_position: Get the current (x, y) pixel coordinate of the cursor on the screen.
+mouse_move: Move the cursor to a specified (x, y) pixel coordinate on the screen.
+Example: execute(action=“mouse_move”, coordinate=(100, 200))
+left_click: Click the left mouse button.
+left_click_drag: Click and drag the cursor to a specified (x, y) pixel coordinate on the screen.
+right_click: Click the right mouse button.
+middle_click: Click the middle mouse button.
+double_click: Double-click the left mouse button.
+screenshot: Take a screenshot.
+Here is an approval policy that requires approval for key combos (e.g. Enter or a shortcut) and mouse clicks:
+
+approval.yaml
+approvers:
+  - name: human
+    tools:
+      - computer(action='key'
+      - computer(action='left_click'
+      - computer(action='middle_click'
+      - computer(action='double_click'
+
+  - name: auto
+    tools: "*"
+
+Note that since this is a prefix match and there could be other arguments, we don’t end the tool match pattern with a parentheses.
+
+You can apply this policy using the --approval command line option:
+
+inspect eval computer.py --approval approval.yaml
+
+Tool Binding
+The computer tool’s schema is a superset of the standard Anthropic and Open AI computer tool schemas. When using models tuned for computer use (currently anthropic/claude-3-7-sonnet-latest and openai/computer-use-preview) the computer tool will automatically bind to the native computer tool definitions (as this presumably provides improved performance).
+
+If you want to experiment with bypassing the native computer tool types and just register the computer tool as a normal function based tool then specify the --no-internal-tools generation option as follows:
+
+inspect eval computer.py --no-internal-tools
+
+Think
+The think() tool provides models with the ability to include an additional thinking step as part of getting to its final answer.
+
+Note that the think() tool is not a substitute for reasoning and extended thinking, but rather an an alternate way of letting models express thinking that is better suited to some tool use scenarios.
+
+Usage
+You should read the original think tool article in its entirely to understand where and where not to use the think tool. In summary, good contexts for the think tool include:
+
+Tool output analysis. When models need to carefully process the output of previous tool calls before acting and might need to backtrack in its approach;
+Policy-heavy environments. When models need to follow detailed guidelines and verify compliance; and
+Sequential decision making. When each action builds on previous ones and mistakes are costly (often found in multi-step domains).
+Use the think() tool alongside other tools like this:
+
+from inspect_ai import Task, task
+from inspect_ai.scorer import includes
+from inspect_ai.solver import generate, system_message, use_tools
+from inspect_ai.tool import bash_session, text_editor, think
+
+@task
+def intercode_ctf():
+    return Task(
+        dataset=read_dataset(),
+        solver=[
+            system_message("system.txt"),
+            use_tools([
+                bash_session(timeout=180),
+                text_editor(timeout=180),
+                think()
+            ]),
+            generate(),
+        ],
+        scorer=includes(),
+        sandbox=("docker", "compose.yaml")
+    )
+
+Tool Description
+In the original think tool article (which was based on experimenting with Claude) they found that providing clear instructions on when and how to use the think() tool for the particular problem domain it is being used within could sometimes be helpful. For example, here’s the prompt they used with SWE-Bench:
+
+from textwrap import dedent
+
+from inspect_ai import Task, task
+from inspect_ai.scorer import includes
+from inspect_ai.solver import generate, system_message, use_tools
+from inspect_ai.tool import bash_session, text_editor, think
+
+@task
+def swe_bench():
+
+    tools = [
+        bash_session(timeout=180),
+        text_editor(timeout=180),  
+        think(dedent("""
+            Use the think tool to think about something. It will not obtain
+            new information or make any changes to the repository, but just 
+            log the thought. Use it when complex reasoning or brainstorming
+            is needed. For example, if you explore the repo and discover
+            the source of a bug, call this tool to brainstorm several unique
+            ways of fixing the bug, and assess which change(s) are likely to 
+            be simplest and most effective. Alternatively, if you receive
+            some test results, call this tool to brainstorm ways to fix the
+            failing tests.
+        """))
+    ])
+
+    return Task(
+        dataset=read_dataset(),
+        solver=[
+            system_message("system.txt"),
+            use_tools(tools),
+            generate(),
+        ),
+        scorer=includes(),
+        sandbox=("docker", "compose.yaml")
+    )
+
+System Prompt
+In the article they also found that when tool instructions are long and/or complex, including instructions about the think() tool in the system prompt can be more effective than placing them in the tool description itself.
+
+Here’s an example of moving the custom think() prompt into the system prompt (note that this was not done in the article’s SWE-Bench experiment, this is merely an example):
+
+from textwrap import dedent
+
+from inspect_ai import Task, task
+from inspect_ai.scorer import includes
+from inspect_ai.solver import generate, system_message, use_tools
+from inspect_ai.tool import bash_session, text_editor, think
+
+@task
+def swe_bench():
+
+    think_system_message = system_message(dedent("""
+        Use the think tool to think about something. It will not obtain
+        new information or make any changes to the repository, but just 
+        log the thought. Use it when complex reasoning or brainstorming
+        is needed. For example, if you explore the repo and discover
+        the source of a bug, call this tool to brainstorm several unique
+        ways of fixing the bug, and assess which change(s) are likely to 
+        be simplest and most effective. Alternatively, if you receive
+        some test results, call this tool to brainstorm ways to fix the
+        failing tests.
+    """))
+
+    return Task(
+        dataset=read_dataset(),
+        solver=[
+            system_message("system.txt"),
+            think_system_message,
+            use_tools([
+                bash_session(timeout=180),
+                text_editor(timeout=180),  
+                think(),
+            ]),
+            generate(),
+        ],
+        scorer=includes(),
+        sandbox=("docker", "compose.yaml")
+    )
+
+Note that the effectivess of using the system prompt will vary considerably across tasks, tools, and models, so should definitely be the subject of experimentation.
+
+Tool Basics
+MCP Tools
+UK AI Security Institute
+
+Code
+
+Changelog
+
+License
+
+Issues
+
+
+Inspect AI
+
+User Guide
+Reference
+Extensions
+Evals
+Changelog
+Basics
+Welcome
+Tutorial
+Options
+Log Viewer
+VS Code
+Components
+Tasks
+Datasets
+Solvers
+Scorers
+Models
+Using Models
+Providers
+Caching
+Batch Mode
+Multimodal
+Reasoning
+Structured Output
+Tools
+Tool Basics
+Standard Tools
+MCP Tools
+Custom Tools
+Sandboxing
+Tool Approval
+Agents
+Using Agents
+ReAct Agent
+Multi Agent
+Custom Agents
+Agent Bridge
+Human Agent
+Analysis
+Log Files
+Log Dataframes
+Advanced
+Eval Sets
+Errors & Limits
+Typing
+Tracing
+Parallelism
+Interactivity
+Extensions
+On this page
+Overview
+Defining Tools
+Using Tools
+Tool Errors
+Sandboxing
+Stateful Tools
+Tool Choice
+Tool Descriptions
+Dynamic Tools
+Report an issue
+Tools
+Custom Tools
+Custom Tools
+Overview
+Inspect natively supports registering Python functions as tools and providing these tools to models that support them. Inspect also supports secure sandboxes for running arbitrary code produced by models, flexible error handling, as well as dynamic tool definitions.
+
+We’ll cover all of these features below, but we’ll start with a very simple example to cover the basic mechanics of tool use.
+
+Defining Tools
+Here’s a simple tool that adds two numbers. The @tool decorator is used to register it with the system:
+
+from inspect_ai.tool import tool
+
+@tool
+def add():
+    async def execute(x: int, y: int):
+        """
+        Add two numbers.
+
+        Args:
+            x: First number to add.
+            y: Second number to add.
+
+        Returns:
+            The sum of the two numbers.
+        """
+        return x + y
+
+    return execute
+
+Annotations
+Note that we provide type annotations for both arguments:
+
+async def execute(x: int, y: int)
+
+Further, we provide descriptions for each parameter in the documentation comment:
+
+Args:
+    x: First number to add.
+    y: Second number to add.
+
+Type annotations and descriptions are required for tool declarations so that the model can be informed which types to pass back to the tool function and what the purpose of each parameter is.
+
+Note that you while you are required to provide default descriptions for tools and their parameters within doc comments, you can also make these dynamically customisable by users of your tool (see the section on Tool Descriptions for details on how to do this).
+
+Using Tools
+We can use the addition() tool in an evaluation by passing it to the use_tools() Solver:
+
+from inspect_ai import Task, task
+from inspect_ai.dataset ipmort Sample
+from inspect_ai.solver import generate, use_tools
+from inspect_ai.scorer import match
+
+@task
+def addition_problem():
+    return Task(
+        dataset=[Sample(input="What is 1 + 1?", target=["2"])],
+        solver=[
+            use_tools(add()), 
+            generate()
+        ],
+        scorer=match(numeric=True),
+    )
+
+Note that this tool doesn’t make network requests or do heavy computation, so is fine to run as inline Python code. If your tool does do more elaborate things, you’ll want to make sure it plays well with Inspect’s concurrency scheme. For network requests, this amounts to using async HTTP calls with httpx. For heavier computation, tools should use subprocesses as described in the next section.
+
+Note that when using tools with models, the models do not call the Python function directly. Rather, the model generates a structured request which includes function parameters, and then Inspect calls the function and returns the result to the model.
+
+Tool Errors
+Various errors can occur during tool execution, especially when interacting with the file system or network or when using Sandbox Environments to execute code in a container sandbox. As a tool writer you need to decide how you’d like to handle error conditions. A number of approaches are possible:
+
+Notify the model that an error occurred to see whether it can recover.
+
+Catch and handle the error internally (trying another code path, etc.).
+
+Allow the error to propagate, resulting in the current Sample failing with an error state.
+
+There are no universally correct approaches as tool usage and semantics can vary widely—some rough guidelines are provided below.
+
+Default Handling
+If you do not explicitly handle errors, then Inspect provides some default error handling behaviour. Specifically, if any of the following errors are raised they will be handled and reported to the model:
+
+TimeoutError — Occurs when a call to subprocess() or sandbox().exec() times out.
+
+PermissionError — Occurs when there are inadequate permissions to read or write a file.
+
+UnicodeDecodeError — Occurs when the output from executing a process or reading a file is binary rather than text.
+
+OutputLimitExceededError - Occurs when one or both of the output streams from sandbox().exec() exceed 10 MiB or when attempting to read a file over 100 MiB in size.
+
+ToolError — Special error thrown by tools to indicate they’d like to report an error to the model.
+
+These are all errors that are expected (in fact the SandboxEnvironment interface documents them as such) and possibly recoverable by the model (try a different command, read a different file, etc.). Unexpected errors (e.g. a network error communicating with a remote service or container runtime) on the other hand are not automatically handled and result in the Sample failing with an error.
+
+Many tools can simply rely on the default handling to provide reasonable behaviour around both expected and unexpected errors.
+
+When we say that the errors are reported directly to the model, this refers to the behaviour when using the default generate(). If on the other hand, you are have created custom scaffolding for an agent, you can intercept tool errors and apply additional filtering and logic.
+
+Explicit Handling
+In some cases a tool can implement a recovery strategy for error conditions. For example, an HTTP request might fail due to transient network issues, and retrying the request (perhaps after a delay) may resolve the problem. Explicit error handling strategies are generally applied when there are expected errors that are not already handled by Inspect’s Default Handling.
+
+Another type of explicit handling is re-raising an error to bypass Inspect’s default handling. For example, here we catch at re-raise TimeoutError so that it fails the Sample:
+
+try:
+  result = await sandbox().exec(
+    cmd=["decode", file], 
+    timeout=timeout
+  )
+except TimeoutError:
+  raise RuntimeError("Decode operation timed out.")
+  
+
+Sandboxing
+Tools may have a need to interact with a sandboxed environment (e.g. to provide models with the ability to execute arbitrary bash or python commands). The active sandbox environment can be obtained via the sandbox() function. For example:
+
+from inspect_ai.tool import ToolError, tool
+from inspect_ai.util import sandbox
+
+@tool
+def list_files():
+    async def execute(dir: str):
+        """List the files in a directory.
+
+        Args:
+            dir: Directory
+
+        Returns:
+            File listing of the directory
+        """
+        result = await sandbox().exec(["ls", dir])
+        if result.success:
+            return result.stdout
+        else:
+            raise ToolError(result.stderr)
+
+    return execute
+
+The following instance methods are available to tools that need to interact with a SandboxEnvironment:
+
+class SandboxEnvironment:
+   
+    async def exec(
+        self,
+        cmd: list[str],
+        input: str | bytes | None = None,
+        cwd: str | None = None,
+        env: dict[str, str] = {},
+        user: str | None = None,
+        timeout: int | None = None,
+        timeout_retry: bool = True,
+        concurrency: bool = True
+    ) -> ExecResult[str]:
+        """
+        Raises:
+          TimeoutError: If the specified `timeout` expires.
+          UnicodeDecodeError: If an error occurs while
+            decoding the command output.
+          PermissionError: If the user does not have
+            permission to execute the command.
+          OutputLimitExceededError: If an output stream
+            exceeds the 10 MiB limit.
+        """
+        ...
+
+    async def write_file(
+        self, file: str, contents: str | bytes
+    ) -> None:
+        """
+        Raises:
+          PermissionError: If the user does not have
+            permission to write to the specified path.
+          IsADirectoryError: If the file exists already and 
+            is a directory.
+        """
+        ...
+
+    async def read_file(
+        self, file: str, text: bool = True
+    ) -> Union[str | bytes]:
+        """
+        Raises:
+          FileNotFoundError: If the file does not exist.
+          UnicodeDecodeError: If an encoding error occurs 
+            while reading the file.
+            (only applicable when `text = True`)
+          PermissionError: If the user does not have
+            permission to read from the specified path.
+          IsADirectoryError: If the file is a directory.
+          OutputLimitExceededError: If the file size
+            exceeds the 100 MiB limit.
+        """
+        ...
+
+    async def connection(self, *, user: str | None = None) -> SandboxConnection:
+        """
+        Raises:
+           NotImplementedError: For sandboxes that don't provide connections
+           ConnectionError: If sandbox is not currently running.
+        """
+
+The read_file() method should preserve newline constructs (e.g. crlf should be preserved not converted to lf). This is equivalent to specifying newline="" in a call to the Python open() function. Note that write_file() automatically creates parent directories as required if they don’t exist.
+
+The connection() method is optional, and provides commands that can be used to login to the sandbox container from a terminal or IDE.
+
+Note that to deal with potential unreliability of container services, the exec() method includes a timeout_retry parameter that defaults to True. For sandbox implementations this parameter is advisory (they should only use it if potential unreliability exists in their runtime). No more than 2 retries should be attempted and both with timeouts less than 60 seconds. If you are executing commands that are not idempotent (i.e. the side effects of a failed first attempt may affect the results of subsequent attempts) then you can specify timeout_retry=False to override this behavior.
+
+For each method there is a documented set of errors that are raised: these are expected errors and can either be caught by tools or allowed to propagate in which case they will be reported to the model for potential recovery. In addition, unexpected errors may occur (e.g. a networking error connecting to a remote container): these errors are not reported to the model and fail the Sample with an error state.
+
+See the documentation on Sandbox Environments for additional details.
+
+Stateful Tools
+Some tools need to retain state across invocations (for example, the bash_session() and web_browser() tools both interact with a stateful remote process). You can create stateful tools by using the store_as() function to access discrete storage for your tool and/or specific instances of your tool.
+
+For example, imagine we were creating a web_surfer() tool that builds on the web_browser() tool to complete sequences of browser actions in service of researching a topic. We might want to ask multiple questions of the web surfer and have it retain its message history and browser state.
+
+Here’s the complete source code for this tool.
+
+from textwrap import dedent
+
+from pydantic import Field
+from shortuuid import uuid
+
+from inspect_ai.model import (
+  ChatMessage, ChatMessageSystem, ChatMessageUser, get_model
+)
+from inspect_ai.tool import Tool, tool, web_browser
+from inspect_ai.util import StoreModel, store_as
+
+class WebSurferState(StoreModel):
+    messages: list[ChatMessage] = Field(default_factory=list)
+
+@tool
+def web_surfer(instance: str | None = None) -> Tool:
+    """Web surfer tool for researching topics.
+
+    The web_surfer tool builds on the web_browser tool to complete
+    sequences of web_browser actions in service of researching a topic.
+    Input can either be requests to do research or questions about 
+    previous research.
+    """
+    async def execute(input: str, clear_history: bool = False) -> str:
+        """Use the web to research a topic.
+
+        You may ask the web surfer any question. These questions can 
+        either prompt new web searches or be clarifying or follow up 
+        questions about previous web searches.
+
+        Args:
+           input: Message to the web surfer. This can be a prompt to
+              do research or a question about previous research.
+           clear_history: Clear memory of previous searches.
+
+        Returns:
+           Answer to research prompt or question.
+        """
+        # keep track of message history in the store
+        surfer_state = store_as(WebSurferState, instance=instance)
+
+        # clear history if requested.
+        if clear_history:
+            surfer_state.messages.clear()
+
+        # provide system prompt if we are at the beginning
+        if len(surfer_state.messages) == 0:
+            surfer_state.messages.append(
+                ChatMessageSystem(
+                    content=dedent("""
+                You are a helpful assistant that can use a browser
+                to answer questions. You don't need to answer the 
+                questions with a single web browser request, rather,
+                you can perform searches, follow links, backtrack, 
+                and otherwise use the browser to its fullest 
+                capability to help answer the question.
+
+                In some cases questions will be about your previous
+                web searches, in those cases you don't always need
+                to use the web browser tool but can answer by 
+                consulting previous conversation messages.
+                """)
+                )
+            )
+
+        # append the latest question
+        surfer_state.messages.append(ChatMessageUser(content=input))
+
+        # run tool loop with web browser
+        messages, output = await get_model().generate_loop(
+            surfer_state.messages, tools=web_browser(instance=instance)
+        )
+
+        # update state
+        surfer_state.messages.extend(messages)
+
+        # return response
+        return output.completion
+
+    return execute
+
+Note that we make available an instance parameter that enables creation of multiple instances of the web_surfer() tool. We then pass this instance to the store_as() function (to store our own tool’s message history) and the web_browser() function (so that we also provision a unique browser for the web surfer session).
+
+For example, this creates a distinct instance of the web_surfer() with its own state and browser:
+
+from shortuuid import uuid
+
+react(..., tools=[web_surfer(instance=uuid())])
+
+Tool Choice
+By default models will use a tool if they think it’s appropriate for the given task. You can override this behaviour using the tool_choice parameter of the use_tools() Solver. For example:
+
+# let the model decide whether to use the tool
+use_tools(addition(), tool_choice="auto")
+
+# force the use of a tool
+use_tools(addition(), tool_choice=ToolFunction(name="addition"))
+
+# prevent use of tools
+use_tools(addition(), tool_choice="none")
+
+The last form (tool_choice="none") would typically be used to turn off tool usage after an initial generation where the tool used. For example:
+
+solver = [
+  use_tools(addition(), tool_choice=ToolFunction(name="addition")),
+  generate(),
+  follow_up_prompt(),
+  use_tools(tool_choice="none"),
+  generate()
+]
+
+Tool Descriptions
+Well crafted tools should include descriptions that provide models with the context required to use them correctly and productively. If you will be developing custom tools it’s worth taking some time to learn how to provide good tool definitions. Here are some resources you may find helpful:
+
+Best Practices for Tool Definitions
+Function Calling with LLMs
+In some cases you may want to change the default descriptions created by a tool author—for example you might want to provide better disambiguation between multiple similar tools that are used together. You also might have need to do this during development of tools (to explore what descriptions are most useful to models).
+
+The tool_with() function enables you to take any tool and adapt its name and/or descriptions. For example:
+
+from inspect_ai.tool import tool_with
+
+my_add = tool_with(
+  tool=addition(), 
+  name="my_add",
+  description="a tool to add numbers", 
+  parameters={
+    "x": "the x argument",
+    "y": "the y argument"
+  })
+
+You need not provide all of the parameters shown above, for example here are some examples where we modify just the main tool description or only a single parameter:
+
+my_add1 = tool_with(addition(), description="a tool to add numbers")
+my_add2 = tool_with(addition(), parameters={"x": "the x argument"})
+
+Note that tool_with() function modifies the passed tool in-place, so if you want to create multiple variations of a single tool using tool_with() you should create the underlying tool multiple times, once for each call to tool_with() (this is demonsrated in the example above).
+
+Dynamic Tools
+As described above, normally tools are defined using @tool decorators and documentation comments. It’s also possible to create a tool dynamically from any function by creating a ToolDef. For example:
+
+from inspect_ai.solver import use_tools
+from inspect_ai.tool import ToolDef
+
+async def addition(x: int, y: int):
+    return x + y
+
+add = ToolDef(
+    tool=addition,
+    name="add",
+    description="A tool to add numbers", 
+    parameters={
+        "x": "the x argument",
+        "y": "the y argument"
+    })
+)
+
+use_tools([add])
+
+This is effectively what happens under the hood when you use the @tool decorator. There is one critical requirement for functions that are bound to tools using ToolDef: type annotations must be provided in the function signature (e.g. x: int, y: int).
+
+For Inspect APIs, ToolDef can generally be used anywhere that Tool can be used (use_tools(), setting state.tools, etc.). If you are using a 3rd party API that does not take Tool in its interface, use the ToolDef.as_tool() method to adapt it. For example:
+
+from inspect_agents import my_agent
+agent = my_agent(tools=[add.as_tool()])
+
+If on the other hand you want to get the ToolDef for an existing tool (e.g. to discover its name, description, and parameters) you can just pass the Tool to the ToolDef constructor (including whatever overrides for name, etc. you want):
+
+from inspect_ai.tool import ToolDef, bash
+bash_def = ToolDef(bash())
+
+MCP Tools
+Sandboxing
+UK AI Security Institute
+
+Code
+
+Changelog
+
+License
+
+Issues
+
+
+Inspect AI
+
+User Guide
+Reference
+Extensions
+Evals
+Changelog
+Basics
+Welcome
+Tutorial
+Options
+Log Viewer
+VS Code
+Components
+Tasks
+Datasets
+Solvers
+Scorers
+Models
+Using Models
+Providers
+Caching
+Batch Mode
+Multimodal
+Reasoning
+Structured Output
+Tools
+Tool Basics
+Standard Tools
+MCP Tools
+Custom Tools
+Sandboxing
+Tool Approval
+Agents
+Using Agents
+ReAct Agent
+Multi Agent
+Custom Agents
+Agent Bridge
+Human Agent
+Analysis
+Log Files
+Log Dataframes
+Advanced
+Eval Sets
+Errors & Limits
+Typing
+Tracing
+Parallelism
+Interactivity
+Extensions
+On this page
+Overview
+Built-In Scorers
+Model Graded
+Custom Scorers
+Multiple Scorers
+Scoring Metrics
+Reducing Epochs
+Workflow
+Report an issue
+Components
+Scorers
+Scorers
+Overview
+Scorers evaluate whether solvers were successful in finding the right output for the target defined in the dataset, and in what measure. Scorers generally take one of the following forms:
+
+Extracting a specific answer out of a model’s completion output using a variety of heuristics.
+
+Applying a text similarity algorithm to see if the model’s completion is close to what is set out in the target.
+
+Using another model to assess whether the model’s completion satisfies a description of the ideal answer in target.
+
+Using another rubric entirely (e.g. did the model produce a valid version of a file format, etc.)
+
+Scorers also define one or more metrics which are used to aggregate scores (e.g. accuracy() which computes what percentage of scores are correct, or mean() which provides an average for scores that exist on a continuum).
+
+Built-In Scorers
+Inspect includes some simple text matching scorers as well as a couple of model graded scorers. Built in scorers can be imported from the inspect_ai.scorer module. Below is a summary of these scorers. There is not (yet) reference documentation on these functions so the best way to learn about how they can be customised, etc. is to use the Go to Definition command in your source editor.
+
+includes()
+
+Determine whether the target from the Sample appears anywhere inside the model output. Can be case sensitive or insensitive (defaults to the latter).
+
+match()
+
+Determine whether the target from the Sample appears at the beginning or end of model output (defaults to looking at the end). Has options for ignoring case, white-space, and punctuation (all are ignored by default).
+
+pattern()
+
+Extract the answer from model output using a regular expression.
+
+answer()
+
+Scorer for model output that preceded answers with “ANSWER:”. Can extract letters, words, or the remainder of the line.
+
+exact()
+
+Scorer which will normalize the text of the answer and target(s) and perform an exact matching comparison of the text. This scorer will return CORRECT when the answer is an exact match to one or more targets.
+
+f1()
+
+Scorer which computes the F1 score for the answer (which balances recall precision by taking the harmonic mean between recall and precision).
+
+model_graded_qa()
+
+Have another model assess whether the model output is a correct answer based on the grading guidance contained in target. Has a built-in template that can be customised.
+
+model_graded_fact()
+
+Have another model assess whether the model output contains a fact that is set out in target. This is a more narrow assessment than model_graded_qa(), and is used when model output is too complex to be assessed using a simple match() or pattern() scorer.
+
+choice()
+
+Specialised scorer that is used with the multiple_choice() solver.
+
+Scorers provide one or more built-in metrics (each of the scorers above provides accuracy and stderr as a metric). You can also provide your own custom metrics in Task definitions. For example:
+
+Task(
+    dataset=dataset,
+    solver=[
+        system_message(SYSTEM_MESSAGE),
+        multiple_choice()
+    ],
+    scorer=match(),
+    metrics=[custom_metric()]
+)
+
+Note
+The current development version of Inspect replaces the use of the bootstrap_stderr metric with stderr for the built in scorers enumerated above.
+
+Since eval scores are means of numbers having finite variance, we can compute standard errors using the Central Limit Theorem rather than bootstrapping. Bootstrapping is generally useful in contexts with more complex structure or non-mean summary statistics (e.g. quantiles). You will notice that the bootstrap numbers will come in quite close to the analytic numbers, since they are estimating the same thing.
+
+A common misunderstanding is that “t-tests require the underlying data to be normally distributed”. This is only true for small-sample problems; for large sample problems (say 30 or more questions), you just need finite variance in the underlying data and the CLT guarantees a normally distributed mean value.
+
+Model Graded
+Model graded scorers are well suited to assessing open ended answers as well as factual answers that are embedded in a longer narrative. The built-in model graded scorers can be customised in several ways—you can also create entirely new model scorers (see the model graded example below for a starting point).
+
+Here is the declaration for the model_graded_qa() function:
+
+@scorer(metrics=[accuracy(), stderr()])
+def model_graded_qa(
+    template: str | None = None,
+    instructions: str | None = None,
+    grade_pattern: str | None = None,
+    include_history: bool | Callable[[TaskState], str] = False,
+    partial_credit: bool = False,
+    model: list[str | Model] | str | Model | None = None,
+    model_role: str | None = "grader",
+) -> Scorer:
+    ...
+
+The default model graded QA scorer is tuned to grade answers to open ended questions. The default template and instructions ask the model to produce a grade in the format GRADE: C or GRADE: I, and this grade is extracted using the default grade_pattern regular expression.
+
+Model selection follows this precedence:
+
+If model is provided, it is used (if a list is provided, each model grades independently and the final grade is by majority vote).
+Else if model_role is provided (default: "grader"), the model bound to that role (via eval(..., model_roles={...}) or --model-role grader=...) is used.
+Else the model currently being evaluated is used.
+There are a few ways you can customise the default behaviour:
+
+Provide alternate instructions—the default instructions ask the model to use chain of thought reasoning and provide grades in the format GRADE: C or GRADE: I. Note that if you provide instructions that ask the model to format grades in a different way, you will also want to customise the grade_pattern.
+Specify include_history = True to include the full chat history in the presented question (by default only the original sample input is presented). You may optionally instead pass a function that enables customising the presentation of the chat history.
+Specify partial_credit = True to prompt the model to assign partial credit to answers that are not entirely right but come close (metrics by default convert this to a value of 0.5). Note that this parameter is only valid when using the default instructions.
+Specify an alternate model to perform the grading (e.g. a more powerful model or a model fine tuned for grading). If you provide a list of models, each grades independently and the final grade is chosen by majority vote.
+Bind a model_role (default: "grader") at eval time. See Model Roles for details.
+Specify a different template—note that templates are passed these variables: question, criterion, answer, and instructions.
+The model_graded_fact() scorer works identically to model_graded_qa() (including model selection precedence and multi-model voting), and simply provides an alternate template oriented around judging whether a fact is included in the model output.
+
+If you want to understand how the default templates for model_graded_qa() and model_graded_fact() work, see their source code.
+
+Multiple Models
+The built-in model graded scorers also support using multiple grader models (whereby the final grade is chosen by majority vote). For example, here we specify that 3 models should be used for grading:
+
+model_graded_qa(
+    model = [
+        "google/gemini-1.5-pro",
+        "anthropic/claude-3-opus-20240229" 
+        "together/meta-llama/Llama-3-70b-chat-hf",
+    ]
+)
+
+The implementation of multiple grader models takes advantage of the multi_scorer() and majority_vote() functions, both of which can be used in your own scorers (as described in the Multiple Scorers section below).
+
+Custom Scorers
+Custom scorers are functions that take a TaskState and Target, and yield a Score.
+
+async def score(state: TaskState, target: Target):
+     # Compare state / model output with target
+     # to yield a score
+     return Score(value=...)
+
+First we’ll talk about the core Score and Value objects, then provide some examples of custom scorers to make things more concrete.
+
+Note that score above is declared as an async function. When creating custom scorers, it’s critical that you understand Inspect’s concurrency model. More specifically, if your scorer is doing non-trivial work (e.g. calling REST APIs, executing external processes, etc.) please review Parallelism before proceeding.
+
+Score
+The components of Score include:
+
+Field	Type	Description
+value	Value	Value assigned to the sample (e.g. “C” or “I”, or a raw numeric value).
+answer	str	Text extracted from model output for comparison (optional).
+explanation	str	Explanation of score, e.g. full model output or grader model output (optional).
+metadata	dict[str,Any]	Additional metadata about the score to record in the log file (optional).
+For example, the following are all valid Score objects:
+
+Score(value="C")
+Score(value="I")
+Score(value=0.6)
+Score(
+    value="C" if extracted == target.text else "I", 
+    answer=extracted, 
+    explanation=state.output.completion
+)
+
+If you are extracting an answer from within a completion (e.g. looking for text using a regex pattern, looking at the beginning or end of the completion, etc.) you should strive to always return an answer as part of your Score, as this makes it much easier to understand the details of scoring when viewing the eval log file.
+
+Value
+Value is union over the main scalar types as well as a list or dict of the same types:
+
+Value = Union[
+    str | int | float | bool,
+    Sequence[str | int | float | bool],
+    Mapping[str, str | int | float | bool],
+]
+
+The vast majority of scorers will use str (e.g. for correct/incorrect via “C” and “I”) or float (the other types are there to meet more complex scenarios). One thing to keep in mind is that whatever Value type you use in a scorer must be supported by the metrics declared for the scorer (more on this below).
+
+Next, we’ll take a look at the source code for a couple of the built in scorers as a jumping off point for implementing your own scorers. If you are working on custom scorers, you should also review the Scorer Workflow section below for tips on optimising your development process.
+
+Models in Scorers
+You’ll often want to use models in the implementation of scorers. Use the get_model() function to get either the currently evaluated model or another model interface. For example:
+
+# use the model being evaluated for grading
+grader_model = get_model() 
+
+# use another model for grading
+grader_model = get_model("google/gemini-1.5-pro")
+
+Use the config parameter of get_model() to override default generation options:
+
+grader_model = get_model(
+    "google/gemini-1.5-pro", 
+    config = GenerateConfig(temperature = 0.9, max_connections = 10)
+)
+
+Example: Includes
+Here is the source code for the built-in includes() scorer:
+
+1@scorer(metrics=[accuracy(), stderr()])
+def includes(ignore_case: bool = True):
+
+2    async def score(state: TaskState, target: Target):
+
+        # check for correct
+        answer = state.output.completion
+3        target = target.text
+        if ignore_case:
+            correct = answer.lower().rfind(target.lower()) != -1
+        else:
+            correct = answer.rfind(target) != -1
+
+        # return score
+        return Score(
+4            value = CORRECT if correct else INCORRECT,
+5            answer=answer
+        )
+
+    return score
+
+1
+The function applies the @scorer decorator and registers two metrics for use with the scorer.
+2
+The score function is declared as async. This is so that it can participate in Inspect’s optimised scheduling for expensive model generation calls (this scorer doesn’t call a model but others will).
+3
+We make use of the text property on the Target. This is a convenience property to get a simple text value out of the Target (as targets can technically be a list of strings).
+4
+We use the special constants CORRECT and INCORRECT for the score value (as the accuracy(), stderr(), and bootstrap_stderr() metrics know how to convert these special constants to float values (1.0 and 0.0 respectively).
+5
+We provide the full model completion as the answer for the score (answer is optional, but highly recommended as it is often useful to refer to during evaluation development).
+Example: Model Grading
+Here’s a somewhat simplified version of the code for the model_graded_qa() scorer:
+
+
+@scorer(metrics=[accuracy(), stderr()])
+def model_graded_qa(
+    template: str = DEFAULT_MODEL_GRADED_QA_TEMPLATE,
+    instructions: str = DEFAULT_MODEL_GRADED_QA_INSTRUCTIONS,
+    grade_pattern: str = DEFAULT_GRADE_PATTERN,
+    model: str | Model | None = None,
+) -> Scorer:
+   
+    # resolve grading template and instructions, 
+    # (as they could be file paths or URLs)
+    template = resource(template)
+    instructions = resource(instructions)
+
+    # resolve model
+    grader_model = get_model(model)
+
+    async def score(state: TaskState, target: Target) -> Score:
+        # format the model grading template
+        score_prompt = template.format(
+            question=state.input_text,
+            answer=state.output.completion,
+            criterion=target.text,
+            instructions=instructions,
+        )
+
+        # query the model for the score
+        result = await grader_model.generate(score_prompt)
+
+        # extract the grade
+        match = re.search(grade_pattern, result.completion)
+        if match:
+            return Score(
+                value=match.group(1),
+                answer=match.group(0),
+                explanation=result.completion,
+            )
+        else:
+            return Score(
+                value=INCORRECT,
+                explanation="Grade not found in model output: "
+                + f"{result.completion}",
+            )
+
+    return score
+
+Note that the call to model_grader.generate() is done with await—this is critical to ensure that the scorer participates correctly in the scheduling of generation work.
+
+Note also we use the input_text property of the TaskState to access a string version of the original user input to substitute it into the grading template. Using the input_text has two benefits: (1) It is guaranteed to cover the original input from the dataset (rather than a transformed prompt in messages); and (2) It normalises the input to a string (as it could have been a message list).
+
+Multiple Scorers
+There are several ways to use multiple scorers in an evaluation:
+
+You can provide a list of scorers in a Task definition (this is the best option when scorers are entirely independent)
+You can yield multiple scores from a Scorer (this is the best option when scores share code and/or expensive computations).
+You can use multiple scorers and then aggregate them into a single scorer (e.g. majority voting).
+List of Scorers
+Task definitions can specify multiple scorers. For example, the below task will use two different models to grade the results, storing two scores with each sample, one for each of the two models:
+
+Task(
+    dataset=dataset,
+    solver=[
+        system_message(SYSTEM_MESSAGE),
+        generate()
+    ],
+    scorer=[
+        model_graded_qa(model="openai/gpt-4"), 
+        model_graded_qa(model="google/gemini-1.5-pro")
+    ],
+)
+
+This is useful when there is more than one way to score a result and you would like preserve the individual score values with each sample (versus reducing the multiple scores to a single value).
+
+Scorer with Multiple Values
+You may also create a scorer which yields multiple scores. This is useful when the scores use data that is shared or expensive to compute. For example:
+
+@scorer(
+1    metrics={
+        "a_count": [mean(), stderr()],
+        "e_count": [mean(), stderr()]
+    }
+)
+def letter_count():
+    async def score(state: TaskState, target: Target):
+        answer = state.output.completion
+        a_count = answer.count("a")
+        e_count = answer.count("e")
+2        return Score(
+            value={"a_count": a_count, "e_count": e_count},
+            answer=answer
+        )
+
+    return score
+
+task = Task(
+    dataset=[Sample(input="Tell me a story."],
+    scorer=letter_count()
+)
+
+1
+The metrics for this scorer are a dictionary—this defines metrics to be applied to scores (by name).
+2
+The score value itself is a dictionary—the keys corresponding to the keys defined in the metrics on the @scorer decorator.
+The above example will produce two scores, a_count and e_count, each of which will have metrics for mean and stderr.
+
+When working with complex score values and metrics, you may use globs as keys for mapping metrics to scores. For example, a more succinct way to write the previous example:
+
+@scorer(
+    metrics={
+        "*": [mean(), stderr()], 
+    }
+)
+
+Glob keys will each be resolved and a complete list of matching metrics will be applied to each score key. For example to compute mean for all score keys, and only compute stderr for e_count you could write:
+
+@scorer(
+    metrics={
+        "*": [mean()], 
+        "e_count": [stderr()]
+    }
+)
+
+Scorer with Complex Metrics
+Sometime, it is useful for a scorer to compute multiple values (returning a dictionary as the score value) and to have metrics computed both for each key in the score dictionary, but also for the dictionary as a whole. For example:
+
+@scorer(
+1    metrics=[{
+        "a_count": [mean(), stderr()],
+        "e_count": [mean(), stderr()]
+    }, total_count()]
+)
+def letter_count():
+    async def score(state: TaskState, target: Target):
+        answer = state.output.completion
+        a_count = answer.count("a")
+        e_count = answer.count("e")
+2        return Score(
+            value={"a_count": a_count, "e_count": e_count},
+            answer=answer
+        )
+
+    return score
+
+@metric
+def total_count() -> Metric:
+    def metric(scores: list[SampleScore]) -> int | float:
+        total = 0.0
+        for score in scores:
+3            total = score.score.value["a_count"]
+                + score.score.value["e_count"]
+        return total
+    return metric
+
+task = Task(
+    dataset=[Sample(input="Tell me a story."],
+    scorer=letter_count()
+)
+
+1
+The metrics for this scorer are a list, one element is a dictionary—this defines metrics to be applied to scores (by name), the other element is a Metric which will receive the entire score dictionary.
+2
+The score value itself is a dictionary—the keys corresponding to the keys defined in the metrics on the @scorer decorator.
+3
+The total_count metric will compute a metric based upon the entire score dictionary (since it isn’t being mapped onto the dictionary by key)
+Reducing Multiple Scores
+It’s possible to use multiple scorers in parallel, then reduce their output into a final overall score. This is done using the multi_scorer() function. For example, this is roughly how the built in model graders use multiple models for grading:
+
+multi_scorer(
+    scorers = [model_graded_qa(model=model) for model in models],
+    reducer = "mode"
+)
+
+Use of multi_scorer() requires both a list of scorers as well as a reducer which determines how a list of scores will be turned into a single score. In this case we use the “mode” reducer which returns the score that appeared most frequently in the answers.
+
+Sandbox Access
+If your Solver is an Agent with tool use, you might want to inspect the contents of the tool sandbox to score the task.
+
+The contents of the sandbox for the Sample are available to the scorer; simply call await sandbox().read_file() (or .exec()).
+
+For example:
+
+from inspect_ai import Task, task
+from inspect_ai.dataset import Sample
+from inspect_ai.scorer import Score, Target, accuracy, scorer
+from inspect_ai.solver import Plan, TaskState, generate, use_tools
+from inspect_ai.tool import bash
+from inspect_ai.util import sandbox
+
+
+@scorer(metrics=[accuracy()])
+def check_file_exists():
+    async def score(state: TaskState, target: Target):
+        try:
+            _ = await sandbox().read_file(target.text)
+            exists = True
+        except FileNotFoundError:
+            exists = False
+        return Score(value=1 if exists else 0)
+
+    return score
+
+
+@task
+def challenge() -> Task:
+    return Task(
+        dataset=[
+            Sample(
+                input="Create a file called hello-world.txt",
+                target="hello-world.txt",
+            )
+        ],
+        solver=[use_tools([bash()]), generate()],
+        sandbox="local",
+        scorer=check_file_exists(),
+    )
+
+Scoring Metrics
+Each scorer provides one or more built-in metrics (typically accuracy and stderr) corresponding to the most typically useful metrics for that scorer.
+
+You can override scorer’s built-in metrics by passing an alternate list of metrics to the Task. For example:
+
+Task(
+    dataset=dataset,
+    solver=[
+        system_message(SYSTEM_MESSAGE),
+        multiple_choice()
+    ],
+    scorer=choice(),
+    metrics=[custom_metric()]
+)
+
+If you still want to compute the built-in metrics, we re-specify them along with the custom metrics:
+
+metrics=[accuracy(), stderr(), custom_metric()]
+
+Built-In Metrics
+Inspect includes some simple built in metrics for calculating accuracy, mean, etc. Built in metrics can be imported from the inspect_ai.scorer module. Below is a summary of these metrics. There is not (yet) reference documentation on these functions so the best way to learn about how they can be customised, etc. is to use the Go to Definition command in your source editor.
+
+accuracy()
+
+Compute proportion of total answers which are correct. For correct/incorrect scores assigned 1 or 0, can optionally assign 0.5 for partially correct answers.
+
+mean()
+
+Mean of all scores.
+
+var()
+
+Sample variance over all scores.
+
+std()
+
+Standard deviation over all scores (see below for details on computing clustered standard errors).
+
+stderr()
+
+Standard error of the mean.
+
+bootstrap_stderr()
+
+Standard deviation of a bootstrapped estimate of the mean. 1000 samples are taken by default (modify this using the num_samples option).
+
+Metric Grouping
+The grouped() function applies a given metric to subgroups of samples defined by a key in sample metadata, creating a separate metric for each group along with an "all" metric that aggregates across all samplesor groups. Each sample must have a value for whatever key is used for grouping.
+
+For example, let’s say you wanted to create a separate accuracy metric for each distinct “category” variable defined in Sample metadata:
+
+@task
+def gpqa():
+    return Task(
+        dataset=read_gpqa_dataset("gpqa_main.csv"),
+        solver=[
+            system_message(SYSTEM_MESSAGE),
+            multiple_choice(),
+        ],
+        scorer=choice(),
+        metrics=[grouped(accuracy(), "category"), stderr()]
+    )
+
+The metrics passed to the Task override the default metrics of the choice() scorer.
+
+Note that the "all" metric by default takes the selected metric over all of the samples. If you prefer that it take the mean of the individual grouped values, pass all="groups":
+
+grouped(accuracy(), "category", all="groups")
+
+Clustered Stderr
+The stderr() metric supports computing clustered standard errors via the cluster parameter. Most scorers already include stderr() as a built-in metric, so to compute clustered standard errors you’ll want to specify custom metrics for your task (which will override the scorer’s built in metrics).
+
+For example, let’s say you wanted to cluster on a “category” variable defined in Sample metadata:
+
+@task
+def gpqa():
+    return Task(
+        dataset=read_gpqa_dataset("gpqa_main.csv"),
+        solver=[
+            system_message(SYSTEM_MESSAGE),
+            multiple_choice(),
+        ],
+        scorer=choice(),
+        metrics=[accuracy(), stderr(cluster="category")]
+    )
+
+The metrics passed to the Task override the default metrics of the choice() scorer.
+
+Custom Metrics
+You can also add your own metrics with @metric decorated functions. For example, here is the implementation of the mean metric:
+
+import numpy as np
+
+from inspect_ai.scorer import Metric, Score, metric
+
+@metric
+def mean() -> Metric:
+    """Compute mean of all scores.
+
+    Returns:
+       mean metric
+    """
+
+    def metric(scores: list[SampleScore]) -> float:
+        return np.mean([score.score.as_float() for score in scores]).item()
+
+    return metric
+
+Note that the Score class contains a Value that is a union over several scalar and collection types. As a convenience, Score includes a set of accessor methods to treat the value as a simpler form (e.g. above we use the score.as_float() accessor).
+
+Reducing Epochs
+If a task is run over more than one epoch, multiple scores will be generated for each sample. These scores are then reduced to a single score representing the score for the sample across all the epochs.
+
+By default, this is done by taking the mean of all sample scores, but you may specify other strategies for reducing the samples by passing an Epochs, which includes both a count and one or more reducers to combine sample scores with. For example:
+
+@task
+def gpqa():
+    return Task(
+        dataset=read_gpqa_dataset("gpqa_main.csv"),
+        solver=[
+            system_message(SYSTEM_MESSAGE),
+            multiple_choice(),
+        ],
+        scorer=choice(),
+        epochs=Epochs(5, "mode"),
+    )
+
+You may also specify more than one reducer which will compute metrics using each of the reducers. For example:
+
+@task
+def gpqa():
+    return Task(
+        ...
+        epochs=Epochs(5, ["at_least_2", "at_least_5"]),
+    )
+
+Built-in Reducers
+Inspect includes several built in reducers which are summarised below.
+
+Reducer	Description
+mean	Reduce to the average of all scores.
+median	Reduce to the median of all scores
+mode	Reduce to the most common score.
+max	Reduce to the maximum of all scores.
+pass_at_{k}	Probability of at least 1 correct sample given k epochs (https://arxiv.org/pdf/2107.03374)
+at_least_{k}	1 if at least k samples are correct, else 0.
+Note
+The built in reducers will compute a reduced value for the score and populate the fields answer and explanation only if their value is equal across all epochs. The metadata field will always be reduced to the value of metadata in the first epoch. If your custom metrics function needs differing behavior for reducing fields, you should also implement your own custom reducer and merge or preserve fields in some way.
+
+Custom Reducers
+You can also add your own reducer with @score_reducer decorated functions. Here’s a somewhat simplified version of the code for the mean reducer:
+
+import statistics
+
+from inspect_ai.scorer import (
+    Score, ScoreReducer, score_reducer, value_to_float
+)
+
+@score_reducer(name="mean")
+def mean_score() -> ScoreReducer:
+    to_float = value_to_float()
+
+    def reduce(scores: list[Score]) -> Score:
+        """Compute a mean value of all scores."""
+        values = [to_float(score.value) for score in scores]
+        mean_value = statistics.mean(values)
+
+        return Score(value=mean_value)
+
+    return reduce
+
+Workflow
+Unscored Evals
+By default, model output in evaluations is automatically scored. However, you can defer scoring by using the --no-score option. For example:
+
+inspect eval popularity.py --model openai/gpt-4 --no-score
+
+This will produce a log with samples that have not yet been scored and with no evaluation metrics.
+
+Using a distinct scoring step is particularly useful during scorer development, as it bypasses the entire generation phase, saving lots of time and inference costs.
+
+Score Command
+You can score an evaluation previously run this way using the inspect score command:
+
+# score an unscored eval
+inspect score ./logs/2024-02-23_task_gpt-4_TUhnCn473c6.eval
+
+This will use the scorers and metrics that were declared when the evaluation was run, applying them to score each sample and generate metrics for the evaluation.
+
+You may choose to use a different scorer than the task scorer to score a log file. In this case, you can use the --scorer option to pass the name of a scorer (including one in a package) or the path to a source code file containing a scorer to use. For example:
+
+# use built in match scorer
+inspect score ./logs/2024-02-23_task_gpt-4_TUhnCn473c6.eval --scorer match
+
+# use scorer in a package
+inspect score ./logs/2024-02-23_task_gpt-4_TUhnCn473c6.eval --scorer scorertools/custom_scorer
+
+# use scorer in a file
+inspect score ./logs/2024-02-23_task_gpt-4_TUhnCn473c6.eval --scorer custom_scorer.py
+
+# use a custom scorer named 'classify' in a file with more than one scorer
+inspect score ./logs/2024-02-23_task_gpt-4_TUhnCn473c6.eval --scorer custom_scorers.py@classify
+
+If you need to pass arguments to the scorer, you can do do using scorer args (-S) like so:
+
+inspect score ./logs/2024-02-23_task_gpt-4_TUhnCn473c6.eval --scorer match -S location=end
+
+Overwriting Logs
+When you use the inspect score command, you will prompted whether or not you’d like to overwrite the existing log file (with the scores added), or create a new scored log file. By default, the command will create a new log file with a -scored suffix to distinguish it from the original file. You may also control this using the --overwrite flag as follows:
+
+# overwrite the log with scores from the task defined scorer
+inspect score ./logs/2024-02-23_task_gpt-4_TUhnCn473c6.eval --overwrite
+
+Overwriting Scores
+When rescoring a previously scored log file you have two options:
+
+Append Mode (Default): The new scores will be added alongside the existing scores in the log file, keeping both the old and new results.
+Overwrite Mode: The new scores will replace the existing scores in the log file, removing the old results.
+You can choose which mode to use based on whether you want to preserve or discard the previous scoring data. To control this, use the --action arg:
+
+# append scores from custom scorer
+inspect score ./logs/2024-02-23_task_gpt-4_TUhnCn473c6.eval --scorer custom_scorer.py --action append
+
+# overwrite scores with new scores from custom scorer
+inspect score ./logs/2024-02-23_task_gpt-4_TUhnCn473c6.eval --scorer custom_scorer.py --action overwrite
+
+Score Function
+You can also use the score() function in your Python code to score evaluation logs. For example, if you are exploring the performance of different scorers, you might find it more useful to call the score() function using varying scorers or scorer options. For example:
+
+log = eval(popularity, model="openai/gpt-4")[0]
+
+grader_models = [
+    "openai/gpt-4",
+    "anthropic/claude-3-opus-20240229",
+    "google/gemini-1.5-pro",
+    "mistral/mistral-large-latest"
+]
+
+scoring_logs = [score(log, model_graded_qa(model=model)) 
+                for model in grader_models]
+
+plot_results(scoring_logs)
+
+You can also use this function to score an existing log file (appending or overwriting results) like so:
+
+# read the log
+input_log_path = "./logs/2025-02-11T15-17-00-05-00_popularity_dPiJifoWeEQBrfWsAopzWr.eval"
+log = read_eval_log(input_log_path)
+
+grader_models = [
+    "openai/gpt-4",
+    "anthropic/claude-3-opus-20240229",
+    "google/gemini-1.5-pro",
+    "mistral/mistral-large-latest"
+]
+
+# perform the scoring using various models
+scoring_logs = [score(log, model_graded_qa(model=model), action="append") 
+                for model in grader_models]
+
+# write log files with the model name as a suffix
+for model, scored_log in zip(grader_models, scoring_logs):
+    base, ext = os.path.splitext(input_log_path)
+    output_file = f"{base}_{model.replace('/', '_')}{ext}"
+    write_eval_log(scored_log, output_file)
+
+Solvers
+Using Models
+UK AI Security Institute
+
+Code
+
+Changelog
+
+License
+
+Issues
+

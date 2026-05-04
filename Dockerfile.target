@@ -17,8 +17,10 @@ RUN apt-get update && \
     curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --dearmor -o /usr/share/keyrings/wazuh-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/wazuh-archive-keyring.gpg] https://packages.wazuh.com/4.x/apt/ stable main" > /etc/apt/sources.list.d/wazuh.list && \
     apt-get update && \
-    # Install Wazuh agent and Sysmon for Linux
-    apt-get install -y wazuh-agent sysmonforlinux && \
+    # Install Wazuh agent (pinned to match manager image 4.13.0 — newer agents
+    # are rejected by the manager with "Agent version must be lower or equal")
+    # and Sysmon for Linux.
+    apt-get install -y wazuh-agent=4.13.0-1 sysmonforlinux && \
     # Clean up
     rm -rf /var/lib/apt/lists/*
 

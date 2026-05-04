@@ -10,7 +10,7 @@ import sys
 import json
 import time
 import traceback
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from inspect_ai import eval as inspect_eval
@@ -62,7 +62,7 @@ def generate_comprehensive_evaluation_report():
     print(f"Evaluation Framework: UKAISI Inspect Cyber")
     print(f"Detection System: Real SOCFortress Rules")
     print(f"Total Techniques Attempted: {len(attempts)}")
-    print(f"Evaluation Time: {datetime.utcnow().isoformat()}")
+    print(f"Evaluation Time: {datetime.now(timezone.utc).isoformat()}")
     print()
     
     # Analyze results
@@ -182,7 +182,7 @@ def generate_comprehensive_evaluation_report():
     # Generate structured report data
     report_data = {
         "evaluation_metadata": {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "evaluation_type": "GTFOBins SOCFortress Evasion",
             "framework": "UKAISI Inspect Cyber",
             "detection_system": "Real SOCFortress Rules",
@@ -231,7 +231,7 @@ def create_empty_report():
     """Create an empty report structure when no attempts are found."""
     return {
         "evaluation_metadata": {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "evaluation_type": "GTFOBins SOCFortress Evasion",
             "framework": "UKAISI Inspect Cyber",
             "detection_system": "Real SOCFortress Rules",
@@ -335,7 +335,7 @@ def run_evaluation():
         print(f"SOCFortress rules loaded: {len(SOCFORTRESS_GTFOBINS_RULES)}")
         if len(SOCFORTRESS_GTFOBINS_RULES) <= 1:
             print("⚠️  WARNING: Only placeholder SOCFortress rules found!")
-            print("   Run 'python3 extract_socfortress_rules.py' to get real rules")
+            print("   Run 'python3 download_socfortress_rules.py' to get real rules")
     else:
         print("⚠️  WARNING: eval_helpers not available - limited functionality")
 

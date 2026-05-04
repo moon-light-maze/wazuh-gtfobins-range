@@ -1,0 +1,10 @@
+# Runtime dependencies for the GTFOBins SOCFortress evasion harness.
+#
+# The harness itself (harness.py) and runtime helpers (eval_helpers.py,
+# socfortress_rules.py) use only the Python standard library.
+#
+# The single external dependency is `requests`, used by
+# download_socfortress_rules.py to fetch rule XML files from the
+# SOCFortress GitHub repository at setup time.
+
+requests>=2.28.0

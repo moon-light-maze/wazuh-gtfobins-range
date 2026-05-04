@@ -148,21 +148,47 @@ def detect_gtfobins_technique(command: str) -> Optional[Dict[str, str]]:
 # SOCFortress Alert Detection
 # ------------------------------
 
-def check_wazuh_alerts(wait_seconds: int = 20) -> Dict[str, Any]:
+def get_alerts_log_line_count() -> Optional[int]:
+    """Return the current line count of the manager's alerts.log, or None on error.
+
+    Used as a high-water mark before running a command, so we can later read
+    only the alerts that fired *after* the command — not whatever happened
+    to be in the last 500 lines globally.
     """
-    Check for SOCFortress correlation rule alerts only.
-    
+    manager = find_container("wazuh.manager")
+    if not manager:
+        return None
+    try:
+        result = subprocess.run([
+            "docker", "exec", manager,
+            "wc", "-l", "/var/ossec/logs/alerts/alerts.log",
+        ], capture_output=True, text=True, timeout=10)
+        if result.returncode == 0:
+            return int(result.stdout.strip().split()[0])
+    except (subprocess.SubprocessError, OSError, ValueError, IndexError):
+        pass
+    return None
+
+
+def check_wazuh_alerts(wait_seconds: int = 20, since_line: Optional[int] = None) -> Dict[str, Any]:
+    """
+    Check Wazuh alerts.log for detections.
+
     Args:
-        wait_seconds: Time to wait for SOCFortress correlation processing
-    
+        wait_seconds: Time to wait for correlation processing before reading.
+        since_line: If provided, only inspect alerts.log lines after this 1-indexed
+            line number (use the value returned by get_alerts_log_line_count()
+            *before* running the command). If None, falls back to last 500 lines —
+            but that re-counts old alerts and is unreliable across multiple attempts.
+
     Returns:
-        Dict with SOCFortress detection results only
+        Dict with detection results.
     """
     print(f"[DETECTION] Waiting {wait_seconds} seconds for SOCFortress correlation processing...")
-    
+
     if wait_seconds > 0:
         time.sleep(wait_seconds)
-    
+
     manager = find_container("wazuh.manager")
     if not manager:
         return {
@@ -173,10 +199,13 @@ def check_wazuh_alerts(wait_seconds: int = 20) -> Dict[str, Any]:
         }
 
     try:
-        # Get recent alerts from Wazuh manager
+        if since_line is not None and since_line >= 0:
+            # Window scoped to this attempt: read only lines after the high-water mark.
+            tail_cmd = ["tail", "-n", f"+{since_line + 1}", "/var/ossec/logs/alerts/alerts.log"]
+        else:
+            tail_cmd = ["tail", "-n", "500", "/var/ossec/logs/alerts/alerts.log"]
         result = subprocess.run([
-            "docker", "exec", manager,
-            "tail", "-n", "500", "/var/ossec/logs/alerts/alerts.log"
+            "docker", "exec", manager, *tail_cmd,
         ], capture_output=True, text=True, timeout=30)
 
         if result.returncode != 0:
@@ -348,8 +377,11 @@ def run_attempt(
     """
     print(f"[ATTEMPT {attempt_number}] {technique}: {command}")
 
+    # Mark the alerts.log high-water mark BEFORE running the command so the
+    # detection check only counts alerts that fired during this attempt.
+    since_line = get_alerts_log_line_count()
     exec_result = execute_command(command, target)
-    detection_result = check_wazuh_alerts(wait_seconds=wait_seconds)
+    detection_result = check_wazuh_alerts(wait_seconds=wait_seconds, since_line=since_line)
     detected = detection_result.get("detected", False)
 
     attempt_data = {

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Sysmon schemaversion="4.81">
+  <!--
+  Sysmon for Linux Configuration - GTFOBins Detection
+  Designed to catch privilege escalation and evasion techniques
+  -->
+
+  <HashAlgorithms>sha256</HashAlgorithms>
+
+  <EventFiltering>
+
+    <!-- Event ID 1: Process Creation -->
+    <!-- Capture suspicious GTFOBins command executions -->
+    <RuleGroup name="" groupRelation="or">
+      <ProcessCreate onmatch="include">
+
+        <!-- Find command with -exec (common GTFOBins technique) -->
+        <Rule name="GTFOBins_Find_Exec" groupRelation="and">
+          <Image condition="end with">find</Image>
+          <CommandLine condition="contains">-exec</CommandLine>
+        </Rule>
+
+        <!-- AWK with system() or shell spawning -->
+        <Rule name="GTFOBins_AWK_System" groupRelation="or">
+          <Image condition="end with">awk</Image>
+          <Image condition="end with">gawk</Image>
+          <Image condition="end with">mawk</Image>
+        </Rule>
+        <CommandLine condition="contains" name="AWK_BEGIN_system">BEGIN {system</CommandLine>
+
+        <!-- Python with -c (command execution) -->
+        <Rule name="GTFOBins_Python_Command" groupRelation="and">
+          <Image condition="contains">python</Image>
+          <CommandLine condition="contains">-c</CommandLine>
+        </Rule>
+
+        <!-- VIM shell escape -->
+        <Rule name="GTFOBins_VIM_Shell" groupRelation="and">
+          <Image condition="end with">vim</Image>
+          <CommandLine condition="contains any">:!;-c</CommandLine>
+        </Rule>
+
+        <!-- Base64 decode with piped execution -->
+        <CommandLine condition="contains all" name="Base64_Decode_Exec">base64;-d</CommandLine>
+
+        <!-- Less/More pager abuse -->
+        <Rule name="GTFOBins_Pager_Abuse" groupRelation="or">
+          <Image condition="is">/usr/bin/less</Image>
+          <Image condition="is">/usr/bin/more</Image>
+        </Rule>
+
+        <!-- Wget with suspicious flags (file upload/POST) -->
+        <Rule name="GTFOBins_Wget_Exfil" groupRelation="and">
+          <Image condition="end with">wget</Image>
+          <CommandLine condition="contains any">--post-file;--post-data</CommandLine>
+        </Rule>
+
+        <!-- Curl piped to shell -->
+        <CommandLine condition="contains all" name="Curl_Pipe_Shell">curl;| sh;| bash</CommandLine>
+
+        <!-- Sed with execute flag -->
+        <Rule name="GTFOBins_Sed_Exec" groupRelation="and">
+          <Image condition="end with">sed</Image>
+          <CommandLine condition="contains">e /bin/sh</CommandLine>
+        </Rule>
+
+        <!-- Netcat reverse shells -->
+        <Rule name="GTFOBins_Netcat" groupRelation="and">
+          <Image condition="contains any">nc;netcat;ncat</Image>
+          <CommandLine condition="contains any">-e /bin/sh;-e /bin/bash;-c /bin/sh</CommandLine>
+        </Rule>
+
+        <!-- Sudo with suspicious binaries -->
+        <Rule name="Sudo_Suspicious_Binary" groupRelation="and">
+          <ParentImage condition="end with">sudo</ParentImage>
+          <Image condition="contains any">vim;less;more;awk;find;python;perl;ruby;node;php</Image>
+        </Rule>
+
+        <!-- Shell spawning from text editors/pagers -->
+        <Rule name="Shell_From_Editor" groupRelation="and">
+          <ParentImage condition="contains any">vim;vi;less;more;man;pico;nano</ParentImage>
+          <Image condition="contains any">/bin/sh;/bin/bash;/bin/dash</Image>
+        </Rule>
+
+      </ProcessCreate>
+    </RuleGroup>
+
+    <!-- Event ID 3: Network Connection -->
+    <!-- Detect data exfiltration and C2 communication -->
+    <RuleGroup name="" groupRelation="or">
+      <NetworkConnect onmatch="include">
+
+        <!-- Suspicious binaries making network connections -->
+        <Rule name="Network_From_GTFOBins" groupRelation="or">
+          <Image condition="contains any">wget;curl;python;perl;ruby;nc;netcat;ncat;socat</Image>
+        </Rule>
+
+      </NetworkConnect>
+    </RuleGroup>
+
+    <!-- Event ID 11: File Creation -->
+    <!-- Monitor for suspicious file writes -->
+    <RuleGroup name="" groupRelation="or">
+      <FileCreate onmatch="include">
+
+        <!-- Scripts created in /tmp or /dev/shm -->
+        <Rule name="Suspicious_Script_Creation" groupRelation="and">
+          <TargetFilename condition="begin with">/tmp/;/dev/shm/</TargetFilename>
+          <TargetFilename condition="end with">.sh;.py;.pl;.rb</TargetFilename>
+        </Rule>
+
+      </FileCreate>
+    </RuleGroup>
+
+    <!-- Event ID 23: File Delete -->
+    <!-- Monitor for log/evidence deletion -->
+    <RuleGroup name="" groupRelation="or">
+      <FileDelete onmatch="include">
+
+        <!-- Log file deletion -->
+        <TargetFilename condition="contains">/var/log/</TargetFilename>
+
+        <!-- History file deletion -->
+        <TargetFilename condition="contains">history</TargetFilename>
+
+      </FileDelete>
+    </RuleGroup>
+
+  </EventFiltering>
+
+</Sysmon>

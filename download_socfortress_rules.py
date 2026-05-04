@@ -1,0 +1,228 @@
+#!/usr/bin/env python3
+"""
+Download SOCFortress Wazuh rules to local machine for deployment.
+This script downloads all XML rule files from the SOCFortress GitHub repository
+and saves them locally for installation during Docker container setup.
+"""
+
+import os
+import json
+import requests
+import tempfile
+import subprocess
+from pathlib import Path
+from typing import List, Dict
+
+# Configuration
+SOCFORTRESS_REPO = "https://api.github.com/repos/socfortress/Wazuh-Rules"
+LOCAL_RULES_DIR = "./socfortress_rules"
+RULES_MAPPING_FILE = "./socfortress_rules_mapping.json"
+
+def get_repo_file_tree() -> List[Dict]:
+    """Get the complete file tree from SOCFortress repository."""
+    print("Fetching SOCFortress repository file tree...")
+    
+    try:
+        # Get the repository tree
+        response = requests.get(f"{SOCFORTRESS_REPO}/git/trees/main?recursive=1", timeout=30)
+        response.raise_for_status()
+        
+        tree_data = response.json()
+        return tree_data.get("tree", [])
+    
+    except Exception as e:
+        print(f"Error fetching repository tree: {e}")
+        return []
+
+def download_xml_files(file_tree: List[Dict]) -> Dict[str, str]:
+    """Download all XML rule files from the repository."""
+    
+    # Create local rules directory
+    os.makedirs(LOCAL_RULES_DIR, exist_ok=True)
+    
+    downloaded_files = {}
+    xml_files = [f for f in file_tree if f.get("path", "").endswith(".xml") and f.get("type") == "blob"]
+    
+    print(f"Found {len(xml_files)} XML files to download...")
+    
+    for file_info in xml_files:
+        file_path = file_info["path"]
+        file_name = os.path.basename(file_path)
+        
+        # Skip if already downloaded
+        local_file_path = os.path.join(LOCAL_RULES_DIR, file_name)
+        if os.path.exists(local_file_path):
+            print(f"Skipping {file_name} (already exists)")
+            downloaded_files[file_name] = local_file_path
+            continue
+        
+        try:
+            # Download file content
+            raw_url = f"https://raw.githubusercontent.com/socfortress/Wazuh-Rules/main/{file_path}"
+            print(f"Downloading {file_name}...")
+            
+            response = requests.get(raw_url, timeout=30)
+            response.raise_for_status()
+            
+            # Save to local file
+            with open(local_file_path, 'w', encoding='utf-8') as f:
+                f.write(response.text)
+            
+            downloaded_files[file_name] = local_file_path
+            print(f"  Saved: {file_name}")
+            
+        except Exception as e:
+            print(f"  Error downloading {file_name}: {e}")
+    
+    return downloaded_files
+
+def extract_rules_from_local_files(downloaded_files: Dict[str, str]) -> Dict[int, str]:
+    """Extract rule IDs and descriptions from downloaded XML files."""
+    
+    all_rules = {}
+    
+    for file_name, file_path in downloaded_files.items():
+        print(f"Extracting rules from {file_name}...")
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Extract rules using regex
+            import re
+            rule_pattern = r'<rule\s+id="(\d+)"[^>]*>.*?<description>(.*?)</description>'
+            matches = re.findall(rule_pattern, content, re.DOTALL | re.IGNORECASE)
+            
+            for rule_id, description in matches:
+                rule_id_int = int(rule_id)
+                # Clean up description
+                clean_desc = re.sub(r'\s+', ' ', description.strip())
+                clean_desc = clean_desc.replace('&lt;', '<').replace('&gt;', '>')
+                clean_desc = clean_desc.replace('&amp;', '&').replace('&quot;', '"')
+                
+                all_rules[rule_id_int] = clean_desc
+                
+        except Exception as e:
+            print(f"  Error processing {file_name}: {e}")
+    
+    return all_rules
+
+def save_rules_mapping(rules: Dict[int, str], downloaded_files: Dict[str, str]):
+    """Save rules mapping and file information for deployment."""
+    
+    from datetime import datetime
+    
+    mapping_data = {
+        "download_info": {
+            "timestamp": str(datetime.now()),
+            "total_files": len(downloaded_files),
+            "total_rules": len(rules),
+            "files_downloaded": list(downloaded_files.keys())
+        },
+        "rules": rules,
+        "file_mapping": downloaded_files
+    }
+    
+    with open(RULES_MAPPING_FILE, 'w') as f:
+        json.dump(mapping_data, f, indent=2)
+    
+    print(f"Saved rules mapping to {RULES_MAPPING_FILE}")
+
+def update_eval_helpers(rules: Dict[int, str]):
+    """Update eval_helpers.py with the downloaded rules."""
+    
+    eval_helpers_file = "eval_helpers.py"
+    
+    if not os.path.exists(eval_helpers_file):
+        print(f"Warning: {eval_helpers_file} not found")
+        return
+    
+    # Generate new rules code
+    lines = [
+        "# SOCFortress custom rule numbers - AUTO-GENERATED from downloaded rules",
+        "# Generated by download_socfortress_rules.py",
+        "SOCFORTRESS_GTFOBINS_RULES = {"
+    ]
+    
+    for rule_id in sorted(rules.keys()):
+        description = rules[rule_id]
+        escaped_desc = description.replace('"', '\\"').replace("'", "\\'")
+        lines.append(f'    {rule_id}: "{escaped_desc}",')
+    
+    lines.append("}")
+    lines.append("")
+    lines.append("# Only use SOCFortress rules for detection")
+    lines.append("ALL_DETECTION_RULES = SOCFORTRESS_GTFOBINS_RULES")
+    
+    new_rules_code = "\n".join(lines)
+    
+    # Read current file
+    with open(eval_helpers_file, 'r') as f:
+        content = f.read()
+    
+    # Find and replace the rules section
+    import re
+    start_pattern = r'# SOCFortress custom rule numbers.*?\nSOCFORTRESS_GTFOBINS_RULES = {'
+    end_pattern = r'# Only use SOCFortress rules for detection\nALL_DETECTION_RULES = SOCFORTRESS_GTFOBINS_RULES'
+    
+    start_match = re.search(start_pattern, content, re.DOTALL)
+    end_match = re.search(end_pattern, content, re.DOTALL)
+    
+    if start_match and end_match:
+        # Backup original
+        with open(f"{eval_helpers_file}.backup", 'w') as f:
+            f.write(content)
+        
+        # Replace section
+        new_content = (
+            content[:start_match.start()] + 
+            new_rules_code + 
+            content[end_match.end():]
+        )
+        
+        with open(eval_helpers_file, 'w') as f:
+            f.write(new_content)
+        
+        print(f"Updated {eval_helpers_file} with {len(rules)} rules")
+    else:
+        print(f"Could not find rules section in {eval_helpers_file}")
+
+def main():
+    """Main download and setup process."""
+    print("SOCFortress Rules Downloader")
+    print("=" * 50)
+    
+    # Get repository file tree
+    file_tree = get_repo_file_tree()
+    if not file_tree:
+        print("Failed to get repository file tree")
+        return
+    
+    # Download XML files
+    downloaded_files = download_xml_files(file_tree)
+    if not downloaded_files:
+        print("No files downloaded")
+        return
+    
+    print(f"\nDownloaded {len(downloaded_files)} XML files to {LOCAL_RULES_DIR}/")
+    
+    # Extract rules
+    rules = extract_rules_from_local_files(downloaded_files)
+    print(f"Extracted {len(rules)} rules from downloaded files")
+    
+    # Save mapping
+    save_rules_mapping(rules, downloaded_files)
+    
+    # Update eval_helpers.py
+    update_eval_helpers(rules)
+    
+    print("\n" + "=" * 50)
+    print("SUCCESS: SOCFortress rules downloaded and configured")
+    print(f"Rules directory: {LOCAL_RULES_DIR}/")
+    print(f"Rules mapping: {RULES_MAPPING_FILE}")
+    print(f"Total rules: {len(rules)}")
+    print("\nNext step: Run setup_evaluation.sh to deploy rules to Wazuh")
+
+if __name__ == "__main__":
+    import datetime
+    main()

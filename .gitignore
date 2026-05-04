@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Backup files (pre-cleanup leftovers)
+*.backup
+
+# Eval artifacts (regenerated each run)
+logs/
+*.eval
+eval_status.json
+comprehensive_gtfobins_report.json
+gtfobins_evaluation_report.md
+/tmp/

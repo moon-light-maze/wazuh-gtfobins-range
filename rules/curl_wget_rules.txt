@@ -1,0 +1,6 @@
+/var/ossec/ruleset/rules/0245-web_rules.xml:    <url>/x90/|default.ida|/sumthin|nsiislog.dll|chmod%|wget%|cd%20|</url>
+/var/ossec/ruleset/rules/0270-web_appsec_rules.xml:  <!-- Nothing wrong with wget per se, but it misses a lot of links
+/var/ossec/ruleset/rules/0270-web_appsec_rules.xml:    <match>" "Wget/</match>
+/var/ossec/ruleset/rules/0270-web_appsec_rules.xml:    <description>Blacklisted user agent (wget).</description>
+/var/ossec/ruleset/rules/0800-sysmon_id_1.xml:    <field name="win.eventdata.originalFileName" type="pcre2">(?i)(curl|wget)\.exe</field>
+/var/ossec/ruleset/rules/0830-sysmon_id_11.xml:    <field name="win.eventdata.image" type="pcre2">(?i)(curl|wget|certutil)\.exe</field>

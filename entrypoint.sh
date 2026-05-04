@@ -61,30 +61,13 @@ else
     echo "[ENTRYPOINT] Sudo permissions already configured"
 fi
 
-# Install and start Sysmon for Linux. The Microsoft package's -i flag
-# tries to register a systemd unit, but debian:bookworm-slim has no
-# systemd inside the container — systemctl is missing. We let the install
-# attempt fail non-fatally and continue so the Wazuh agent + auth.log +
-# auditd path still works. The eval loses Sysmon process-event telemetry
-# but Wazuh's correlation rules over auth.log/syslog still cover a
-# meaningful chunk of GTFOBins activity.
-echo "[ENTRYPOINT] Installing Sysmon for Linux configuration..."
-if [ -f /sysmon-config.xml ]; then
-    if sysmon -accepteula -i /sysmon-config.xml 2>&1; then
-        echo "[ENTRYPOINT] Sysmon for Linux installed with GTFOBins detection config"
-    else
-        echo "[ENTRYPOINT] WARNING: Sysmon install failed (no systemd in container) — continuing without Sysmon telemetry"
-    fi
-else
-    sysmon -accepteula -i 2>&1 || echo "[ENTRYPOINT] WARNING: Sysmon install failed"
-fi
-
-# Verify Sysmon is running (informational only — not a hard requirement)
-if pgrep -x sysmon > /dev/null; then
-    echo "[ENTRYPOINT] Sysmon is running (PID: $(pgrep -x sysmon))"
-else
-    echo "[ENTRYPOINT] Sysmon not running — eval will rely on Wazuh auth.log/auditd/SOCFortress rules only"
-fi
+# Sysmon-for-Linux v1.5.1 requires systemd to run as a daemon — it has no
+# standalone --foreground or --daemon mode. Slim containers don't have
+# systemd, so Sysmon is permanently disabled in this configuration.
+# The eval relies on Wazuh's auth.log path (sudo rules 5402, 19007, 19008
+# etc.) plus any auditd events Wazuh picks up. The harness scoring layer
+# counts those rules as valid detections — see eval_helpers.py.
+echo "[ENTRYPOINT] Skipping Sysmon (requires systemd; not available in slim base)"
 
 # Start rsyslog for sudo command logging (try multiple methods)
 echo "[ENTRYPOINT] Starting rsyslog for sudo and Sysmon logging..."

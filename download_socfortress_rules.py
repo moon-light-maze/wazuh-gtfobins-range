@@ -129,12 +129,12 @@ def save_rules_mapping(rules: Dict[int, str], downloaded_files: Dict[str, str]):
     print(f"Saved rules mapping to {RULES_MAPPING_FILE}")
 
 def update_eval_helpers(rules: Dict[int, str]):
-    """Update eval_helpers.py with the downloaded rules."""
-    
-    eval_helpers_file = "eval_helpers.py"
-    
-    if not os.path.exists(eval_helpers_file):
-        print(f"Warning: {eval_helpers_file} not found")
+    """Update socfortress_rules.py with the downloaded rules."""
+
+    rules_file = "socfortress_rules.py"
+
+    if not os.path.exists(rules_file):
+        print(f"Warning: {rules_file} not found")
         return
     
     # Generate new rules code
@@ -157,7 +157,7 @@ def update_eval_helpers(rules: Dict[int, str]):
     new_rules_code = "\n".join(lines)
     
     # Read current file
-    with open(eval_helpers_file, 'r') as f:
+    with open(rules_file, 'r') as f:
         content = f.read()
     
     # Find and replace the rules section
@@ -170,7 +170,7 @@ def update_eval_helpers(rules: Dict[int, str]):
     
     if start_match and end_match:
         # Backup original
-        with open(f"{eval_helpers_file}.backup", 'w') as f:
+        with open(f"{rules_file}.backup", 'w') as f:
             f.write(content)
         
         # Replace section
@@ -180,12 +180,12 @@ def update_eval_helpers(rules: Dict[int, str]):
             content[end_match.end():]
         )
         
-        with open(eval_helpers_file, 'w') as f:
+        with open(rules_file, 'w') as f:
             f.write(new_content)
         
-        print(f"Updated {eval_helpers_file} with {len(rules)} rules")
+        print(f"Updated {rules_file} with {len(rules)} rules")
     else:
-        print(f"Could not find rules section in {eval_helpers_file}")
+        print(f"Could not find rules section in {rules_file}")
 
 def main():
     """Main download and setup process."""

@@ -11,32 +11,51 @@ if [ -n "$MANAGER_IP" ]; then
     sed -i "s|MANAGER_IP|${MANAGER_IP}|g" /var/ossec/etc/client.keys 2>/dev/null || true
 fi
 
-# Configure log monitoring for sudo and auditd detection
+# Configure log monitoring (auth.log, syslog, audit.log).
+#
+# Architectural notes on the idempotency check:
+#   - The previous version grep'd for "/var/log/auth.log" which is too
+#     loose; combined with sed's "insert before every </ossec_config>",
+#     it ended up with duplicated <localfile> blocks across container
+#     recreates. The fix here uses a unique marker ("GTFOBINS-EVAL-LF")
+#     that only appears when WE wrote the blocks, and inserts only at
+#     the LAST </ossec_config> via awk.
 echo "[ENTRYPOINT] Configuring log monitoring for sudo + auditd detection..."
-if ! grep -q "/var/log/auth.log" /var/ossec/etc/ossec.conf; then
-    echo "[ENTRYPOINT] Adding auth.log + syslog + audit.log monitoring..."
-    sed -i '/<\/ossec_config>/i\
-\
-  <!-- Auth log monitoring for sudo detection -->\
-  <localfile>\
-    <log_format>syslog</log_format>\
-    <location>/var/log/auth.log</location>\
-  </localfile>\
-\
-  <!-- Syslog monitoring for general system events -->\
-  <localfile>\
-    <log_format>syslog</log_format>\
-    <location>/var/log/syslog</location>\
-  </localfile>\
-\
-  <!-- Auditd monitoring for process-event detection (Sysmon alternative) -->\
-  <localfile>\
-    <log_format>audit</log_format>\
-    <location>/var/log/audit/audit.log</location>\
-  </localfile>' /var/ossec/etc/ossec.conf
-    echo "[ENTRYPOINT] Log monitoring added (auth.log + syslog + audit.log)"
+if grep -q "GTFOBINS-EVAL-LF" /var/ossec/etc/ossec.conf 2>/dev/null; then
+    echo "[ENTRYPOINT] Log monitoring already configured (marker found)"
 else
-    echo "[ENTRYPOINT] Log monitoring already configured"
+    echo "[ENTRYPOINT] Adding auth.log + syslog + audit.log monitoring..."
+    LOCALFILE_BLOCK=$(cat <<'BLOCK'
+
+  <!-- GTFOBINS-EVAL-LF: do not remove this marker; it makes the entrypoint idempotent -->
+  <localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/auth.log</location>
+  </localfile>
+
+  <localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/syslog</location>
+  </localfile>
+
+  <localfile>
+    <log_format>audit</log_format>
+    <location>/var/log/audit/audit.log</location>
+  </localfile>
+BLOCK
+)
+    # Insert before the LAST </ossec_config>, not every occurrence.
+    awk -v block="$LOCALFILE_BLOCK" '
+        /<\/ossec_config>/ { last_close = NR }
+        { lines[NR] = $0 }
+        END {
+            for (i = 1; i <= NR; i++) {
+                if (i == last_close) print block
+                print lines[i]
+            }
+        }
+    ' /var/ossec/etc/ossec.conf > /tmp/ossec.conf.new && mv /tmp/ossec.conf.new /var/ossec/etc/ossec.conf
+    echo "[ENTRYPOINT] Log monitoring added (auth.log + syslog + audit.log)"
 fi
 
 # Wait for Wazuh manager to be reachable

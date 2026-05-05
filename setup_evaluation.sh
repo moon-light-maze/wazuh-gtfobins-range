@@ -15,6 +15,72 @@ if [ -z "$WAZUH_MGR" ]; then
 fi
 echo "[SETUP] Using Wazuh manager container: $WAZUH_MGR"
 
+# Architectural fix: configure the manager so target-container recreation
+# does NOT cause "Duplicate agent name" errors and require `docker compose
+# down -v`. Two settings:
+#
+# 1. <global><agents_disconnection_time> — manager marks agents as
+#    disconnected after this long with no keepalive. Default is 10
+#    minutes which is way too long for our recreate workflow. Set to 10s.
+# 2. <auth><force> — when a disconnected agent's slot is requested by a
+#    new agent with the same name, replace it. With key_mismatch=yes,
+#    disconnected_time=1s, the new container can take over the slot
+#    almost immediately after the old container dies.
+#
+# Both are inserted with the GTFOBINS-EVAL-MGR marker so this is idempotent.
+echo "[SETUP] Ensuring manager auto-replace + fast disconnect detection..."
+# Idempotent patch: regardless of prior state, remove any existing
+# <force>...</force> and <agents_disconnection_time> tags, then insert
+# the values we want. Running setup_evaluation.sh multiple times always
+# converges to the same correct config.
+docker exec "$WAZUH_MGR" python3 -c '
+import re
+path = "/var/ossec/etc/ossec.conf"
+with open(path) as f:
+    content = f.read()
+
+# Strip ALL existing <force>...</force> blocks (anywhere in the file)
+content = re.sub(r"\s*<force>.*?</force>\s*\n", "\n", content, flags=re.DOTALL)
+
+# Strip ALL existing <agents_disconnection_time> tags
+content = re.sub(r"\s*<agents_disconnection_time>[^<]*</agents_disconnection_time>\s*\n", "\n", content)
+
+# Strip our marker comment so we re-insert cleanly
+content = re.sub(r"\s*<!-- GTFOBINS-EVAL-MGR[^>]*-->\s*\n", "\n", content)
+
+# Insert <agents_disconnection_time> at start of FIRST <global>
+global_inject = """    <!-- GTFOBINS-EVAL-MGR: rapid disconnect detection + auth force-replace -->
+    <agents_disconnection_time>10s</agents_disconnection_time>
+"""
+content = re.sub(r"(<global>\s*\n)", r"\1" + global_inject, content, count=1)
+
+# Insert <force> at start of FIRST <auth>
+force_block = """    <force>
+      <enabled>yes</enabled>
+      <key_mismatch>yes</key_mismatch>
+      <disconnected_time enabled=\"yes\">1s</disconnected_time>
+      <after_registration_time>1s</after_registration_time>
+    </force>
+"""
+content = re.sub(r"(<auth>\s*\n)", r"\1" + force_block, content, count=1)
+
+with open(path, "w") as f:
+    f.write(content)
+print("manager ossec.conf patched (cleaned + global + auth)")
+'
+    # One-shot purge: drop any existing target-* registrations so this run
+    # starts clean. Subsequent recreates will be handled by <force>.
+    docker exec "$WAZUH_MGR" bash -c "
+        if grep -q '^[0-9]\\+ target-' /var/ossec/etc/client.keys 2>/dev/null; then
+            cp /var/ossec/etc/client.keys /var/ossec/etc/client.keys.bak
+            grep -v '^[0-9]\\+ target-' /var/ossec/etc/client.keys > /tmp/k && mv /tmp/k /var/ossec/etc/client.keys
+            echo '[SETUP] Purged stale target-* entries from client.keys'
+        fi
+    "
+    docker exec "$WAZUH_MGR" /var/ossec/bin/wazuh-control restart
+    echo "[SETUP] Manager restarted with cleaned config + clean client.keys"
+    sleep 10
+
 # Check if SOCFortress rules need to be downloaded
 if [ ! -d "socfortress_rules" ] || [ ! -f "socfortress_rules_mapping.json" ]; then
     echo "[SETUP] SOCFortress rules not found locally. Downloading..."

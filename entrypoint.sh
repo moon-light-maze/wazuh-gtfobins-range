@@ -11,7 +11,7 @@ if [ -n "$MANAGER_IP" ]; then
     sed -i "s|MANAGER_IP|${MANAGER_IP}|g" /var/ossec/etc/client.keys 2>/dev/null || true
 fi
 
-# Configure log monitoring (auth.log, syslog, audit.log).
+# Configure log monitoring (auth.log, syslog).
 #
 # Architectural notes on the idempotency check:
 #   - The previous version grep'd for "/var/log/auth.log" which is too
@@ -20,11 +20,11 @@ fi
 #     recreates. The fix here uses a unique marker ("GTFOBINS-EVAL-LF")
 #     that only appears when WE wrote the blocks, and inserts only at
 #     the LAST </ossec_config> via awk.
-echo "[ENTRYPOINT] Configuring log monitoring for sudo + auditd detection..."
+echo "[ENTRYPOINT] Configuring log monitoring for sudo + Sysmon detection..."
 if grep -q "GTFOBINS-EVAL-LF" /var/ossec/etc/ossec.conf 2>/dev/null; then
     echo "[ENTRYPOINT] Log monitoring already configured (marker found)"
 else
-    echo "[ENTRYPOINT] Adding auth.log + syslog + audit.log monitoring..."
+    echo "[ENTRYPOINT] Adding auth.log + syslog monitoring..."
     LOCALFILE_BLOCK=$(cat <<'BLOCK'
 
   <!-- GTFOBINS-EVAL-LF: do not remove this marker; it makes the entrypoint idempotent -->
@@ -36,11 +36,6 @@ else
   <localfile>
     <log_format>syslog</log_format>
     <location>/var/log/syslog</location>
-  </localfile>
-
-  <localfile>
-    <log_format>audit</log_format>
-    <location>/var/log/audit/audit.log</location>
   </localfile>
 BLOCK
 )
@@ -55,7 +50,7 @@ BLOCK
             }
         }
     ' /var/ossec/etc/ossec.conf > /tmp/ossec.conf.new && mv /tmp/ossec.conf.new /var/ossec/etc/ossec.conf
-    echo "[ENTRYPOINT] Log monitoring added (auth.log + syslog + audit.log)"
+    echo "[ENTRYPOINT] Log monitoring added (auth.log + syslog)"
 fi
 
 # Wait for Wazuh manager to be reachable
@@ -86,30 +81,61 @@ else
     echo "[ENTRYPOINT] Sudo permissions already configured"
 fi
 
-# Sysmon-for-Linux v1.5.1 requires systemd; not available in slim base.
-# We use auditd as the process-event source instead — same telemetry shape
-# (every execve, file access on watched paths), no systemd required.
-echo "[ENTRYPOINT] Skipping Sysmon (requires systemd) — using auditd instead"
-
-# Start auditd as a daemon. The container needs CAP_AUDIT_CONTROL,
-# CAP_AUDIT_READ, CAP_AUDIT_WRITE (already in compose) plus the host
-# kernel's audit subsystem to be available. With privileged: true we
-# get all of these.
-echo "[ENTRYPOINT] Starting auditd..."
-if /sbin/auditd 2>&1; then
-    sleep 1
-    if pgrep -x auditd > /dev/null; then
-        echo "[ENTRYPOINT] auditd running (PID $(pgrep -x auditd))"
-        # Load the rules from /etc/audit/rules.d/*.rules
-        /sbin/augenrules --load 2>&1 | tail -3 || echo "[ENTRYPOINT] augenrules --load failed (rules may still be partial)"
-        rule_count=$(/sbin/auditctl -l 2>/dev/null | wc -l)
-        echo "[ENTRYPOINT] auditd has $rule_count rules loaded"
-    else
-        echo "[ENTRYPOINT] WARNING: auditd died after start; eval will lack process-event coverage"
-    fi
+# Start Sysmon-for-Linux. The Microsoft package's systemd unit isn't usable
+# in our slim base (no systemd as PID 1), but the binary itself runs fine —
+# it just prints two harmless "systemctl: not found" lines from its install
+# hooks before forking into a daemon. Two pieces are needed:
+#
+#   1. tracefs mounted at /sys/kernel/tracing — Sysmon's BPF programs attach
+#      to tracepoints (sched/sched_process_exit etc) and need to read the
+#      tracepoint id from tracefs. Docker Desktop's LinuxKit VM has tracefs
+#      compiled in but doesn't expose it inside containers; with
+#      privileged: true we can mount it ourselves.
+#   2. `sysmon -i <config> -service` — what the systemd unit normally runs.
+#      Copies binary/config to /opt/sysmon/ and forks into a daemon that
+#      writes events to /var/log/syslog (which Wazuh is already monitoring).
+echo "[ENTRYPOINT] Mounting tracefs for Sysmon eBPF tracepoints..."
+if mountpoint -q /sys/kernel/tracing; then
+    echo "[ENTRYPOINT] tracefs already mounted"
 else
-    echo "[ENTRYPOINT] WARNING: auditd failed to launch"
+    if mount -t tracefs nodev /sys/kernel/tracing 2>&1; then
+        echo "[ENTRYPOINT] tracefs mounted at /sys/kernel/tracing"
+    else
+        echo "[ENTRYPOINT] WARNING: tracefs mount failed — Sysmon BPF will not attach"
+    fi
 fi
+
+# Sysmon launch is two-step:
+#   (a) `/usr/bin/sysmon -accepteula -i <config>` — copies binary + eBPF .o
+#       files + config to /opt/sysmon/. Without `-service` it does the install
+#       half only; the systemctl invocations at the end fail harmlessly with
+#       "systemctl: not found". Doing this synchronously (without `-service`)
+#       avoids a race where `-service` mode can fork before /opt/sysmon is
+#       fully populated.
+#   (b) `/opt/sysmon/sysmon -i /opt/sysmon/config.xml -service` — what the
+#       Microsoft-shipped systemd unit normally runs. Forks into a daemon
+#       that loads the eBPF program and writes events to /var/log/syslog.
+echo "[ENTRYPOINT] Installing Sysmon (copy binary + config to /opt/sysmon)..."
+/usr/bin/sysmon -accepteula -i /sysmon-config.xml > /var/log/sysmon.out 2>&1 || true
+
+echo "[ENTRYPOINT] Starting Sysmon-for-Linux daemon..."
+nohup /opt/sysmon/sysmon -i /opt/sysmon/config.xml -service >> /var/log/sysmon.out 2>&1 &
+disown
+sleep 4
+if pgrep -x sysmon > /dev/null; then
+    echo "[ENTRYPOINT] Sysmon running (PIDs: $(pgrep -x sysmon | tr '\n' ' '))"
+else
+    echo "[ENTRYPOINT] WARNING: Sysmon failed to start — last 15 lines of /var/log/sysmon.out:"
+    tail -15 /var/log/sysmon.out 2>&1
+fi
+
+# Sysmon (above) is the sole process-event source. We previously also
+# started auditd, but on Docker Desktop the kernel rejects auditd's
+# `set-enable` netlink message (`type=DAEMON_ABORT op=set-enable
+# res=failed`) even with privileged + seccomp:unconfined + AUDIT_*
+# caps. Sysmon's eBPF telemetry covers the same ground (every execve,
+# file access on watched paths, process tree with hashes), so auditd
+# is not needed here.
 
 # Start rsyslog for sudo command logging (try multiple methods)
 echo "[ENTRYPOINT] Starting rsyslog for sudo and Sysmon logging..."

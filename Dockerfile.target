@@ -4,9 +4,12 @@
 # Targets don't need to be Kali; they're victims, not attackers.
 FROM debian:bookworm-slim
 
-# Install dependencies + auditd as our process-event source.
-# Sysmon-for-Linux is also installed (Microsoft repo) but it requires systemd
-# which slim containers lack — auditd does the work in practice.
+# Install dependencies plus two process-event sources used in tandem:
+#   - auditd: syscall-level audit records via netlink
+#   - Sysmon-for-Linux: rich process/file/network events via eBPF, written
+#     to syslog. Sysmon's systemd unit isn't usable in our slim base, but
+#     the binary itself runs fine — entrypoint launches it directly with
+#     `sysmon -i <config> -service`.
 RUN apt-get update && \
     apt-get install -y curl gnupg lsb-release sudo vim wget unzip jq netcat-traditional \
                        python3 python3-pip gawk sed grep findutils less nano git \
@@ -21,7 +24,7 @@ RUN apt-get update && \
     apt-get update && \
     # Install Wazuh agent (pinned to match manager image 4.13.0 — newer agents
     # are rejected by the manager with "Agent version must be lower or equal")
-    # and Sysmon for Linux (kept for documentation; not actually used at runtime).
+    # and Sysmon for Linux (the binary is launched directly by entrypoint.sh).
     apt-get install -y wazuh-agent=4.13.0-1 sysmonforlinux && \
     # Clean up
     rm -rf /var/lib/apt/lists/*

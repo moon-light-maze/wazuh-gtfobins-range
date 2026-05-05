@@ -64,9 +64,9 @@ services:
       - SYS_PTRACE
     security_opt:
       - apparmor:unconfined
-      # Docker Desktop's default seccomp profile blocks the audit netlink
-      # syscalls even with CAP_AUDIT_CONTROL — auditctl returns EPERM.
-      # Disable seccomp filtering so auditd can enable kernel audit.
+      # Disable seccomp filtering so Sysmon's eBPF program can attach
+      # tracepoints / kprobes. Redundant under privileged: true, but
+      # documents the requirement in case privileged is dropped later.
       - seccomp:unconfined
 
   target-2:
@@ -95,9 +95,9 @@ services:
       - SYS_PTRACE
     security_opt:
       - apparmor:unconfined
-      # Docker Desktop's default seccomp profile blocks the audit netlink
-      # syscalls even with CAP_AUDIT_CONTROL — auditctl returns EPERM.
-      # Disable seccomp filtering so auditd can enable kernel audit.
+      # Disable seccomp filtering so Sysmon's eBPF program can attach
+      # tracepoints / kprobes. Redundant under privileged: true, but
+      # documents the requirement in case privileged is dropped later.
       - seccomp:unconfined
 
   target-3:
@@ -126,9 +126,9 @@ services:
       - SYS_PTRACE
     security_opt:
       - apparmor:unconfined
-      # Docker Desktop's default seccomp profile blocks the audit netlink
-      # syscalls even with CAP_AUDIT_CONTROL — auditctl returns EPERM.
-      # Disable seccomp filtering so auditd can enable kernel audit.
+      # Disable seccomp filtering so Sysmon's eBPF program can attach
+      # tracepoints / kprobes. Redundant under privileged: true, but
+      # documents the requirement in case privileged is dropped later.
       - seccomp:unconfined
 
 networks:

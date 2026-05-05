@@ -55,8 +55,19 @@
           <CommandLine condition="contains any">--post-file;--post-data</CommandLine>
         </Rule>
 
-        <!-- Curl piped to shell -->
+        <!-- Curl piped to shell. Original "contains all" form below kept for
+             reference, but it never matches (the substrings are ANDed and
+             the canonical `... | sudo sh` doesn't contain "| sh" literally). -->
         <CommandLine condition="contains all" name="Curl_Pipe_Shell">curl;| sh;| bash</CommandLine>
+
+        <!-- Curl downloading from a URL — the actual GTFOBins curl primitive
+             (download payload over the network). Tags any curl process whose
+             command line references an http(s) URL, so it fires on the eval's
+             canonical command and the Wazuh rule 100207 can pick it up. -->
+        <Rule name="GTFOBins_Curl_Web" groupRelation="and">
+          <Image condition="end with">curl</Image>
+          <CommandLine condition="contains any">http://;https://</CommandLine>
+        </Rule>
 
         <!-- Sed with execute flag -->
         <Rule name="GTFOBins_Sed_Exec" groupRelation="and">

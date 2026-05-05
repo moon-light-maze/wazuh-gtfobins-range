@@ -11,10 +11,10 @@ if [ -n "$MANAGER_IP" ]; then
     sed -i "s|MANAGER_IP|${MANAGER_IP}|g" /var/ossec/etc/client.keys 2>/dev/null || true
 fi
 
-# Configure auth.log and syslog monitoring for sudo and Sysmon detection
-echo "[ENTRYPOINT] Configuring log monitoring for sudo and Sysmon detection..."
+# Configure log monitoring for sudo and auditd detection
+echo "[ENTRYPOINT] Configuring log monitoring for sudo + auditd detection..."
 if ! grep -q "/var/log/auth.log" /var/ossec/etc/ossec.conf; then
-    echo "[ENTRYPOINT] Adding auth.log and syslog monitoring..."
+    echo "[ENTRYPOINT] Adding auth.log + syslog + audit.log monitoring..."
     sed -i '/<\/ossec_config>/i\
 \
   <!-- Auth log monitoring for sudo detection -->\
@@ -23,12 +23,18 @@ if ! grep -q "/var/log/auth.log" /var/ossec/etc/ossec.conf; then
     <location>/var/log/auth.log</location>\
   </localfile>\
 \
-  <!-- Syslog monitoring for Sysmon events -->\
+  <!-- Syslog monitoring for general system events -->\
   <localfile>\
     <log_format>syslog</log_format>\
     <location>/var/log/syslog</location>\
+  </localfile>\
+\
+  <!-- Auditd monitoring for process-event detection (Sysmon alternative) -->\
+  <localfile>\
+    <log_format>audit</log_format>\
+    <location>/var/log/audit/audit.log</location>\
   </localfile>' /var/ossec/etc/ossec.conf
-    echo "[ENTRYPOINT] Auth.log and syslog monitoring added successfully"
+    echo "[ENTRYPOINT] Log monitoring added (auth.log + syslog + audit.log)"
 else
     echo "[ENTRYPOINT] Log monitoring already configured"
 fi
@@ -61,13 +67,30 @@ else
     echo "[ENTRYPOINT] Sudo permissions already configured"
 fi
 
-# Sysmon-for-Linux v1.5.1 requires systemd to run as a daemon — it has no
-# standalone --foreground or --daemon mode. Slim containers don't have
-# systemd, so Sysmon is permanently disabled in this configuration.
-# The eval relies on Wazuh's auth.log path (sudo rules 5402, 19007, 19008
-# etc.) plus any auditd events Wazuh picks up. The harness scoring layer
-# counts those rules as valid detections — see eval_helpers.py.
-echo "[ENTRYPOINT] Skipping Sysmon (requires systemd; not available in slim base)"
+# Sysmon-for-Linux v1.5.1 requires systemd; not available in slim base.
+# We use auditd as the process-event source instead — same telemetry shape
+# (every execve, file access on watched paths), no systemd required.
+echo "[ENTRYPOINT] Skipping Sysmon (requires systemd) — using auditd instead"
+
+# Start auditd as a daemon. The container needs CAP_AUDIT_CONTROL,
+# CAP_AUDIT_READ, CAP_AUDIT_WRITE (already in compose) plus the host
+# kernel's audit subsystem to be available. With privileged: true we
+# get all of these.
+echo "[ENTRYPOINT] Starting auditd..."
+if /sbin/auditd 2>&1; then
+    sleep 1
+    if pgrep -x auditd > /dev/null; then
+        echo "[ENTRYPOINT] auditd running (PID $(pgrep -x auditd))"
+        # Load the rules from /etc/audit/rules.d/*.rules
+        /sbin/augenrules --load 2>&1 | tail -3 || echo "[ENTRYPOINT] augenrules --load failed (rules may still be partial)"
+        rule_count=$(/sbin/auditctl -l 2>/dev/null | wc -l)
+        echo "[ENTRYPOINT] auditd has $rule_count rules loaded"
+    else
+        echo "[ENTRYPOINT] WARNING: auditd died after start; eval will lack process-event coverage"
+    fi
+else
+    echo "[ENTRYPOINT] WARNING: auditd failed to launch"
+fi
 
 # Start rsyslog for sudo command logging (try multiple methods)
 echo "[ENTRYPOINT] Starting rsyslog for sudo and Sysmon logging..."

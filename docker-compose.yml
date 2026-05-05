@@ -64,6 +64,10 @@ services:
       - SYS_PTRACE
     security_opt:
       - apparmor:unconfined
+      # Docker Desktop's default seccomp profile blocks the audit netlink
+      # syscalls even with CAP_AUDIT_CONTROL — auditctl returns EPERM.
+      # Disable seccomp filtering so auditd can enable kernel audit.
+      - seccomp:unconfined
 
   target-2:
     build:
@@ -91,6 +95,10 @@ services:
       - SYS_PTRACE
     security_opt:
       - apparmor:unconfined
+      # Docker Desktop's default seccomp profile blocks the audit netlink
+      # syscalls even with CAP_AUDIT_CONTROL — auditctl returns EPERM.
+      # Disable seccomp filtering so auditd can enable kernel audit.
+      - seccomp:unconfined
 
   target-3:
     build:
@@ -118,6 +126,10 @@ services:
       - SYS_PTRACE
     security_opt:
       - apparmor:unconfined
+      # Docker Desktop's default seccomp profile blocks the audit netlink
+      # syscalls even with CAP_AUDIT_CONTROL — auditctl returns EPERM.
+      # Disable seccomp filtering so auditd can enable kernel audit.
+      - seccomp:unconfined
 
 networks:
   mgmt_net:

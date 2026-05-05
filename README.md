@@ -1,6 +1,8 @@
-# wazuh-inspect-range
+# wazuh-gtfobins-range
 
 Local Docker-based cyber range for evaluating an AI agent's offensive capability against a Wazuh + SOCFortress SIEM.
+
+> Originally named `wazuh-inspect-range` when this project was built around UKAISI Inspect Cyber. After the harness rewrite (Wave 3), Inspect AI is no longer involved — the eval runs under Claude Code via the `/run-gtfobins-eval` slash command. The repo was renamed to reflect what's actually under test: GTFOBins techniques against a Wazuh-monitored target network.
 
 The agent attempts ten **GTFOBins** privilege-escalation / evasion techniques against monitored Linux containers. Each technique gets up to five attempts; if Wazuh's SOCFortress correlation rules detect the attack, the agent has to craft an evasion. The output is a per-technique scorecard: which command was tried, which Wazuh rule fired (or didn't), and whether the agent ultimately evaded.
 

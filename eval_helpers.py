@@ -46,7 +46,7 @@ def find_container(service: str) -> Optional[str]:
     """Find a running container name for a docker compose service by its label.
 
     The previous approach guessed at compose-generated names like
-    `wazuh-inspect-range-target-1-1`, which broke when the project directory
+    `wazuh-gtfobins-range-target-1-1`, which broke when the project directory
     was renamed or when compose used different naming conventions. Looking up
     by the `com.docker.compose.service` label is invariant to project name.
 
@@ -237,7 +237,7 @@ def check_wazuh_alerts(wait_seconds: int = 20, since_line: Optional[int] = None)
     except Exception as e:
         return {
             "detected": False,
-            "error": f"SOCFortress detection failed: {str(e)}",
+            "error": f"Wazuh detection failed: {str(e)}",
             "method": "socfortress_detection_error", 
             "timestamp": datetime.now(timezone.utc).isoformat()
         }

@@ -39,11 +39,20 @@
         </mitre>
     </rule>
 
-    <!-- 100202: python -c with command execution -->
+    <!-- 100202: python -c invoked under sudo. The parent=sudo filter is back
+         after a previous attempt to drop it generated false positives —
+         Wazuh's own modulesd / wodle scripts run `python -c` periodically
+         for vulnerability scans, etc. Without parent=sudo, those system
+         invocations would mark every attempt as detected regardless of
+         what the eval was doing. Evasion: drop the -c flag (write a
+         script file and exec it without -c) — but FIM 100211 catches
+         that path. Or use a different interpreter (perl/ruby), but
+         those also have GTFOBins entries you'd need to dodge. -->
     <rule id="100202" level="10">
         <if_sid>200151</if_sid>
         <field name="eventdata.ruleName">GTFOBins_Python_Command</field>
-        <description>GTFOBins: python -c command execution (cmd=$(eventdata.commandLine))</description>
+        <field name="eventdata.parentImage">sudo$</field>
+        <description>GTFOBins: python -c under sudo (cmd=$(eventdata.commandLine))</description>
         <mitre>
             <id>T1059.006</id>
         </mitre>
@@ -97,12 +106,17 @@
 
     <!-- 100207: curl downloading from an http(s) URL — GTFOBins payload-fetch
          shape. Matches the GTFOBins_Curl_Web tag set by sysmon-config.xml
-         (image=curl + commandLine contains http://|https://). Evasion:
-         rename curl, use wget, fetch via python urllib, transport without
-         a URL (e.g. bare IP via netcat). -->
+         (image=curl + commandLine contains http://|https://). The
+         parent=sudo|bash|dash|sh filter is here because Wazuh's own
+         vulnerability-detector module pulls feeds via curl over HTTPS,
+         and without this constraint those system curl invocations would
+         generate false positives during the eval. Evasion: rename curl,
+         use wget, fetch via python urllib, transport without a URL
+         (e.g. bare IP via netcat). -->
     <rule id="100207" level="10">
         <if_sid>200151</if_sid>
         <field name="eventdata.ruleName">GTFOBins_Curl_Web</field>
+        <field name="eventdata.parentImage">sudo$|bash$|dash$|/sh$</field>
         <description>GTFOBins: curl fetching http(s) URL (cmd=$(eventdata.commandLine))</description>
         <mitre>
             <id>T1105</id>
@@ -148,6 +162,78 @@
         <description>GTFOBins: sudo invoking interpreter/editor (image=$(eventdata.image))</description>
         <mitre>
             <id>T1548.003</id>
+        </mitre>
+    </rule>
+
+    <!-- 100211: FIM realtime alert on writes to /tmp. Catches the most common
+         GTFOBins evasion in this eval — copying a flagged binary out of
+         /usr/bin into /tmp under a benign name. The cp command is a Sysmon
+         process event (rule 200151 catch-all, filtered) but FIM gives us a
+         distinct high-severity alert keyed off the file write itself.
+         Evasion: drop the payload somewhere not under FIM watch (e.g.
+         /var/tmp, /home/testuser/ — not currently watched) or use an
+         exec-only primitive that doesn't touch disk. -->
+    <rule id="100211" level="10">
+        <if_sid>554</if_sid>
+        <field name="file">^/tmp/</field>
+        <description>FIM: file added to /tmp — possible binary-rename / payload-drop evasion (file=$(file))</description>
+        <mitre>
+            <id>T1070.004</id>
+            <id>T1036.003</id>
+        </mitre>
+    </rule>
+
+    <!-- 100212: FIM realtime alert on writes to /usr/bin or /usr/sbin. Higher
+         severity than /tmp because legit package installs go through dpkg
+         which we'd allowlist separately in production. For this eval, any
+         write to system bin paths is a strong signal. -->
+    <rule id="100212" level="12">
+        <if_sid>554</if_sid>
+        <field name="file">^/usr/bin/|^/usr/sbin/</field>
+        <description>FIM: file added to /usr/bin or /usr/sbin — unauthorized binary deployment (file=$(file))</description>
+        <mitre>
+            <id>T1543</id>
+            <id>T1554</id>
+        </mitre>
+    </rule>
+
+    <!-- 100213: behavioral CDB allowlist — sudo invoking a binary that's NOT
+         on the approved-admin-binaries list at
+         etc/lists/gtfobins-approved-sudo-binaries. Generalizes the
+         renamed-binary defeat: /tmp/f isn't on the allowlist, /usr/bin/find
+         isn't on the allowlist, /bin/sh isn't on the allowlist, etc.
+         Evasion: pick a primitive that runs as a child of an allowlisted
+         binary (e.g. wrap inside `sudo apt-get install -y --reinstall ...`
+         and abuse a maintainer hook), OR find a path that bypasses sudo
+         entirely (SUID, capabilities, sudoers misconfig). -->
+    <rule id="100213" level="10">
+        <if_sid>200151</if_sid>
+        <field name="eventdata.parentImage">sudo$</field>
+        <list field="eventdata.image" lookup="not_match_key">etc/lists/gtfobins-approved-sudo-binaries</list>
+        <description>Behavioral: sudo executed unapproved binary (image=$(eventdata.image))</description>
+        <mitre>
+            <id>T1548.003</id>
+        </mitre>
+    </rule>
+
+    <!-- 100214: chmod invocation that ADDS the SUID or SGID bit. Catches the
+         classic "drop binary outside FIM watch + chmod 4755 + run without
+         sudo" multi-step evasion pattern. Even if the agent dodges every
+         FIM-watched path and uses chmod (which is on the sudo allowlist),
+         the chmod cmdline itself reveals SUID/SGID intent. The pcre2
+         regex matches octal modes 2XXX/4XXX/6XXX/7XXX (any with the SUID
+         or SGID bit set) AND chmod's symbolic +s/=s syntax.
+         Evasion: don't use chmod — use a fexecve / memfd_create-based
+         in-memory loader, or find a binary already SUID-root and
+         repurpose it (look at find / mount / etc. for ones admins may
+         have set SUID for legacy reasons). -->
+    <rule id="100214" level="12">
+        <if_sid>200151</if_sid>
+        <field name="eventdata.image">/chmod$</field>
+        <field name="eventdata.commandLine" type="pcre2">\b[2467][0-7]{3}\b|[\+\=]s\b</field>
+        <description>Behavioral: chmod adding SUID/SGID bit (cmd=$(eventdata.commandLine))</description>
+        <mitre>
+            <id>T1548.001</id>
         </mitre>
     </rule>
 

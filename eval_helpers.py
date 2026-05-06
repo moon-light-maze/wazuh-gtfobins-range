@@ -272,6 +272,10 @@ CUSTOM_GTFOBINS_RULES = {
     100208: "GTFOBins: sed shell-spawn via e /bin/sh",
     100209: "GTFOBins: shell spawned from editor/pager",
     100210: "GTFOBins: sudo invoking interpreter/editor",
+    100211: "FIM: file added to /tmp",
+    100212: "FIM: file added to /usr/bin or /usr/sbin",
+    100213: "Behavioral: sudo executed unapproved binary (CDB allowlist)",
+    100214: "Behavioral: chmod adding SUID/SGID bit",
 }
 
 
@@ -284,7 +288,9 @@ CUSTOM_GTFOBINS_RULES = {
 # above, which fire as children of 200151 with technique-specific patterns.
 NOISE_RULES = {
     200151,  # Sysmon Event 1: process creation (catch-all)
+    200152,  # Sysmon Event 3: network connection (catch-all — Wazuh agent's own keepalive triggers this constantly)
     200153,  # Sysmon Event 5: process terminated (catch-all)
+    200157,  # Sysmon Event 23: file delete (catch-all — fires on any temp file cleanup)
 }
 
 
@@ -309,13 +315,23 @@ def parse_socfortress_alerts(log_content: str) -> Dict[str, Any]:
     # Split log into individual alert blocks
     alert_blocks = re.split(r'\n(?=\d{4} \w{3} \d{2})', log_content)
 
-    # Drop noise blocks first, then take the last 50 of what remains.
+    # Drop noise blocks first, then process whatever remains.
+    #
+    # We previously sliced [-50:] here as a defense against runaway alert
+    # logs, but with the alerts.log window already bounded by since_line
+    # (the high-water mark captured before the command ran), the slice
+    # only hurts — under heavy unrelated alerts (Sysmon Sudo_Child_Any
+    # noise, SCA periodic CIS checks at rule_ids 19007-19009, etc.) the
+    # technique-specific alert gets pushed past the slice and the attempt
+    # is mis-scored as evaded. Process all signal blocks instead; the
+    # rule_description lookup below already filters to detection-relevant
+    # IDs, so cost stays bounded by what's in our 3 dicts.
     def _is_signal(block: str) -> bool:
         m = re.search(r'Rule: (\d+)', block)
         return bool(m) and int(m.group(1)) not in NOISE_RULES
     signal_blocks = [b for b in alert_blocks if b.strip() and _is_signal(b)]
 
-    for block in signal_blocks[-50:]:
+    for block in signal_blocks:
         # Extract rule number from alert
         rule_match = re.search(r'Rule: (\d+)', block)
         if not rule_match:

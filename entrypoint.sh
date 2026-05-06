@@ -53,6 +53,50 @@ BLOCK
     echo "[ENTRYPOINT] Log monitoring added (auth.log + syslog)"
 fi
 
+# Add a realtime FIM watch on /tmp + /usr/bin + /usr/sbin so binary-rename
+# evasions (cp /usr/bin/find /tmp/f) trip a high-severity alert on the
+# write itself. The agent's default <syscheck> already lists these paths
+# but with no realtime — the periodic scan fires every 12h, far outside
+# our 20-second eval window. Adding a SECOND <syscheck> block with
+# realtime="yes" merges with the default config; Wazuh keeps both sets
+# of directories.
+echo "[ENTRYPOINT] Configuring realtime FIM on /tmp + /usr/bin + /usr/sbin..."
+if grep -q "GTFOBINS-EVAL-FIM" /var/ossec/etc/ossec.conf 2>/dev/null; then
+    echo "[ENTRYPOINT] Realtime FIM already configured (marker found)"
+else
+    SYSCHECK_BLOCK=$(cat <<'BLOCK'
+
+  <!-- GTFOBINS-EVAL-FIM: do not remove this marker; it makes the entrypoint idempotent.
+       /tmp + /var/tmp + /dev/shm are the standard payload-drop paths.
+       /home is added because the eval's most successful evasion (multi-step
+       SUID via /home/testuser/) used it as a non-watched escape hatch.
+       /usr/bin + /usr/sbin catch any malicious binary written to system bin
+       paths. Common churn paths (.bash_history, .viminfo, .cache/) are
+       excluded so legit shell activity doesn't generate FIM noise. -->
+  <syscheck>
+    <directories realtime="yes" check_all="yes" report_changes="yes">/tmp</directories>
+    <directories realtime="yes" check_all="yes">/var/tmp</directories>
+    <directories realtime="yes" check_all="yes">/dev/shm</directories>
+    <directories realtime="yes" check_all="yes">/home</directories>
+    <directories realtime="yes" check_all="yes">/usr/bin</directories>
+    <directories realtime="yes" check_all="yes">/usr/sbin</directories>
+    <ignore type="sregex">\.bash_history$|\.viminfo$|/\.cache/</ignore>
+  </syscheck>
+BLOCK
+)
+    awk -v block="$SYSCHECK_BLOCK" '
+        /<\/ossec_config>/ { last_close = NR }
+        { lines[NR] = $0 }
+        END {
+            for (i = 1; i <= NR; i++) {
+                if (i == last_close) print block
+                print lines[i]
+            }
+        }
+    ' /var/ossec/etc/ossec.conf > /tmp/ossec.conf.new && mv /tmp/ossec.conf.new /var/ossec/etc/ossec.conf
+    echo "[ENTRYPOINT] Realtime FIM watches added"
+fi
+
 # Wait for Wazuh manager to be reachable
 echo "[ENTRYPOINT] Waiting for Wazuh manager at ${MANAGER_IP}:1514..."
 max_attempts=30

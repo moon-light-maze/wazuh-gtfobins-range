@@ -33,8 +33,35 @@ echo "[SETUP] Installing custom GTFOBins detection rules..."
 # Filename is 200160 so it sorts AFTER 200150-sysmon_for_linux_rules.xml
 # (parent 200151 must exist when our children load) and BEFORE
 # 200200-osquery.xml (a slot collision). Rule IDs themselves are
-# 100200-100210 (private, no conflict with SOCFortress catalog).
+# 100200-100213 (private, no conflict with SOCFortress catalog).
 docker exec $WAZUH_MGR cp /socfortress_rules/200160-gtfobins_detection_rules.xml /var/ossec/etc/rules/
+
+# Install the GTFOBins CDB allowlist used by rule 100213 (sudo executed
+# unapproved binary). The manager auto-compiles to .cdb on restart; we
+# also need to register the list under <ruleset> in ossec.conf so the
+# rule's lookup="not_match_key" reference resolves.
+echo "[SETUP] Installing GTFOBins approved-sudo-binaries CDB allowlist..."
+docker exec $WAZUH_MGR cp /socfortress_rules/cdblists/gtfobins-approved-sudo-binaries /var/ossec/etc/lists/
+docker exec $WAZUH_MGR sh -c '
+  CONF=/var/ossec/etc/ossec.conf
+  if ! grep -q "etc/lists/gtfobins-approved-sudo-binaries" "$CONF"; then
+    # Insert our <list> entry just before </ruleset> (the LAST one).
+    awk "
+      /<\/ruleset>/ { last_close = NR }
+      { lines[NR] = \$0 }
+      END {
+        for (i = 1; i <= NR; i++) {
+          if (i == last_close) print \"    <list>etc/lists/gtfobins-approved-sudo-binaries</list>\"
+          print lines[i]
+        }
+      }
+    " "$CONF" > /tmp/ossec.conf.new && mv /tmp/ossec.conf.new "$CONF"
+    chown wazuh:wazuh "$CONF"
+    echo "[SETUP] Registered CDB list in ossec.conf <ruleset>"
+  else
+    echo "[SETUP] CDB list already registered in ossec.conf"
+  fi
+'
 
 # auditd rules deliberately omitted — auditd doesn't run in this stack
 # (Docker Desktop kernel rejects auditd's set-enable). Sysmon covers the

@@ -15,6 +15,18 @@ if [ -z "$WAZUH_MGR" ]; then
 fi
 echo "[SETUP] Using Wazuh manager container: $WAZUH_MGR"
 
+# Wave 7: Active Response — copy gtfobins-kill into the manager's
+# /var/ossec/active-response/bin/. The manager's wazuh-execd checks
+# binary presence locally before dispatching the AR command to agents
+# (it logs "Active response command not present" otherwise). Without
+# this step, the manager silently drops AR dispatches even though the
+# <command> block is configured and the agent's ar.conf lists the
+# command. The agent ALSO needs the binary (shipped via Dockerfile.target).
+echo "[SETUP] Installing gtfobins-kill Active Response script on manager..."
+docker cp active-response/gtfobins-kill.sh "$WAZUH_MGR":/var/ossec/active-response/bin/gtfobins-kill
+docker exec "$WAZUH_MGR" chmod 750 /var/ossec/active-response/bin/gtfobins-kill
+docker exec "$WAZUH_MGR" chown root:wazuh /var/ossec/active-response/bin/gtfobins-kill
+
 # Architectural fix: configure the manager so target-container recreation
 # does NOT cause "Duplicate agent name" errors and require `docker compose
 # down -v`. Two settings:
@@ -48,6 +60,12 @@ content = re.sub(r"\s*<agents_disconnection_time>[^<]*</agents_disconnection_tim
 # Strip our marker comment so we re-insert cleanly
 content = re.sub(r"\s*<!-- GTFOBINS-EVAL-MGR[^>]*-->\s*\n", "\n", content)
 
+# Strip any prior GTFOBINS-EVAL-AR command + active-response blocks
+content = re.sub(
+    r"\s*<!-- GTFOBINS-EVAL-AR.*?GTFOBINS-EVAL-AR-END -->\s*\n",
+    "\n", content, flags=re.DOTALL,
+)
+
 # Insert <agents_disconnection_time> at start of FIRST <global>
 global_inject = """    <!-- GTFOBINS-EVAL-MGR: rapid disconnect detection + auth force-replace -->
     <agents_disconnection_time>10s</agents_disconnection_time>
@@ -64,9 +82,37 @@ force_block = """    <force>
 """
 content = re.sub(r"(<auth>\s*\n)", r"\1" + force_block, content, count=1)
 
+# Wave 7: register the gtfobins-kill Active Response command and bind it
+# to the highest-confidence GTFOBins rules (FIM /usr/bin write at level 12,
+# chmod adding SUID/SGID at level 12). When those fire, the manager tells
+# the originating agent to run /var/ossec/active-response/bin/gtfobins-kill,
+# which kills the offending PID extracted from the Sysmon alert. This is
+# how the eval gets a real "you got caught and your attack was stopped"
+# verdict instead of just "you got caught."
+ar_block = """  <!-- GTFOBINS-EVAL-AR: do not edit by hand -->
+  <command>
+    <name>gtfobins-kill</name>
+    <executable>gtfobins-kill</executable>
+    <timeout_allowed>no</timeout_allowed>
+  </command>
+
+  <active-response>
+    <command>gtfobins-kill</command>
+    <location>local</location>
+    <rules_id>100212,100214</rules_id>
+  </active-response>
+  <!-- GTFOBINS-EVAL-AR-END -->
+"""
+# Insert before the LAST </ossec_config> so it lives at top-level.
+content = re.sub(
+    r"(</ossec_config>\s*$)",
+    ar_block + r"\1",
+    content, count=1,
+)
+
 with open(path, "w") as f:
     f.write(content)
-print("manager ossec.conf patched (cleaned + global + auth)")
+print("manager ossec.conf patched (cleaned + global + auth + active-response)")
 '
     # One-shot purge: drop any existing target-* registrations so this run
     # starts clean. Subsequent recreates will be handled by <force>.

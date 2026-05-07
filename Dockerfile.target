@@ -67,6 +67,14 @@ RUN echo "auth.*    /var/log/auth.log" >> /etc/rsyslog.conf && \
     touch /var/log/auth.log && \
     chmod 644 /var/log/auth.log
 
+# Wazuh Active Response: ship the gtfobins-kill.sh script to the
+# agent's AR bin path. The manager dispatches "gtfobins-kill" by name
+# (configured in the manager's ossec.conf <command> block); the agent
+# runs the script from this location with the alert JSON on stdin.
+COPY active-response/gtfobins-kill.sh /var/ossec/active-response/bin/gtfobins-kill
+RUN chmod 750 /var/ossec/active-response/bin/gtfobins-kill && \
+    chown root:wazuh /var/ossec/active-response/bin/gtfobins-kill
+
 # Set environment variables
 ENV MANAGER_IP=wazuh.manager
 

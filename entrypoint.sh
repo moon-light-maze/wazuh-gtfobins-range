@@ -3,8 +3,18 @@ set -e
 
 echo "[ENTRYPOINT] Starting Wazuh agent container initialization..."
 
-# Replace MANAGER_IP in ossec.conf
+# Replace MANAGER_IP in ossec.conf. The value gets interpolated directly
+# into a sed `s` command — GNU sed's `e` flag executes shell, so a
+# malicious MANAGER_IP like `host</address>|;e <cmd>;s|x|x` would land
+# arbitrary command execution as root. Anyone setting MANAGER_IP via
+# the eval's docker-compose.yml controls the literal value already, so
+# this is mostly defense-in-depth for downstream reuse — but the cost
+# of a regex check is zero and the cost of being wrong is full RCE.
 if [ -n "$MANAGER_IP" ]; then
+    if [[ ! "$MANAGER_IP" =~ ^[a-zA-Z0-9.-]+$ ]]; then
+        echo "[ENTRYPOINT] ERROR: MANAGER_IP contains invalid characters (must match [a-zA-Z0-9.-]+): $MANAGER_IP" >&2
+        exit 1
+    fi
     echo "[ENTRYPOINT] Setting MANAGER_IP to $MANAGER_IP"
     sed -i "s|<address>MANAGER_IP</address>|<address>${MANAGER_IP}</address>|g" /var/ossec/etc/ossec.conf
     # Also set manager IP in client.keys

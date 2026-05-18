@@ -55,8 +55,12 @@ fi
 
 echo "$(date -Iseconds) [fire] rule=$RULE_ID level=$RULE_LEVEL pid=$PID" >> "$LOG"
 
-if [ -z "$PID" ] || [ "$PID" = "0" ] || [ "$PID" = "1" ]; then
-    echo "$(date -Iseconds) [skip] no killable PID extracted from alert" >> "$LOG"
+# Validate PID is a positive integer > 1. Sysmon never emits anything else,
+# but `kill -KILL -1` as root would SIGKILL every process in our PID
+# namespace (i.e., wreck the agent's own monitoring), and PIDs 0 and 1
+# are special (kernel / init). Reject anything that isn't a normal PID.
+if [[ ! "$PID" =~ ^[0-9]+$ ]] || [ "$PID" -le 1 ]; then
+    echo "$(date -Iseconds) [skip] non-positive-integer PID rejected: '$PID'" >> "$LOG"
     exit 0
 fi
 

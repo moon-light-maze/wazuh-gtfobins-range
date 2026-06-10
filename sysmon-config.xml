@@ -60,7 +60,7 @@
              the canonical `... | sudo sh` doesn't contain "| sh" literally). -->
         <CommandLine condition="contains all" name="Curl_Pipe_Shell">curl;| sh;| bash</CommandLine>
 
-        <!-- Curl downloading from a URL — the actual GTFOBins curl primitive
+        <!-- Curl downloading from a URL - the actual GTFOBins curl primitive
              (download payload over the network). Tags any curl process whose
              command line references an http(s) URL, so it fires on the eval's
              canonical command and the Wazuh rule 100207 can pick it up. -->
@@ -91,7 +91,7 @@
              (i.e. NOT /usr/bin or /usr/sbin or /bin or /sbin). This catches
              the renamed-binary evasion (sudo /tmp/f, sudo /home/x/y, sudo
              /run/payload) without the eval-breaking volume of "emit every
-             sudo child" — that approach put Wazuh's alerts.log past 600 MB
+             sudo child" - that approach put Wazuh's alerts.log past 600 MB
              in a single eval run and bogged down the manager. The CDB
              allowlist rule (Wazuh 100213) still does the final approved/
              unapproved decision; this Sysmon filter just narrows what
@@ -105,8 +105,8 @@
              onmatch="include" filter drops chmod events (chmod isn't in
              any other rule), and Wazuh rule 100214 (which detects SUID/
              SGID bit additions in the command line) has nothing to
-             evaluate. Volume is low — chmod is rarely run interactively
-             outside admin and build workflows — so emitting all of them
+             evaluate. Volume is low - chmod is rarely run interactively
+             outside admin and build workflows - so emitting all of them
              doesn't recreate the alerts.log overflow problem. -->
         <Rule name="Chmod_Any" groupRelation="or">
           <Image condition="end with">chmod</Image>

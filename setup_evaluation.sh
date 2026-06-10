@@ -15,7 +15,7 @@ if [ -z "$WAZUH_MGR" ]; then
 fi
 echo "[SETUP] Using Wazuh manager container: $WAZUH_MGR"
 
-# Wave 7: Active Response — copy gtfobins-kill into the manager's
+# Wave 7: Active Response - copy gtfobins-kill into the manager's
 # /var/ossec/active-response/bin/. The manager's wazuh-execd checks
 # binary presence locally before dispatching the AR command to agents
 # (it logs "Active response command not present" otherwise). Without
@@ -31,10 +31,10 @@ docker exec "$WAZUH_MGR" chown root:wazuh /var/ossec/active-response/bin/gtfobin
 # does NOT cause "Duplicate agent name" errors and require `docker compose
 # down -v`. Two settings:
 #
-# 1. <global><agents_disconnection_time> — manager marks agents as
+# 1. <global><agents_disconnection_time> - manager marks agents as
 #    disconnected after this long with no keepalive. Default is 10
 #    minutes which is way too long for our recreate workflow. Set to 10s.
-# 2. <auth><force> — when a disconnected agent's slot is requested by a
+# 2. <auth><force> - when a disconnected agent's slot is requested by a
 #    new agent with the same name, replace it. With key_mismatch=yes,
 #    disconnected_time=1s, the new container can take over the slot
 #    almost immediately after the old container dies.

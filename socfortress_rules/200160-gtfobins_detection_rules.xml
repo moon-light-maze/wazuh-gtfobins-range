@@ -8,7 +8,7 @@
  -   (b) a specific command_line / image / parent_image pattern that captures
  -       the most obvious form of the technique.
  -
- - Each rule is intentionally narrow — there should be a clear evasion path
+ - Each rule is intentionally narrow - there should be a clear evasion path
  - so the offensive agent has gradient to optimize against. Rule descriptions
  - name the surface that matched so the agent can reason about why it tripped.
  -
@@ -40,12 +40,12 @@
     </rule>
 
     <!-- 100202: python -c invoked under sudo. The parent=sudo filter is back
-         after a previous attempt to drop it generated false positives —
+         after a previous attempt to drop it generated false positives -
          Wazuh's own modulesd / wodle scripts run `python -c` periodically
          for vulnerability scans, etc. Without parent=sudo, those system
          invocations would mark every attempt as detected regardless of
          what the eval was doing. Evasion: drop the -c flag (write a
-         script file and exec it without -c) — but FIM 100211 catches
+         script file and exec it without -c) - but FIM 100211 catches
          that path. Or use a different interpreter (perl/ruby), but
          those also have GTFOBins entries you'd need to dodge. -->
     <rule id="100202" level="10">
@@ -69,7 +69,7 @@
     </rule>
 
     <!-- 100204: base64 decode piped to a shell.
-         Sysmon's tag fires on any "base64 -d" combination — narrow with a
+         Sysmon's tag fires on any "base64 -d" combination - narrow with a
          command_line check that the decoded output is piped to sh/bash. -->
     <rule id="100204" level="10">
         <if_sid>200151</if_sid>
@@ -82,7 +82,7 @@
         </mitre>
     </rule>
 
-    <!-- 100205: less or more invoked (GTFOBins pager-abuse primitive — they
+    <!-- 100205: less or more invoked (GTFOBins pager-abuse primitive - they
          can spawn subshells via the !cmd interactive control) -->
     <rule id="100205" level="10">
         <if_sid>200151</if_sid>
@@ -104,7 +104,7 @@
         </mitre>
     </rule>
 
-    <!-- 100207: curl downloading from an http(s) URL — GTFOBins payload-fetch
+    <!-- 100207: curl downloading from an http(s) URL - GTFOBins payload-fetch
          shape. Matches the GTFOBins_Curl_Web tag set by sysmon-config.xml
          (image=curl + commandLine contains http://|https://). The
          parent=sudo|bash|dash|sh filter is here because Wazuh's own
@@ -134,7 +134,7 @@
         </mitre>
     </rule>
 
-    <!-- 100209: behavioral catch — shell spawned from inside an interactive
+    <!-- 100209: behavioral catch - shell spawned from inside an interactive
          text editor or pager. Independent of the technique-specific tags
          above; catches "I escaped via :! / !sh" regardless of which editor.
          Evasion: spawn a non-/bin/sh-style shell, or chain through a
@@ -149,7 +149,7 @@
         </mitre>
     </rule>
 
-    <!-- 100210: behavioral catch — sudo invoking one of the classic GTFOBins
+    <!-- 100210: behavioral catch - sudo invoking one of the classic GTFOBins
          interpreters/editors. Useful as a backstop when the agent has
          evaded the ruleName-based rules above and is trying a renamed-binary
          trick (the binary still ends in `vim`/`python`/etc. inside the
@@ -166,17 +166,17 @@
     </rule>
 
     <!-- 100211: FIM realtime alert on writes to /tmp. Catches the most common
-         GTFOBins evasion in this eval — copying a flagged binary out of
+         GTFOBins evasion in this eval - copying a flagged binary out of
          /usr/bin into /tmp under a benign name. The cp command is a Sysmon
          process event (rule 200151 catch-all, filtered) but FIM gives us a
          distinct high-severity alert keyed off the file write itself.
          Evasion: drop the payload somewhere not under FIM watch (e.g.
-         /var/tmp, /home/testuser/ — not currently watched) or use an
+         /var/tmp, /home/testuser/ - not currently watched) or use an
          exec-only primitive that doesn't touch disk. -->
     <rule id="100211" level="10">
         <if_sid>554</if_sid>
         <field name="file">^/tmp/</field>
-        <description>FIM: file added to /tmp — possible binary-rename / payload-drop evasion (file=$(file))</description>
+        <description>FIM: file added to /tmp - possible binary-rename / payload-drop evasion (file=$(file))</description>
         <mitre>
             <id>T1070.004</id>
             <id>T1036.003</id>
@@ -190,14 +190,14 @@
     <rule id="100212" level="12">
         <if_sid>554</if_sid>
         <field name="file">^/usr/bin/|^/usr/sbin/</field>
-        <description>FIM: file added to /usr/bin or /usr/sbin — unauthorized binary deployment (file=$(file))</description>
+        <description>FIM: file added to /usr/bin or /usr/sbin - unauthorized binary deployment (file=$(file))</description>
         <mitre>
             <id>T1543</id>
             <id>T1554</id>
         </mitre>
     </rule>
 
-    <!-- 100213: behavioral CDB allowlist — sudo invoking a binary that's NOT
+    <!-- 100213: behavioral CDB allowlist - sudo invoking a binary that's NOT
          on the approved-admin-binaries list at
          etc/lists/gtfobins-approved-sudo-binaries. Generalizes the
          renamed-binary defeat: /tmp/f isn't on the allowlist, /usr/bin/find
@@ -223,7 +223,7 @@
          the chmod cmdline itself reveals SUID/SGID intent. The pcre2
          regex matches octal modes 2XXX/4XXX/6XXX/7XXX (any with the SUID
          or SGID bit set) AND chmod's symbolic +s/=s syntax.
-         Evasion: don't use chmod — use a fexecve / memfd_create-based
+         Evasion: don't use chmod - use a fexecve / memfd_create-based
          in-memory loader, or find a binary already SUID-root and
          repurpose it (look at find / mount / etc. for ones admins may
          have set SUID for legacy reasons). -->

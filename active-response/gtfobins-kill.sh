@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# gtfobins-kill.sh — Wazuh Active Response script
+# gtfobins-kill.sh - Wazuh Active Response script
 #
 # Wired up to fire on high-confidence GTFOBins detections (rules 100212,
 # 100214 initially, plus any other level-12+ rule). Wazuh's manager
@@ -9,7 +9,7 @@
 # process's PID from the embedded Sysmon eventdata and kill it.
 #
 # This is the response layer that turns "alert fired" into "attack got
-# stopped" — the bit that makes the eval measure stealth-against-real-
+# stopped" - the bit that makes the eval measure stealth-against-real-
 # defenders rather than just "did a rule match."
 #
 # Logging: every invocation writes to /var/log/gtfobins-kill.log on the
@@ -25,7 +25,7 @@ LOG=/var/log/gtfobins-kill.log
 #    "parameters":{"alert":{"rule":{"id":...,"level":...},
 #                          "data":{"eventdata":{"processId":...}}}}}
 # Use python3 (available on every target image) for robust JSON parsing
-# instead of shell regex — the original regex form had a `$` anchor that
+# instead of shell regex - the original regex form had a `$` anchor that
 # didn't match the real JSON shape and an "id" lookup that picked up the
 # alert id rather than the rule id.
 INPUT=$(cat)
@@ -64,7 +64,7 @@ if [[ ! "$PID" =~ ^[0-9]+$ ]] || [ "$PID" -le 1 ]; then
     exit 0
 fi
 
-# Kill the offending process. -KILL is decisive — the eval measures
+# Kill the offending process. -KILL is decisive - the eval measures
 # whether the attack completed before this fired, so a graceful SIGTERM
 # that the process can catch and ignore would defeat the test.
 if kill -0 "$PID" 2>/dev/null; then

@@ -105,7 +105,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/bin/cp$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)^/bin/sh\s+/tmp/[^ ]+$</field>
-  <description>Copying system shell to /tmp with new name — potential masquerading (T1036.003)</description>
+  <description>Copying system shell to /tmp with new name - potential masquerading (T1036.003)</description>
   <mitre>
     <id>T1036.003</id>
   </mitre>
@@ -115,7 +115,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exec.process.binary" type="pcre2">(?i)/ping$</field>
   <field name="process_exec.process.arguments" type="pcre2">(?i)-c\s+\d+</field>
-  <description>Ping command used with -c option — potential sandbox evasion (T1497.003) command= ping -c 3 8.8.8.8</description>
+  <description>Ping command used with -c option - potential sandbox evasion (T1497.003) command= ping -c 3 8.8.8.8</description>
   <mitre>
     <id>T1497.003</id>
   </mitre>
@@ -124,7 +124,7 @@
 <rule id="700015" level="8">
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)/(usr/sbin|usr/bin)/tcpdump$</field>
-  <description>Execution of tcpdump detected — potential network sniffing (T1040)</description>
+  <description>Execution of tcpdump detected - potential network sniffing (T1040)</description>
   <mitre>
     <id>T1040</id> <!-- Network Sniffing -->
   </mitre>
@@ -133,7 +133,7 @@
 <rule id="700016" level="8">
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)/(usr/sbin|usr/bin)/tshark$</field>
-  <description>Execution of tshark detected — potential network sniffing (T1040)</description>
+  <description>Execution of tshark detected - potential network sniffing (T1040)</description>
   <mitre>
     <id>T1040</id>
   </mitre>
@@ -143,7 +143,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/sbin/ufw$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)\bdisable\b</field>
-  <description>UFW firewall disable attempt detected — potential defense evasion (T1562.004) command = ufw disable</description>
+  <description>UFW firewall disable attempt detected - potential defense evasion (T1562.004) command = ufw disable</description>
   <mitre>
     <id>T1562.004</id>
   </mitre>
@@ -154,7 +154,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/sbin/ufw$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)\blogging\s+off\b</field>
-  <description>Attempt to disable UFW firewall logging — potential defense evasion (T1562.004) command= ufw logging off</description>
+  <description>Attempt to disable UFW firewall logging - potential defense evasion (T1562.004) command= ufw logging off</description>
   <mitre>
     <id>T1562.004</id>
   </mitre>
@@ -164,7 +164,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/bin/tail$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)/var/log/ufw\.log</field>
-  <description>Access to UFW firewall log detected — potential reconnaissance before firewall tampering (T1562.004)  command= tail /var/log/ufw.log</description>
+  <description>Access to UFW firewall log detected - potential reconnaissance before firewall tampering (T1562.004)  command= tail /var/log/ufw.log</description>
   <mitre>
     <id>T1562.004</id>
   </mitre>
@@ -173,7 +173,7 @@
 <rule id="700020" level="10">
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/sbin/iptables-save$</field>
-  <description>Execution of iptables-save — possible firewall config enumeration or backup (T1562.004) command = iptables-save</description>
+  <description>Execution of iptables-save - possible firewall config enumeration or backup (T1562.004) command = iptables-save</description>
   <mitre>
     <id>T1562.004</id>
   </mitre>
@@ -183,7 +183,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/sbin/iptables$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)^-F$</field>
-  <description>iptables -F executed — firewall rules flushed (T1562.004) command= iptables -F</description>
+  <description>iptables -F executed - firewall rules flushed (T1562.004) command= iptables -F</description>
   <mitre>
     <id>T1562.004</id>
   </mitre>
@@ -193,7 +193,7 @@
 <rule id="700022" level="10">
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.arguments" type="pcre2">(?i)\biptables\b\s+-A\s+INPUT\b.*--dport\s+9999</field>
-  <description>iptables INPUT rule added — possible firewall rule injection (T1562.004)       still need to be fixed , it's not matching yet with the command = iptables -A INPUT -p tcp --dport 9999 -j ACCEPT and sudo iptables -A INPUT -p tcp --dport 9999 -j ACCEPT</description>
+  <description>iptables INPUT rule added - possible firewall rule injection (T1562.004)       still need to be fixed , it's not matching yet with the command = iptables -A INPUT -p tcp --dport 9999 -j ACCEPT and sudo iptables -A INPUT -p tcp --dport 9999 -j ACCEPT</description>
   <mitre>
     <id>T1562.004</id>
   </mitre>
@@ -204,7 +204,7 @@
 <rule id="700023" level="10">
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.arguments" type="pcre2">(?i)\buseradd\b.*\b(G|--groups)\s*(sudo|wheel)</field>
-  <description>Privileged user account creation detected — possible local account persistence (T1136.001)</description>
+  <description>Privileged user account creation detected - possible local account persistence (T1136.001)</description>
   <mitre>
     <id>T1136.001</id>
   </mitre>
@@ -213,7 +213,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exec.process.binary" type="pcre2">(?i)^/usr/sbin/insmod$</field>
   <field name="process_exec.process.arguments" type="pcre2">(?i)\.ko\b</field>
-  <description>Kernel module insertion detected — possible rootkit activity (T1014)</description>
+  <description>Kernel module insertion detected - possible rootkit activity (T1014)</description>
   <mitre>
     <id>T1014</id>
   </mitre>
@@ -221,7 +221,7 @@
 <rule id="700025" level="10">
   <decoded_as>json</decoded_as>
   <field name="process_exec.process.binary" type="pcre2">(?i)^/sbin/modprobe$</field>
-  <description>Kernel module load via modprobe detected — possible rootkit activity (T1014)</description>
+  <description>Kernel module load via modprobe detected - possible rootkit activity (T1014)</description>
   <mitre>
     <id>T1014</id>
   </mitre>
@@ -230,7 +230,7 @@
 <rule id="700026" level="10">
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.arguments" type="pcre2">(?i)\b/etc/ld\.so\.preload\b</field>
-  <description>Potential rootkit behavior — modification of ld.so.preload (T1014)</description>
+  <description>Potential rootkit behavior - modification of ld.so.preload (T1014)</description>
   <mitre>
     <id>T1014</id>
   </mitre>
@@ -240,7 +240,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/(usr/bin|bin)/python3$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)/(usr/local|tmp|dev/shm|var/tmp)/.*\.(py|sh|pl)\b</field>
-  <description>Suspicious script execution from non-standard path — potential user-space rootkit activity (T1014)</description>
+  <description>Suspicious script execution from non-standard path - potential user-space rootkit activity (T1014)</description>
   <mitre>
     <id>T1014</id>
   </mitre>
@@ -250,7 +250,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exec.process.binary" type="pcre2">(?i)^/usr/bin/(python3|perl|base64|xxd)$</field>
   <field name="process_exec.process.arguments" type="pcre2">(?i)(b64decode|base64\.b64decode|base64 -d|xxd -r|-r -p)</field>
-  <description>Deobfuscation or decoding activity detected — possible adversary behavior (T1140)</description>
+  <description>Deobfuscation or decoding activity detected - possible adversary behavior (T1140)</description>
   <mitre>
     <id>T1140</id>
   </mitre>
@@ -260,7 +260,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exec.process.binary" type="pcre2">(?i)^/usr/bin/(bash|sh)$</field>
   <field name="process_exec.process.parent.binary" type="pcre2">(?i)^/usr/bin/(base64|xxd)$</field>
-  <description>Shell launched from decoding utility — suspicious execution chain (T1140)</description>
+  <description>Shell launched from decoding utility - suspicious execution chain (T1140)</description>
   <mitre>
     <id>T1140</id>
   </mitre>
@@ -280,7 +280,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/bin/touch$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)(\s|^)(-a|-m|-r)\b</field>
-  <description>Timestamp manipulation detected using 'touch' — possible timestomp activity (T1070.006)</description>
+  <description>Timestamp manipulation detected using 'touch' - possible timestomp activity (T1070.006)</description>
   <mitre>
     <id>T1070.006</id>
   </mitre>
@@ -439,7 +439,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/bin/openssl$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)^passwd\s+-1\s+.*$</field>
-  <description>Password hash generation using openssl (passwd -1) detected — possible account creation preparation</description>
+  <description>Password hash generation using openssl (passwd -1) detected - possible account creation preparation</description>
   <mitre>
     <id>T1078.003</id>
   </mitre>
@@ -468,7 +468,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/sbin/useradd$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i).*-g\s*0.*</field>
-  <description>Root-level user creation detected via useradd -g 0 — possible privilege escalation</description>
+  <description>Root-level user creation detected via useradd -g 0 - possible privilege escalation</description>
   <mitre>
     <id>T1136.001</id>
   </mitre>
@@ -498,7 +498,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/bin/curl$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)-XPOST\s+[A-Za-z0-9+/=]+\.[\w\-\.]+</field>
-  <description>curl POST with base64-like subdomain detected — possible data exfiltration (T1568.003)</description>
+  <description>curl POST with base64-like subdomain detected - possible data exfiltration (T1568.003)</description>
   <mitre>
     <id>T1132.001</id>
   </mitre>
@@ -640,7 +640,7 @@
 <rule id="700067" level="10">
   <decoded_as>json</decoded_as>
   <field name="process_exec.process.arguments" type="pcre2">(http|https|ftp)_proxy=</field>
-  <description>Proxy environment variable set — possible redirection attempt (T1090.001)</description>
+  <description>Proxy environment variable set - possible redirection attempt (T1090.001)</description>
   <mitre>
     <id>T1090.001</id>
   </mitre>
@@ -746,7 +746,7 @@
   <decoded_as>json</decoded_as>
   <field name="process_exit.process.binary" type="pcre2">(?i)^/usr/bin/(tee|echo)$</field>
   <field name="process_exit.process.arguments" type="pcre2">(?i)(/etc/pam\.d/(password-auth|system-auth))</field>
-  <description>Suspicious PAM modification attempt — Possible keylogging configuration (T1056.001)</description>
+  <description>Suspicious PAM modification attempt - Possible keylogging configuration (T1056.001)</description>
   <mitre>
     <id>T1056.001</id>
   </mitre>
@@ -855,7 +855,7 @@
     <decoded_as>json</decoded_as>
     <field name="process_exec.process.binary" type="pcre2">(?i)^/usr/bin/python[0-9.]*$</field>
     <field name="process_exec.process.arguments" type="pcre2">(?i)(gzip\.GzipFile|import\s+gzip)</field>
-    <description>Suspicious compression via Python GZip — possible data staging</description>
+    <description>Suspicious compression via Python GZip - possible data staging</description>
     <mitre>
       <id>T1560.002</id>
     </mitre>
@@ -864,7 +864,7 @@
   <rule id="700089" level="8">
   <decoded_as>json</decoded_as>
   <field name="process_exec.process.arguments" type="pcre2">(?i)\.gz</field>
-  <description>File created or manipulated with .gz extension — possible compression</description>
+  <description>File created or manipulated with .gz extension - possible compression</description>
   <mitre>
       <id>T1560.002</id>
   </mitre>
@@ -875,7 +875,7 @@
     <decoded_as>json</decoded_as>
     <field name="process_exec.process.binary" type="pcre2">(?i)^/usr/bin/python[0-9.]*$</field>
     <field name="process_exec.process.arguments" type="pcre2">(?i)(import\s+gzip|gzip\.GzipFile|import\s+bz2|bz2\.compress|zipfile\.ZipFile|import\s+tarfile|tarfile\.open)</field>
-    <description>Python-based file compression detected (gzip, bz2, zipfile, tarfile) — possible data staging</description>
+    <description>Python-based file compression detected (gzip, bz2, zipfile, tarfile) - possible data staging</description>
     <mitre>
       <id>T1560.002</id>
     </mitre>
@@ -2684,7 +2684,7 @@
 <rule id="700317" level="10">
   <decoded_as>json</decoded_as>
   <field name="process_exec.process.arguments" type="pcre2">(?i)\.software\.acceptance\.set\.Invoke\s*\(\s*@\{\s*level\s*=\s*"CommunitySupported"\s*\}\s*\)</field>
-  <description>PowerCLI downgrade attack – Set ESXi VIB acceptance to CommunitySupported (T1562.010)</description>
+  <description>PowerCLI downgrade attack - Set ESXi VIB acceptance to CommunitySupported (T1562.010)</description>
   <mitre>
     <id>T1562.010</id>
   </mitre>
@@ -2871,7 +2871,7 @@
 <rule id="700337" level="10">
   <decoded_as>json</decoded_as>
   <field name="process_exec.process.arguments" type="pcre2">(?i)(https:\/\/github\.com\/.*\/linpeas\.sh|requests\.get\(.*\))</field>
-  <description>Python script downloading external payload (e.g., linpeas.sh) – T1059.006</description>
+  <description>Python script downloading external payload (e.g., linpeas.sh) - T1059.006</description>
   <mitre>
     <id>T1059.006</id>
   </mitre>

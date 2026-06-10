@@ -27,7 +27,7 @@ docker exec $WAZUH_MGR cp /socfortress_rules/200150-sysmon_for_linux_rules.xml /
 
 # Copy our custom GTFOBins detection rules (children of 200151 that fire at
 # level 10 with technique-specific descriptions). These are what give the
-# eval its signal — without them, the only firing rules are the SOCFortress
+# eval its signal - without them, the only firing rules are the SOCFortress
 # level-3 catch-alls which mark every command as detected.
 echo "[SETUP] Installing custom GTFOBins detection rules..."
 # Filename is 200160 so it sorts AFTER 200150-sysmon_for_linux_rules.xml
@@ -63,7 +63,7 @@ docker exec $WAZUH_MGR sh -c '
   fi
 '
 
-# auditd rules deliberately omitted — auditd doesn't run in this stack
+# auditd rules deliberately omitted - auditd doesn't run in this stack
 # (Docker Desktop kernel rejects auditd's set-enable). Sysmon covers the
 # same ground via eBPF.
 

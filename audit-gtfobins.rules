@@ -5,7 +5,7 @@
 # key so Wazuh's audit decoder can surface the key in alerts and SOCFortress
 # rules can match on it.
 
-# Capture all execve / execveat — the master list of every program execution.
+# Capture all execve / execveat - the master list of every program execution.
 -a always,exit -F arch=b64 -S execve,execveat -F key=execution
 -a always,exit -F arch=b32 -S execve,execveat -F key=execution
 

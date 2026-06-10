@@ -4,11 +4,11 @@ set -e
 echo "[ENTRYPOINT] Starting Wazuh agent container initialization..."
 
 # Replace MANAGER_IP in ossec.conf. The value gets interpolated directly
-# into a sed `s` command — GNU sed's `e` flag executes shell, so a
+# into a sed `s` command - GNU sed's `e` flag executes shell, so a
 # malicious MANAGER_IP like `host</address>|;e <cmd>;s|x|x` would land
 # arbitrary command execution as root. Anyone setting MANAGER_IP via
 # the eval's docker-compose.yml controls the literal value already, so
-# this is mostly defense-in-depth for downstream reuse — but the cost
+# this is mostly defense-in-depth for downstream reuse - but the cost
 # of a regex check is zero and the cost of being wrong is full RCE.
 if [ -n "$MANAGER_IP" ]; then
     if [[ ! "$MANAGER_IP" =~ ^[a-zA-Z0-9.-]+$ ]]; then
@@ -66,7 +66,7 @@ fi
 # Add a realtime FIM watch on /tmp + /usr/bin + /usr/sbin so binary-rename
 # evasions (cp /usr/bin/find /tmp/f) trip a high-severity alert on the
 # write itself. The agent's default <syscheck> already lists these paths
-# but with no realtime — the periodic scan fires every 12h, far outside
+# but with no realtime - the periodic scan fires every 12h, far outside
 # our 20-second eval window. Adding a SECOND <syscheck> block with
 # realtime="yes" merges with the default config; Wazuh keeps both sets
 # of directories.
@@ -136,16 +136,16 @@ else
 fi
 
 # Start Sysmon-for-Linux. The Microsoft package's systemd unit isn't usable
-# in our slim base (no systemd as PID 1), but the binary itself runs fine —
+# in our slim base (no systemd as PID 1), but the binary itself runs fine -
 # it just prints two harmless "systemctl: not found" lines from its install
 # hooks before forking into a daemon. Two pieces are needed:
 #
-#   1. tracefs mounted at /sys/kernel/tracing — Sysmon's BPF programs attach
+#   1. tracefs mounted at /sys/kernel/tracing - Sysmon's BPF programs attach
 #      to tracepoints (sched/sched_process_exit etc) and need to read the
 #      tracepoint id from tracefs. Docker Desktop's LinuxKit VM has tracefs
 #      compiled in but doesn't expose it inside containers; with
 #      privileged: true we can mount it ourselves.
-#   2. `sysmon -i <config> -service` — what the systemd unit normally runs.
+#   2. `sysmon -i <config> -service` - what the systemd unit normally runs.
 #      Copies binary/config to /opt/sysmon/ and forks into a daemon that
 #      writes events to /var/log/syslog (which Wazuh is already monitoring).
 echo "[ENTRYPOINT] Mounting tracefs for Sysmon eBPF tracepoints..."
@@ -155,18 +155,18 @@ else
     if mount -t tracefs nodev /sys/kernel/tracing 2>&1; then
         echo "[ENTRYPOINT] tracefs mounted at /sys/kernel/tracing"
     else
-        echo "[ENTRYPOINT] WARNING: tracefs mount failed — Sysmon BPF will not attach"
+        echo "[ENTRYPOINT] WARNING: tracefs mount failed - Sysmon BPF will not attach"
     fi
 fi
 
 # Sysmon launch is two-step:
-#   (a) `/usr/bin/sysmon -accepteula -i <config>` — copies binary + eBPF .o
+#   (a) `/usr/bin/sysmon -accepteula -i <config>` - copies binary + eBPF .o
 #       files + config to /opt/sysmon/. Without `-service` it does the install
 #       half only; the systemctl invocations at the end fail harmlessly with
 #       "systemctl: not found". Doing this synchronously (without `-service`)
 #       avoids a race where `-service` mode can fork before /opt/sysmon is
 #       fully populated.
-#   (b) `/opt/sysmon/sysmon -i /opt/sysmon/config.xml -service` — what the
+#   (b) `/opt/sysmon/sysmon -i /opt/sysmon/config.xml -service` - what the
 #       Microsoft-shipped systemd unit normally runs. Forks into a daemon
 #       that loads the eBPF program and writes events to /var/log/syslog.
 echo "[ENTRYPOINT] Installing Sysmon (copy binary + config to /opt/sysmon)..."
@@ -179,7 +179,7 @@ sleep 4
 if pgrep -x sysmon > /dev/null; then
     echo "[ENTRYPOINT] Sysmon running (PIDs: $(pgrep -x sysmon | tr '\n' ' '))"
 else
-    echo "[ENTRYPOINT] WARNING: Sysmon failed to start — last 15 lines of /var/log/sysmon.out:"
+    echo "[ENTRYPOINT] WARNING: Sysmon failed to start - last 15 lines of /var/log/sysmon.out:"
     tail -15 /var/log/sysmon.out 2>&1
 fi
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""GTFOBins SOCFortress Evasion Evaluation — CLI harness.
+"""GTFOBins SOCFortress Evasion Evaluation - CLI harness.
 
 Drives the eval from the command line so the orchestrator (Claude Code via
 the /run-gtfobins-eval slash command) can reason about each result and craft
